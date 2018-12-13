@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.domi.mapper.InviteUserMapper">
+	<insert id="insert" parameterType="InviteUser" useGeneratedKeys="true" keyProperty="inviteId">
+		insert into invite_user(account, password, addtime)
+		values(#{account}, #{password}, #{addtime})
+	</insert> 
+	
+	<update id="updatePassword">
+		update invite_user set password=#{password} where inviteId=#{inviteId}
+	</update>
+	
+	<update id="updateToken">
+		update invite_user set token=#{token} where account=#{account}
+	</update>
+	
+	<select id="getByAccount" resultType="InviteUser">
+		select * from invite_user where account=#{account}
+	</select>
+	
+	<select id="getByInviteId" resultType="InviteUser">
+		select * from invite_user where inviteId=#{inviteId}
+	</select>
+	
+	<select id="getAll" resultType="InviteUser">
+		select * from invite_user
+	</select>
+	<select id="getList" resultType="InviteUser">
+		select inviteId, account, addtime from invite_user
+	</select>
+	<select id="getSize" resultType="int">
+		select count(1) from invite_user
+	</select>
+</mapper>

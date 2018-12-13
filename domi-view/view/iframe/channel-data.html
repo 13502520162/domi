@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>渠道数据</title>
+    <link rel="stylesheet" href="../../js/public/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/public/reset.css">
+    <link rel="stylesheet" href="../../css/public/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/view/iframe/channel-data.css">
+
+</head>
+<body>
+<div class="channel-data layui-form">
+    <div class="channel-data-top">
+        <div class="channel-data-platform-name">
+            <span>渠道名称: &nbsp;</span>
+            <div style="display: inline-block;">
+                <input type="text" class="channel-data-ipt data-management-name">
+            </div>
+        </div>
+        <div class="management-option-date">
+            <p class="date-today" data-time="1">今天</p>
+            <p class="date-yesterday"  data-time="-1">昨天</p>
+            <p class="nearly-7-days"  data-time="7">近7天</p>
+            <p class="date-last-30-days"  data-time="30">最近30天</p>
+            <p class="historical-record active"  data-time="all">历史记录</p>
+        </div>
+        <div class="channel-data-time">
+            <span>时间: </span>
+            <input type="text" class="channel-data-ipt channel-data-start">
+            <i class="fa fa-calendar"></i>
+    <!--        <span class="data-management-empty">重置</span>-->
+        </div>
+    </div>
+    <div class="channel-data-bottom">
+        <div class="channel-data-content-option">
+            <span class="channel-data-export-all">全部导出</span>
+            <span class="channel-data-batch-export">批量导出</span>
+            <div class="dsl fr">
+                <span class="total-registration">注册总数: <span>0</span></span>
+                <span class="total-activation">激活总数:  <span>0</span></span>
+            </div>
+        </div>
+        <div class="channel-data-content-table">
+            <table class="layui-hide" id="channel-data-content-table"></table>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../js/public/divScroll/divScroll.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script src="../../js/public/layui/layui.all.js"></script>
+<script src="../../js/view/channel-data.js"></script>
+</body>
+</html>

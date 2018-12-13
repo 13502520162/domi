@@ -1,0 +1,127 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 11,
+  "data": [
+    {
+      "id": 10000,
+      "permissionName": "贷贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10001,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10002,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10003,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10004,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10005,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10006,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10007,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10008,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10007,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10008,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10009,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 10010,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 100011,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    },
+    {
+      "id": 100012,
+      "permissionName": "网网贷",
+      "accountNumber": "33645354",
+      "password": "33645354",
+      "basicAuthority":"基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限基本权限",
+      "operationTime":"2018-12-05"
+    }
+  ]
+}

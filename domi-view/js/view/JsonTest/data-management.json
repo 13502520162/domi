@@ -1,0 +1,124 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 11,
+  "data": [
+    {
+      "id": 10000,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10001,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10002,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10003,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10004,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10005,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10006,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10007,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10008,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    }, {
+      "id": 10007,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10008,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    }, {
+      "id": 10009,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 10010,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    }, {
+      "id": 100011,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    },
+    {
+      "id": 100012,
+      "productName": "网网贷",
+      "creationTime": "2018-12-04",
+      "displayData": 2513210,
+      "clickData": 651320,
+      "conversionRate": "51%"
+    }
+  ]
+}

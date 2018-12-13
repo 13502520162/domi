@@ -1,0 +1,109 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 11,
+  "data": [
+    {
+      "id": 10000,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10001,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10002,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10003,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10004,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10005,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10006,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10007,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10008,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    }, {
+      "id": 10007,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10008,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    }, {
+      "id": 10009,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 10010,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    }, {
+      "id": 100011,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    },
+    {
+      "id": 100012,
+      "statisticalTime":"2018/12/01-2018/12/06",
+      "enrolment":354351,
+      "newActivationNumber":354351,
+      "activeNumber":354351
+    }
+  ]
+}

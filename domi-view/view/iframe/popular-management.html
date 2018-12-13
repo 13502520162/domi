@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>热门管理</title>
+    <link rel="stylesheet" href="../../js/public/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/public/reset.css">
+    <link rel="stylesheet" href="../../css/public/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
+    <style>
+       html,body, .popular-management{
+            width: 100%;
+            height: 99%;
+           min-width: auto;
+        }
+       #layui-table-page1 {
+           text-align: center;
+       }
+    </style>
+
+</head>
+<body>
+<div class="popular-management">
+    <table  class="layui-hide" id="popular-management-table"></table>
+</div>
+
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../js/public/divScroll/divScroll.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script src="../../js/public/layui/layui.all.js"></script>
+<script src="../../js/view/popular-management.js" defer></script>
+
+<script type="text/html" id="state">
+    <input type="checkbox" name="状态" value="{{d.state}}" data-id="{{d.id}}" lay-skin="switch" lay-text="开|关" lay-filter="state" {{ d.state == true ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="roofPlacement">
+    <input type="checkbox" name="置顶" value="{{d.roofPlacement}}" data-id="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="roofPlacement" {{ d.roofPlacement == true ? 'checked' : '' }}>
+</script>
+</body>
+</html>

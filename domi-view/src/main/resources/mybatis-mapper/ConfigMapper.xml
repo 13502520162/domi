@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.domi.mapper.ConfigMapper">
+	
+	<update id="update" parameterType="Config">
+		<![CDATA[
+			update config set servicePhone=#{servicePhone}, serviceQQ=#{serviceQQ}, serviceWx=#{serviceWx},
+			 bank1ImgUrl=#{bank1ImgUrl}, bank1GotoUrl=#{bank1GotoUrl}, bank2ImgUrl=#{bank2ImgUrl}, bank2GotoUrl=#{bank2GotoUrl},
+			  moreBankUrl=#{moreBankUrl}, startPingang=#{startPingang}, alipay_mode=#{alipay_mode}, check_version=#{check_version},
+			  android_check_version=#{android_check_version}, android_mode=#{android_mode}   
+		]]>
+	</update>
+	
+	<select id="query" resultType="Config">
+		<![CDATA[
+			select * from config
+		]]>
+	</select>
+	
+</mapper>
