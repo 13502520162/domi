@@ -3,8 +3,8 @@ body, html {
     height: 100%;
 }
 
-body .active {
-    background: #5cb85c;
+body .active>a {
+    color: #5cb85c;
 }
 /*  顶部start */
 .info_content {
@@ -149,6 +149,8 @@ body .active {
 .s-firstDrop,
 .s-secondDrop {
     display: none;
+    background: #12374A;
+    border-left: 2px solid #5cb85c;
 }
 
 .first .s-thirdItem {

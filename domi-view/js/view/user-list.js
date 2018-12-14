@@ -1,4 +1,4 @@
-let table = layui.table, laydate = layui.laydate;
+let start = '', end = '', laydate = layui.laydate, table = layui.table;
 
 
 //日期范围
@@ -10,14 +10,12 @@ laydate.render({
         if (value) {
             let arr = value.split(' - ');
             let start = arr[0],
-                end =  arr[1],
-                val = $('.data-management-name').val();
+                end =  arr[1];
             table.reload('user-list', {
                 url: globalAjaxUrl + '/admin/userData/getUserList'
                 , where: {
                     beginDate: start,
-                    endDate: end,
-                    phone: val
+                    endDate: end
                 }
             });
         } else {
@@ -25,8 +23,7 @@ laydate.render({
                 url: globalAjaxUrl + '/admin/userData/getUserList'
                 , where: {
                     beginDate: '',
-                    endDate: '',
-                    phone: ''
+                    endDate: ''
                 }
             });
         }
@@ -60,6 +57,27 @@ table.render({
 
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
+    let time = $(this).attr('data-time');
+    if (time != 'all') {
+        table.reload('user-list', {
+            url: globalAjaxUrl + '/admin/userData/getTimeCount'
+            , where: {
+                beginDate: '',
+                endDate: '',
+                time: time
+            }
+        });
+    } else {
+        table.reload('user-list', {
+            url: globalAjaxUrl + '/admin/userData/getTimeCount'
+            , where: {
+                beginDate: '',
+                endDate: ''
+            }
+
+        });
+    }
+
 });
 
 
@@ -80,7 +98,7 @@ document.onkeydown = function (e) {
 
 // 导出用户
 $('.channel-data-export-all').click(function () {
-    let url = window.location.href = globalAjaxUrl + '/admin/channel/exportXls?beginDate=' + start + '&endDate=' + end;
+    let url = window.location.href = globalAjaxUrl + '/admin/userData/exportXls?beginDate=' + start + '&endDate=' + end;
     pageCommon.getAjax(url, {}, function (res) {
         console.log(res);
     });
