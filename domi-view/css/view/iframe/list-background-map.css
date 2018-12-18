@@ -24,8 +24,8 @@ html, body, .list-background-map {
     position: absolute;
 }
 .list-background-map-upload{
-    width: 180px;
-    height: 220px;
+    width: 240px;
+    height: 270px;
     display: inline-block;
     margin-left: 90px;
 }
@@ -74,6 +74,7 @@ html, body, .list-background-map {
 .list-background-map-upload .img-src img{
     width: 100%;
     height: 100%;
+    border-radius: 4px;
 }
 
 .list-background-map-upload .img-src span {

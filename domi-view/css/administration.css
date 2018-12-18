@@ -33,9 +33,8 @@ body .active>a {
 .info_content-info{
     height: 65px;
     line-height: 65px;
-    color: #000;
-
-    padding-left: 20px;
+    color: #5A5D5A;
+    padding-left: 22px;
 }
 .info_content-info>span{
     font-weight: bold;
@@ -44,7 +43,7 @@ body .active>a {
     max-width: 300px;
     cursor: pointer;
     color: rgba(81, 90, 110, 1);
-    padding-right: 30px;
+    padding-right: 50px;
     float: right;
     display: inline-block;
     padding-top: 20px;

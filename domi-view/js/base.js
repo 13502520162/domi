@@ -117,6 +117,10 @@ $(function () {
         $('.s-side-u').append(html);
     }
 
+    /**
+     * 七牛云的 domain 和 token 值
+     * @type {string}
+     */
     let url = globalAjaxUrl + '/admin/banner/getToken';
     pageCommon.getAjax(url, {}, function (res) {
         localStorage.setItem('domain', res.result.domain);
@@ -171,7 +175,8 @@ $(function () {
     //点击菜单栏切换
     $('.s-side-u').on('click', '.s-secondItem', function () {
         let id = $(this).attr('data-id');
-        /*        $('.s-secondItem').addClass('active').siblings().removeClass('active');*/
+        $('.info-title').text($(this).parents('li').find('.d-firstNav span').text());
+        $('.info-title-child').text($(this).find('a').text());
         tab(id);
     });
 

@@ -3,9 +3,8 @@ let laydate = layui.laydate,
 
 let start = laydate.render({
     elem: '.date-start',
-    range:true
+    range: true
 });
-
 
 
 //转换静态表格
@@ -16,7 +15,7 @@ table.init('channel-setup-table', {
     , url: globalAjaxUrl + '/admin/channel/channelSetUp'
     , page: true
     , where: {
-        time: 7
+        time: ''
     }
     , done: function (res, curr, count) {
         $('.content-text-statistics-bottom').eq(0).find('.real-data .num').text(res.dataArray[0].registrationCount);
@@ -50,7 +49,7 @@ document.onkeydown = function (e) {
 table.on('tool(channel-setup-table)', function (obj) {
     let data = obj.data;
     if (obj.event === 'setUp') {  // 设置
-        let index =  layer.open({
+        let index = layer.open({
             type: 1,
             area: ['300px', '200px'], //宽高
             content: `
@@ -72,11 +71,11 @@ table.on('tool(channel-setup-table)', function (obj) {
                     </div>
                 </div>
             `,
-            success:function (layero, index) {
-                if (data.statistics == '无'){
-                    $('#layui-layer'+ index).find('.data-option').prepend('<span class="open" style="">开启</span>')
+            success: function (layero, index) {
+                if (data.statistics == '无') {
+                    $('#layui-layer' + index).find('.data-option').prepend('<span class="open" style="">开启</span>')
                 } else {
-                    $('#layui-layer'+ index).find('.data-option').prepend('<span class="close" style="">关闭</span>')
+                    $('#layui-layer' + index).find('.data-option').prepend('<span class="close" style="">关闭</span>')
                 }
             }
         });
@@ -84,12 +83,18 @@ table.on('tool(channel-setup-table)', function (obj) {
 
         // 关闭
         $(".close").click(function () {
+            let enter =  parseInt($.trim($('.enter').val()));
+            let buckle = parseInt($.trim($('.buckle').val()));
+            if (!enter || !buckle) {
+                pageCommon.layerMsg('进或扣 值都不能为空',2);
+                return false;
+            }
             let url = globalAjaxUrl + '/admin/channel/SetUp';
             let objS = {
-                id:obj.data.id,
-                state:'0',
-                in: parseInt($('.enter').val()) || 0,
-                out: parseInt($('.buckle').val()) || 0
+                id: obj.data.id,
+                state: '0',
+                in: enter,
+                out: buckle
             };
             let data = {newData: JSON.stringify(objS)};
             pageCommon.postAjax(url, data, function (res) {
@@ -102,12 +107,18 @@ table.on('tool(channel-setup-table)', function (obj) {
 
         // 开启
         $(".open").click(function () {
+            let enter = parseInt($.trim($('.enter').val()));
+            let buckle = parseInt($.trim($('.buckle').val()));
+            if (!enter || !buckle) {
+                pageCommon.layerMsg('进或扣 值都不能为空',2);
+                return false;
+            }
             let url = globalAjaxUrl + '/admin/channel/SetUp';
             let objS = {
-                id:obj.data.id,
-                state:'1',
-                in: parseInt($('.enter').val()) || '',
-                out: parseInt($('.buckle').val()) || ''
+                id: obj.data.id,
+                state: '1',
+                in: enter,
+                out: buckle
             };
             let data = {newData: JSON.stringify(objS)};
             pageCommon.postAjax(url, data, function (res) {
@@ -129,7 +140,7 @@ table.on('tool(channel-setup-table)', function (obj) {
             layer.close(index);
         });
     } else if (obj.event === 'dataStatistics') {  // 统计数据
-      let index =  layer.open({
+        let index = layer.open({
             type: 1,
             area: ['420px', '240px'], //宽高
             content: `
@@ -153,14 +164,14 @@ table.on('tool(channel-setup-table)', function (obj) {
         $(".confirm").click(function () {
             let val = $('.data-main').find('.active').attr('data-type');
             alert(val);
-          layer.close(index);
+            layer.close(index);
         });
 
         $(".cancel").click(function () {
-          layer.close(index);
+            layer.close(index);
         });
     } else if (obj.event === 'notDataStatistics') {  // 未统计数据
-        let index =  layer.open({
+        let index = layer.open({
             type: 1,
             area: ['420px', '240px'], //宽高
             content: `
@@ -178,7 +189,7 @@ table.on('tool(channel-setup-table)', function (obj) {
         });
 
         $('.data-main span').click(function () {
-           $(this).addClass('active').siblings().removeClass('active');
+            $(this).addClass('active').siblings().removeClass('active');
         });
 
         $(".confirm").click(function () {
@@ -216,7 +227,7 @@ $('.management-option-date>p').click(function () {
                 beginDate: '',
                 endDate: '',
                 name: '',
-                time:time
+                time: time
             }
         });
     } else {
@@ -225,7 +236,8 @@ $('.management-option-date>p').click(function () {
             , where: {
                 beginDate: '',
                 endDate: '',
-                name: ''
+                name: '',
+                time: ''
             }
         });
     }

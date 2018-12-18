@@ -130,7 +130,6 @@ html,body,.classification-map{
     overflow: hidden;
     text-decoration: none;
     text-indent: 0;
-    width: 200px;
     height: 100%;
     text-align: center;
 }
@@ -142,7 +141,7 @@ html,body,.classification-map{
     height: 100%;
 }
 .photo-content-right-bottom .upload-pictures-span ,.photo-content-right-top .upload-pictures-span{
-    padding-top: 10px;
+    padding-top: 40px;
 }
 .rotation-chart-bottom-option {
     height: 30px;
@@ -173,10 +172,10 @@ html,body,.classification-map{
     height: 120px;
 }
 .photo-content-left{
-    width: 200px;
-    height: 220px;
+    width: 240px;
+    height: 250px;
 }
 .photo-content-right-top,.photo-content-right-bottom{
-    width: 200px;
-    height: 110px;
+    width: 240px;
+    height: 125px;
 }
