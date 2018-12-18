@@ -11,19 +11,44 @@ let start = laydate.render({
 //转换静态表格
 table.init('channel-setup-table', {
     limit: 10
-    , method: 'POST'
+    , method: 'GET'
     , limits: [10, 20, 30, 50, 100, 200]
-    , url: '/domi/domi-view/js/view/JsonTest/channel-setup.json'
+    , url: globalAjaxUrl + '/admin/channel/channelSetUp'
     , page: true
+    , where: {
+        time: 7
+    }
     , done: function (res, curr, count) {
+        $('.content-text-statistics-bottom').eq(0).find('.real-data .num').text(res.dataArray[0].registrationCount);
+        $('.content-text-statistics-bottom').eq(0).find('.display-data .num').text(res.dataArray[0].registerOut);
+        $('.content-text-statistics-bottom').eq(1).find('.real-data .num').text(res.dataArray[0].activationCount);
+        $('.content-text-statistics-bottom').eq(1).find('.display-data .num').text(res.dataArray[0].activationOut);
+        $('.content-text-statistics-bottom').eq(2).find('.real-data .num').text(res.dataArray[0].loginCount);
+        $('.content-text-statistics-bottom').eq(2).find('.display-data .num').text(res.dataArray[0].loginOut);
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
     }
 });
 
 
+// 回车键搜索
+document.onkeydown = function (e) {
+    if (e.key == 'Enter') {
+        let val = $('.data-management-name').val();
+        table.reload('channel-setup-table', {
+            url: globalAjaxUrl + '/admin/channel/channelSetUp'
+            , where: {
+                beginDate: '',
+                endDate: '',
+                name: val
+            }
+        });
+    }
+};
+
+
 //监听工具条
 table.on('tool(channel-setup-table)', function (obj) {
-    var data = obj.data;
+    let data = obj.data;
     if (obj.event === 'setUp') {  // 设置
         let index =  layer.open({
             type: 1,
@@ -33,31 +58,63 @@ table.on('tool(channel-setup-table)', function (obj) {
                     <div class="set-up">
                         <div class="set-up-left">
                             <p>进</p>
-                            <input type="text" class="enter">
+                            <input type="number" class="enter">
                          </div>
                            <div class="set-up-right" >
                             <p>扣</p>
-                            <input type="text" class="buckle">
+                            <input type="number" class="buckle">
                         </div>
                     </div>
                     <div class="data-option">
-                        <span class="close">关闭</span>
-                 <!--       <span class="open fn-hide">开启</span>-->
+                        <span class="close" style="display: none">关闭</span>
+                        <span class="open" style="display: none">开启</span>
                         <span class="cancel">取消</span>
                     </div>
                 </div>
-            `
+            `,
+            success:function (layero, index) {
+                if (data.statistics == '无'){
+                    $('#layui-layer'+ index).find('.data-option').prepend('<span class="open" style="">开启</span>')
+                } else {
+                    $('#layui-layer'+ index).find('.data-option').prepend('<span class="close" style="">关闭</span>')
+                }
+            }
         });
 
 
         // 关闭
         $(".close").click(function () {
-            layer.close(index);
+            let url = globalAjaxUrl + '/admin/channel/SetUp';
+            let objS = {
+                id:obj.data.id,
+                state:'0',
+                in: parseInt($('.enter').val()) || 0,
+                out: parseInt($('.buckle').val()) || 0
+            };
+            let data = {newData: JSON.stringify(objS)};
+            pageCommon.postAjax(url, data, function (res) {
+                pageCommon.layerMsg(res.msg, 1);
+                layer.close(index);
+
+                table.reload('channel-setup-table');
+            });
         });
 
         // 开启
         $(".open").click(function () {
-            layer.close(index);
+            let url = globalAjaxUrl + '/admin/channel/SetUp';
+            let objS = {
+                id:obj.data.id,
+                state:'1',
+                in: parseInt($('.enter').val()) || '',
+                out: parseInt($('.buckle').val()) || ''
+            };
+            let data = {newData: JSON.stringify(objS)};
+            pageCommon.postAjax(url, data, function (res) {
+                pageCommon.layerMsg(res.msg, 1);
+                layer.close(index);
+                table.reload('channel-setup-table');
+            });
         });
 
 
@@ -72,8 +129,6 @@ table.on('tool(channel-setup-table)', function (obj) {
             layer.close(index);
         });
     } else if (obj.event === 'dataStatistics') {  // 统计数据
-        /* data.state = '未扣量';
-         table.reload('channel-setup-table');*/
       let index =  layer.open({
             type: 1,
             area: ['420px', '240px'], //宽高
@@ -139,13 +194,40 @@ table.on('tool(channel-setup-table)', function (obj) {
 });
 
 
-// 查询
-$('.query').click(function () {
-    let start = $('.date-start').val(),
-        end = $('.date-end').val();
-    let obj = {
-        start: start,
-        end: end
-    };
-    alert(JSON.stringify(obj))
+$('.management-option-date>p').click(function () {
+    $(this).addClass('active').siblings().removeClass('active');
+    let time = $(this).attr('data-time');
+    let dateVal;
+    if (time != 'all') {
+        if (time == '1') {
+            dateVal = pageCommon.getTimeForMat();
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+        } else if (time == '-1') {
+            dateVal = pageCommon.getTimeForMat(1);
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
+        } else {
+            dateVal = pageCommon.getTimeForMat(time);
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+        }
+
+        table.reload('channel-setup-table', {
+            url: globalAjaxUrl + '/admin/channel/channelSetUp'
+            , where: {
+                beginDate: '',
+                endDate: '',
+                name: '',
+                time:time
+            }
+        });
+    } else {
+        table.reload('channel-setup-table', {
+            url: globalAjaxUrl + '/admin/channel/channelSetUp'
+            , where: {
+                beginDate: '',
+                endDate: '',
+                name: ''
+            }
+        });
+    }
+
 });

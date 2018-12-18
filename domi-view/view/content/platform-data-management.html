@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>平台--数据管理</title>
+    <link rel="stylesheet" href="../../js/public/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/public/reset.css">
+    <link rel="stylesheet" href="../../css/public/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/view/iframe/platform-data-management.css">
+
+</head>
+<body>
+<div class="platform-data-management">
+    <div class="platform-data-management-option">
+        <div class="management-option-date">
+            <p class="date-today active" data-time="1">今天</p>
+            <p class="date-yesterday"  data-time="-1">昨天</p>
+            <p class="nearly-7-days"  data-time="7">近7天</p>
+            <p class="date-last-30-days"  data-time="30">最近30天</p>
+            <p class="historical-record"  data-time="all">历史记录</p>
+        </div>
+        <div class="management-option-select-date">
+            <span>时间选择: </span>
+            <input type="text" class="date-ipt date-start" lay-key="1">
+            <i class="fa fa-calendar"></i>
+        </div>
+    </div>
+    <div class="platform-data-management-content">
+        <div class="platform-data-management-content-main">
+            <div class="platform-content-main-date">
+                <div class="platform-content-main-date-u clear">
+                    <ul>
+                        <li class="liActive">今天用户统计</li>
+                  <!--      <li>昨日用户统计</li>-->
+                    </ul>
+                </div>
+                <div class="content-main-select">
+                    <select name="" class="content-main-sel">
+                        <option value="全部来源">全部来源</option>
+                        <option value="自然量">自然量</option>
+                        <option value="推广量">推广量</option>
+                    </select>
+                </div>
+            </div>
+            <div class="content-text-statistics">
+                <ul class="content-text-statistics-u">
+                    <li>
+                        <div class="content-text-statistics-d">
+                            <div class="content-text-statistics-top">
+                                <span class="fl">注册人数</span>
+                                <span class="fr">全部来源</span>
+                            </div>
+                            <div class="content-text-statistics-bottom">
+                                <p class="num">0</p>
+                                <p>截止今日<span>14:20</span></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="content-text-statistics-d">
+                            <div class="content-text-statistics-top">
+                                <span class="fl">新增/激活人数</span>
+                                <span class="fr">全部来源</span>
+                            </div>
+                            <div class="content-text-statistics-bottom">
+                                <p class="num">0</p>
+                                <p>截止今日<span>14:20</span></p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="content-text-statistics-d">
+                            <div class="content-text-statistics-top">
+                                <span class="fl">活跃人数</span>
+                                <span class="fr">全部来源</span>
+                            </div>
+                            <div class="content-text-statistics-bottom">
+                                <p class="num">0</p>
+                                <p>截止今日<span>14:20</span></p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-eCharts-statistics">
+              <!--  <ul class="content-eCharts-statistics-u clear">
+                    <li class="ecActive">汇总趋势图</li>
+                    <li>注册人数</li>
+                    <li>新增/激活人数</li>
+                    <li>活跃人数</li>
+                </ul>-->
+                <div id="main" style="width: 100%;height:400px;"></div>
+            </div>
+            <div class="content-table-statistics">
+                <div class="content-table-statistics-option">
+                    <span class="content-table-statistics-all">全部导出</span>
+                    <span class="content-table-statistics-export">批量导出</span>
+                </div>
+                <div class="table">
+                    <table class="layui-hide" id="content-table-statistics" lay-filter="content-table-statistics"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../js/public/divScroll/divScroll.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/public/layui/layui.all.js"></script>
+<script src="../../js/public/echarts/echarts.min.js"></script>
+<script src="../../js/view/platform-data-management.js"></script>
+</body>
+</html>

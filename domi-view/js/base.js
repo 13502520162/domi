@@ -194,23 +194,23 @@ $(function () {
         if (id == 'rotation-chart') {
             getRotationChart();
         } else if (id == 'data-management') { // 贷款数据管理
-            $('.data-management').find('iframe').attr('src', 'iframe/data-management.html')
+            $('.data-management').find('iframe').attr('src', 'content/data-management.html')
         } else if (id == 'channel-data') { // 渠道数据
-            $('.channel-data').find('iframe').attr('src', 'iframe/channel-data.html')
+            $('.channel-data').find('iframe').attr('src', 'content/channel-data.html')
         } else if (id == 'channel-management') { // 渠道数据
-            $('.channel-management').find('iframe').attr('src', 'iframe/channel-management.html')
+            $('.channel-management').find('iframe').attr('src', 'content/channel-management.html')
         } else if (id == 'privilege-management') { // 权限管理
-            $('.privilege-management').find('iframe').attr('src', 'iframe/privilege-management.html')
+            $('.privilege-management').find('iframe').attr('src', 'content/privilege-management.html')
         } else if (id == 'platform-data-management') { // 平台数据管理
-            $('.platform-data-management').find('iframe').attr('src', 'iframe/platform-data-management.html')
+            $('.platform-data-management').find('iframe').attr('src', 'content/platform-data-management.html')
         } else if (id == 'channel-setup') { // 平台渠道设置
-            $('.channel-setup').find('iframe').attr('src', 'iframe/channel-setup.html')
+            $('.channel-setup').find('iframe').attr('src', 'content/channel-setup.html')
         } else if (id == 'classification-map') { // 分类
-            $('.classification-map').find('iframe').attr('src', 'iframe/classification-map.html')
+            $('.classification-map').find('iframe').attr('src', 'content/classification-map.html')
         } else if (id == 'list-background-map') { // 列表背景图
-            $('.list-background-map').find('iframe').attr('src', 'iframe/list-background-map.html')
+            $('.list-background-map').find('iframe').attr('src', 'content/list-background-map.html')
         } else if (id == 'user-list') { // 用户列表
-            $('.user-list').find('iframe').attr('src', 'iframe/user-list.html')
+            $('.user-list').find('iframe').attr('src', 'content/user-list.html')
         } else if (id == 'platform-management') { // 贷款平台管理
             getPlatformManagement();
         } else if (id == 'label-management') { // 贷款标签管理
@@ -218,7 +218,7 @@ $(function () {
         } else if (id == 'article-management') { // 新闻文章管理
             getArticleManagement();
         } else if (id == 'popular-management') { // 贷款平台热门管理
-            $('.popular-management').find('iframe').attr('src', 'iframe/popular-management.html')
+            $('.popular-management').find('iframe').attr('src', 'content/popular-management.html')
         }
 
         windowResize();

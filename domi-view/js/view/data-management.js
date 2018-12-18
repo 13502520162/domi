@@ -31,19 +31,7 @@ laydate.render({
     }
 });
 
-// 重置
-$('.data-management-empty').click(function () {
-    $('.data-management-start').val('');
-    $('.data-management-name').val('');
-    table.reload('data-management-content-table', {
-        url: globalAjaxUrl + '/admin/loanPlatform/getLoanPlatformData'
-        , where: {
-            beginDate: '',
-            endDate: '',
-            name: ''
-        }
-    });
-});
+
 
 document.onkeydown = function (e) {
     if (e.key == 'Enter') {
@@ -90,7 +78,11 @@ table.render({
 
 // 全部导出
 $('.data-management-export-all').click(function () {
-    let url = window.location.href = globalAjaxUrl + '/admin/loanPlatform/exportXls?beginDate=' + start + '&endDate' + end;
+    let value = $('.data-management-start').val();
+    let arr = value.split(' - ');
+    start = arr[0];
+    end = arr[1];
+    let url = window.location.href = globalAjaxUrl + '/admin/loanPlatform/exportXls?beginDate=' + start + '&endDate=' + end;
     pageCommon.getAjax(url, {}, function (res) {
         console.log(res);
     });
@@ -122,7 +114,18 @@ $('.data-management-batch-export').click(function () {
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let time = $(this).attr('data-time');
+    let dateVal;
     if (time != 'all') {
+        if (time == '1') {
+            dateVal = pageCommon.getTimeForMat();
+            $('.data-management-start').val(dateVal.start + ' - ' + dateVal.end);
+        } else if (time == '-1') {
+            dateVal = pageCommon.getTimeForMat(1);
+            $('.data-management-start').val(dateVal.start + ' - ' + dateVal.start);
+        } else {
+            dateVal = pageCommon.getTimeForMat(time);
+            $('.data-management-start').val(dateVal.start + ' - ' + dateVal.end);
+        }
         table.reload('data-management-content-table', {
             url: globalAjaxUrl + '/admin/loanPlatform/getTimeCount'
             , where: {

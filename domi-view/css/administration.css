@@ -10,7 +10,7 @@ body .active>a {
 .info_content {
     height: 80px;
     width: 100%;
-    background: #12374A;
+    background: #ECECEE;
     display: flex;
 }
 
@@ -18,17 +18,33 @@ body .active>a {
     flex: 0 0 240px;
     text-align: center;
     line-height: 80px;
+    background-color: #444D62;
 }
 .info_content-right{
     flex: 1;
-    padding-right: 30px;
     color: #fff;
     position: relative;
 }
-.info_content-right .personal{
+.info_content-right-con{
+    height: 65px;
+    background: #fff;
+    width: 100%;
+}
+.info_content-info{
+    height: 65px;
+    line-height: 65px;
+    color: #000;
+
+    padding-left: 20px;
+}
+.info_content-info>span{
+    font-weight: bold;
+}
+.info_content-right-con .personal{
     max-width: 300px;
     cursor: pointer;
-    padding-right: 5px;
+    color: rgba(81, 90, 110, 1);
+    padding-right: 30px;
     float: right;
     display: inline-block;
     padding-top: 20px;
@@ -40,7 +56,7 @@ body .active>a {
 .personal-settings{
     position: absolute;
     right: 12px;
-    top: 80px;
+    top: 65px;
     background: #fff;
     border: 1px solid #ccc;
 }
@@ -94,7 +110,7 @@ body .active>a {
     width: 240px;
     float: left;
     height: calc(100% - 80px);
-    background-color: #3CB7F9;
+    background-color: #444D62;
     display: inline-block;
     box-sizing: border-box;
 }
@@ -118,8 +134,8 @@ body .active>a {
 .s-side .d-firstNav span {
     display: inline-block;
     margin-left: 10px;
-    font-weight: bold;
     color: #fff;
+    font-size: 16px;
 }
 
 .s-side .d-firstNav i.fr {
@@ -130,7 +146,7 @@ body .active>a {
 .s-side .s-secondNav,
 .s-side .s-secondItem {
     padding-left: 55px;
-    line-height: 30px;
+    line-height: 35px;
 }
 
 .s-secondNav:hover, .d-firstNav:hover {
@@ -160,6 +176,7 @@ body .active>a {
 .s-secondItem a, .s-thirdItem a {
     width: 100%;
     display: inline-block;
+    font-size: 14px;
 }
 
 .d-firstNav {
@@ -209,7 +226,7 @@ body .active>a {
 
 .content-center {
     width: 100%;
-    height: calc(100% - 51px);
+    height: 100%;
     padding: 20px;
     overflow: hidden;
 }
