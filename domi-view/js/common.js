@@ -1,10 +1,10 @@
 let globalHttp = 'http://';
 let globalAjaxUrl = globalHttp + "192.168.0.104";
-let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
+let globalUrl = globalHttp + window.location.host;
 
 let pageCommon = {
     /**
-     * get ajax è¯·æ±‚
+     * get ajax ÇëÇó
      * @param url
      * @param data
      * @param succ_fn
@@ -12,7 +12,7 @@ let pageCommon = {
      * @param datatype
      */
     getAjax: function (url, data, succ_fn, err_fn, datatype) {
-        let uri = $.trim(url);	      //å»é™¤ç©ºæ ¼
+        let uri = $.trim(url);	      //È¥³ı¿Õ¸ñ
         datatype = datatype || 'json';
         data = data || {};
         $.ajax({
@@ -29,7 +29,7 @@ let pageCommon = {
         );
     },
     /**
-     * post ajax è¯·æ±‚
+     * post ajax ÇëÇó
      * @param url
      * @param data
      * @param succ_fn
@@ -37,7 +37,7 @@ let pageCommon = {
      * @param datatype
      */
     postAjax: function (url, data, succ_fn, err_fn, datatype) {
-        let uri = $.trim(url);	      //å»é™¤ç©ºæ ¼
+        let uri = $.trim(url);	      //È¥³ı¿Õ¸ñ
         datatype = datatype || 'json';
         $.ajax({
                 type: "POST",
@@ -53,13 +53,13 @@ let pageCommon = {
         );
     },
     /**
-     * è·å– å‚æ•°å€¼
+     * »ñÈ¡ ²ÎÊıÖµ
      * @returns {{"": string}}
      */
     getUrlParams:function(){
         if (window.location.search==''){
             return{
-                "":'æ— URLå‚æ•°'
+                "":'ÎŞURL²ÎÊı'
             }
         }
         let q = window.location.search.substr(1).split('&');
@@ -72,11 +72,11 @@ let pageCommon = {
         return returnValue;
     },
     layerParentOpenIframe: function (obj) {
-        // æ£€æµ‹è¯·æ±‚æ–¹å¼
-        let url = obj.url || 'æ²¡æœ‰ä¼ æ•°æ®';
-        let title = obj.title || 'ä¿¡æ¯';
+        // ¼ì²âÇëÇó·½Ê½
+        let url = obj.url || 'Ã»ÓĞ´«Êı¾İ';
+        let title = obj.title || 'ĞÅÏ¢';
         let area = obj.area || ['800px', '480px'];
-        let btn = obj.btn || ['ä¿å­˜', 'å–æ¶ˆ'];
+        let btn = obj.btn || ['±£´æ', 'È¡Ïû'];
         let confirm = obj.confirm;
         let cancel = obj.cancel;
         let layIndex = parent.layer.open({
@@ -85,7 +85,7 @@ let pageCommon = {
             shadeClose: false,
             move: false,
             btn: btn,
-            loading: false, //æ˜¯å¦æ˜¾ç¤ºåŠ è½½æ¡
+            loading: false, //ÊÇ·ñÏÔÊ¾¼ÓÔØÌõ
             title: title,
             closeBtn: 0,
             isOutAnim: false,
@@ -103,7 +103,7 @@ let pageCommon = {
         return layIndex;
     },
     layerMsg: function (msg, icon, isParent, time, success) {
-        msg = msg || "å†…å®¹";
+        msg = msg || "ÄÚÈİ";
         icon = icon || 6;
         time = time || 2000;
         isParent = isParent || true;
@@ -119,7 +119,7 @@ let pageCommon = {
 
                     }
                 },
-                function () { //å…³é—­åå›è°ƒ
+                function () { //¹Ø±Õºó»Øµ÷
                     if (success) {
                         success();
 
@@ -135,7 +135,7 @@ let pageCommon = {
                     , success: function (index, layero) {
                     }
                 },
-                function () { //å…³é—­åå›è°ƒ
+                function () { //¹Ø±Õºó»Øµ÷
                     if (success) {
                         success();
 
@@ -147,7 +147,7 @@ let pageCommon = {
         return indexLayer;
     },
     /*
-   * åŠ è½½å±‚
+   * ¼ÓÔØ²ã
    * */
     layerLoad: function (isParent) {
         let indexLayer;
@@ -172,26 +172,26 @@ let pageCommon = {
             });
         }
 
-        return indexLayer; //ä½œä¸ºå…³é—­çš„ç´¢å¼•æŠ›å‡º
+        return indexLayer; //×÷Îª¹Ø±ÕµÄË÷ÒıÅ×³ö
     },
     /**
      *
-     * @param {	Function} cancelCallback å–æ¶ˆçš„å›è°ƒ
-     * @param {	Function} confirmCallback ç¡®è®¤çš„å›è°ƒ
-     * @param {String} title  å†…å®¹
-     * @param {String} content  æç¤ºçš„å†…å®¹
-     * @param {String} btn   æŒ‰é’®
+     * @param {	Function} cancelCallback È¡ÏûµÄ»Øµ÷
+     * @param {	Function} confirmCallback È·ÈÏµÄ»Øµ÷
+     * @param {String} title  ÄÚÈİ
+     * @param {String} content  ÌáÊ¾µÄÄÚÈİ
+     * @param {String} btn   °´Å¥
      * @returns {*}
      */
     layerConfirm: function (cancelCallback, confirmCallback,title,content, btn) {
         let indexLayer;
-        title = title || 'å–æ¶ˆç¡®è®¤';
-        content = content || 'ç¡®å®šåˆ é™¤?';
-        btn = btn ||['ç¡®å®š', 'å–æ¶ˆ'];
+        title = title || 'È¡ÏûÈ·ÈÏ';
+        content = content || 'È·¶¨É¾³ı?';
+        btn = btn ||['È·¶¨', 'È¡Ïû'];
         indexLayer = layer.confirm(content, {
             title: title,
             resize: false,
-            btn: btn //æŒ‰é’®
+            btn: btn //°´Å¥
             ,isOutAnim: false
             ,closeBtn:0
             ,move: false
@@ -210,7 +210,7 @@ let pageCommon = {
         return indexLayer;
     },
     /**
-     *  æ ¹æ®ä¼ å…¥base64  è¿”å› ä¸ƒç‰›çš„ urlå›¾ç‰‡é“¾æ¥
+     *  ¸ù¾İ´«Èëbase64  ·µ»Ø ÆßÅ£µÄ urlÍ¼Æ¬Á´½Ó
      * @param base
      * @returns {*}
      */
@@ -225,7 +225,7 @@ let pageCommon = {
             async:false,
             beforeSend (request) {
                 request.setRequestHeader('Content-Type', 'application/octet-stream');
-                request.setRequestHeader('Authorization', 'UpToken ' + token) // tokenæœåŠ¡ç«¯è¯·æ±‚
+                request.setRequestHeader('Authorization', 'UpToken ' + token) // token·şÎñ¶ËÇëÇó
             },
             data: pic,
             success: function (data) {
@@ -237,7 +237,7 @@ let pageCommon = {
     },
     noRelevantData:function (Length, el, tip) {
         let liLenGht = $(Length).length;
-        tip = tip || 'æš‚æ— æ•°æ®';
+        tip = tip || 'ÔİÎŞÊı¾İ';
         if (liLenGht <= 0) {
             let html = '<div style="text-align: center;margin-top: 50px;">' +
                 '<i class="fa fa-exclamation-circle" style="font-size: 120px;color: #e6e6e6"></i>' +
@@ -247,9 +247,9 @@ let pageCommon = {
         }
     },
     /**
-     *  ä»¿formè¡¨å•å½¢å¼å¯¼å‡ºexcel
-     * @param params  å‚æ•°
-     * @param url  åå°æ¥å£
+     *  ·Âform±íµ¥ĞÎÊ½µ¼³öexcel
+     * @param params  ²ÎÊı
+     * @param url  ºóÌ¨½Ó¿Ú
      */
     postExcelFile:function (params, url) {
         let form = document.createElement("form");
