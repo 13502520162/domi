@@ -96,6 +96,10 @@ $('.data-management-empty').click(function () {
 
 // 全部导出
 $('.channel-data-export-all').click(function () {
+    let value = $('.channel-data-start').val();
+    let arr = value.split(' - ');
+    start = arr[0];
+    end = arr[1];
     let url = window.location.href = globalAjaxUrl + '/admin/channel/exportXls?beginDate=' + start + '&endDate=' + end;
     pageCommon.getAjax(url, {}, function (res) {
         console.log(res);
@@ -129,10 +133,24 @@ $('.channel-data-batch-export').click(function () {
 });
 
 
+
+
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let time = $(this).attr('data-time');
+    let dateVal;
     if (time != 'all') {
+        if (time == '1') {
+            dateVal = pageCommon.getTimeForMat();
+            $('.channel-data-start').val(dateVal.start + ' - ' + dateVal.end);
+        } else if (time == '-1') {
+            dateVal = pageCommon.getTimeForMat(1);
+            $('.channel-data-start').val(dateVal.start + ' - ' + dateVal.start);
+        } else {
+            dateVal = pageCommon.getTimeForMat(time);
+            $('.channel-data-start').val(dateVal.start + ' - ' + dateVal.end);
+        }
+
         table.reload('channel-data-content-table', {
             url: globalAjaxUrl + '/admin/channel/getTimeData'
             , where: {

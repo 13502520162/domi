@@ -14,7 +14,6 @@ html,body,.classification-map{
 }
 .icon-upload{
     position: relative;
-    height: 170px;
 }
 .icon-upload>span{
     position: absolute;
@@ -29,8 +28,8 @@ html,body,.classification-map{
 .icon-content-u>li{
     float: left;
     margin: 0 40px;
-    width: 120px;
-    height: 120px;
+    width: 260px;
+    height: 250px;
 }
 .img-file{
     width: 100%;
@@ -45,6 +44,7 @@ html,body,.classification-map{
 .img-file .img-src img{
     width: 100%;
     height: 100%;
+    border-radius: 4px;
 }
 .img-file .img-src span{
     position: absolute;
@@ -69,16 +69,15 @@ html,body,.classification-map{
     background: #fff;
     overflow: hidden;
     text-decoration: none;
-    text-indent: 0;
-    width: 120px;
-    height: 120px;
+    text-indent: 0;;
+    height: 100%;
     text-align: center;
 }
 .upload-pictures-span {
     color: #c2c2c2;
     padding-left: 5px;
     display: block;
-    padding-top: 40px;
+    padding-top: 110px;
 }
 .fileImg input {
     position: absolute;
@@ -92,7 +91,7 @@ html,body,.classification-map{
     color: #c2c2c2;
 }
 .icon-ipt{
-    width: 122px;
+    width: 260px;
     height: 30px;
     margin-top: 10px;
     padding-left: 10px;
@@ -132,7 +131,7 @@ html,body,.classification-map{
     text-decoration: none;
     text-indent: 0;
     width: 200px;
-    height: 120px;
+    height: 100%;
     text-align: center;
 }
 .photo-content-right-bottom{
@@ -140,7 +139,7 @@ html,body,.classification-map{
 
 }
 .photo-content-right-bottom .fileImg,.photo-content-right-top .fileImg{
-    height: 60px;
+    height: 100%;
 }
 .photo-content-right-bottom .upload-pictures-span ,.photo-content-right-top .upload-pictures-span{
     padding-top: 10px;
@@ -175,9 +174,9 @@ html,body,.classification-map{
 }
 .photo-content-left{
     width: 200px;
-    height: 120px;
+    height: 220px;
 }
 .photo-content-right-top,.photo-content-right-bottom{
     width: 200px;
-    height: 60px;
+    height: 110px;
 }

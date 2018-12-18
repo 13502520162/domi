@@ -249,6 +249,12 @@ html, body, .platform-data-management {
     color: #fff;
 }
 
+.data-option span.cancel {
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+}
+
 .data-main span:nth-child(1), .data-main span:nth-child(2), .data-option span:nth-child(2) {
     background: #fff;
     border: 1px solid #ccc;

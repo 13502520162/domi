@@ -137,3 +137,6 @@ img, fieldset {
 ins {
     text-decoration: none;
 }
+a:hover {
+    color: #fff;
+}

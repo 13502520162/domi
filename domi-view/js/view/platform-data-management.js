@@ -9,13 +9,14 @@ laydate.render({
     done: function (value, date, endDate) {
         if (value) {
             let arr = value.split(' - ');
-            let start = arr[0],
-                end = arr[1];
+            start = arr[0];
+            end = arr[1];
             table.reload('content-table-statistics', {
                 url: globalAjaxUrl + '/admin/channel/getDateData'
                 , where: {
                     beginDate: start,
-                    endDate:end
+                    endDate: end,
+                    time: ''
                 }
             });
         } else {
@@ -23,8 +24,8 @@ laydate.render({
                 url: globalAjaxUrl + '/admin/channel/getMyData'
                 , where: {
                     beginDate: '',
-                    endDate:'',
-                    time:1
+                    endDate: '',
+                    time: 1
                 }
             });
         }
@@ -72,7 +73,7 @@ function eChartsInit(data) {
         ],
         yAxis: [
             {
-                type : 'value'
+                type: 'value'
             }
         ],
         series: [
@@ -187,42 +188,75 @@ $('.content-main-sel').change(function () {
 
 // 全部导出
 $('.content-table-statistics-all').click(function () {
-    alert('全部导出')
+    let value = $('.date-start').val();
+    let arr = value.split(' - ');
+    start = arr[0];
+    end = arr[1];
+    let url = window.location.href = globalAjaxUrl + '/admin/channel/getExpt?beginDate=' + start + '&endDate=' + end;
+    pageCommon.getAjax(url, {}, function (res) {
+        console.log(res);
+    });
 });
 
 // 批量导出
 $('.content-table-statistics-export').click(function () {
     let check = table.checkStatus('content-table-statistics'); //idTest 即为基础参数 id 对应的值
     let len = check.data.length;
-    let idArr = [];
-    for (let i = 0; i < len; i++) {
-        console.log(check.data[i].id);
-        idArr.push(check.data[i].id);
+
+    if (!len) {
+        pageCommon.layerMsg('请选择要导出的内容', 2);
+        return false;
     }
-    alert('选中的Id有：' + idArr);
+    let Arr = [];
+
+    for (let i = 0; i < len; i++) {
+        Arr.push(check.data[i].nowDate);
+    }
+
+    let obj = {
+        arr: Arr
+    };
+
+    let url = globalAjaxUrl + '/admin/channel/getBatchExpt';
+    pageCommon.postExcelFile(obj, url)
 });
 
 
 //  天数筛选
+let curDare = pageCommon.getTimeForMat();
+$('.date-start').val(curDare.start + ' - ' + curDare.end);
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let time = $(this).attr('data-time');
+    let dateVal;
     $('.content-main-sel').val('全部来源');
     if (time != 'all') {
+        if (time == '1') {
+            dateVal = pageCommon.getTimeForMat();
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+        } else if (time == '-1') {
+            dateVal = pageCommon.getTimeForMat(1);
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
+        } else {
+            dateVal = pageCommon.getTimeForMat(time);
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+        }
+
         table.reload('content-table-statistics', {
             url: globalAjaxUrl + '/admin/channel/getMyData'
             , where: {
                 beginDate: '',
                 endDate: '',
-                time:time
+                time: time
             }
         });
     } else {
         table.reload('content-table-statistics', {
             url: globalAjaxUrl + '/admin/channel/getAllData'
             , where: {
-                time:''
+                time: ''
             }
         });
+        $('.date-start').val('');
     }
 });

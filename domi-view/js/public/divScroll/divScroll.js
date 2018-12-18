@@ -1368,7 +1368,7 @@
 						b = false
 					};
 					if (C.iframexd) {
-						if ("console" in window) console.log('NiceScroll error: policy restriced iframe');
+						if ("console" in window) console.log('NiceScroll error: policy restriced content');
 						return true
 					}
 					C.forcescreen = true;
