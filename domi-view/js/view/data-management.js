@@ -145,5 +145,6 @@ $('.management-option-date>p').click(function () {
             }
 
         });
+        $('.data-management-start').val('');
     }
 });

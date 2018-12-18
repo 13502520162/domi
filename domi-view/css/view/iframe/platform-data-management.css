@@ -120,12 +120,18 @@ html, body, .platform-data-management {
 }
 .content-text-statistics .content-text-statistics-u>li:nth-child(1){
     margin-left: 20px;
+    background: #209FE3;
+    color: #fff;
 }
 .content-text-statistics .content-text-statistics-u>li:nth-child(2){
     margin:0 40px;
+    background: #EA6705;
+    color: #fff;
 }
 .content-text-statistics .content-text-statistics-u>li:nth-child(3){
     margin-right: 20px;
+    background: #1A827A;
+    color: #fff;
 }
 .content-text-statistics-d{
     padding: 10px;
@@ -138,7 +144,7 @@ html, body, .platform-data-management {
     margin-top: 20px;
 }
 .content-text-statistics-bottom .num{
-    color: red;
+    color: #fff;
     font-size: 18px;
 }
 

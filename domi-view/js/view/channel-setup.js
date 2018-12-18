@@ -1,11 +1,27 @@
 let laydate = layui.laydate,
     table = layui.table;
 
-let start = laydate.render({
+laydate.render({
     elem: '.date-start',
-    range: true
-});
+    range: true,
+    max: 0,
+    done: function (value, date, endDate) {
+        if (value) {
+            let start = date.year + '-' + date.month + '-' + date.date,
+                end = endDate.year + '-' + endDate.month + '-' + endDate.date;
+            table.reload('channel-setup-table', {
+                url: globalAjaxUrl + '/admin/channel/getData'
+                , where: {
+                    beginDate: start,
+                    endDate: end
+                }
+            });
+        } else {
+            table.reload('channel-setup-table');
+        }
 
+    }
+});
 
 //转换静态表格
 table.init('channel-setup-table', {
@@ -73,10 +89,14 @@ table.on('tool(channel-setup-table)', function (obj) {
             `,
             success: function (layero, index) {
                 if (data.statistics == '无') {
-                    $('#layui-layer' + index).find('.data-option').prepend('<span class="open" style="">开启</span>')
+                    $('#layui-layer' + index).find('.data-option').prepend('<span class="open" style="">开启</span>');
                 } else {
-                    $('#layui-layer' + index).find('.data-option').prepend('<span class="close" style="">关闭</span>')
+                    $('#layui-layer' + index).find('.data-option').prepend('<span class="close" style="">关闭</span>');
+                    $('#layui-layer' + index).find('.enter').val(obj.data.statistics.substr(1,1));
+                    $('#layui-layer' + index).find('.buckle').val(obj.data.statistics.substr(3,1));
                 }
+
+
             }
         });
 
@@ -90,9 +110,16 @@ table.on('tool(channel-setup-table)', function (obj) {
                 return false;
             }
             let url = globalAjaxUrl + '/admin/channel/SetUp';
+            let census = '';
+            if (obj.data.census == '统计'){
+                census = '1';
+            } else {
+                census = '0';
+            }
             let objS = {
                 id: obj.data.id,
                 state: '0',
+                census:census,
                 in: enter,
                 out: buckle
             };
@@ -113,10 +140,18 @@ table.on('tool(channel-setup-table)', function (obj) {
                 pageCommon.layerMsg('进或扣 值都不能为空',2);
                 return false;
             }
+
+            let census = '';
+            if (obj.data.census == '统计'){
+                census = '1';
+            } else {
+                census = '0';
+            }
             let url = globalAjaxUrl + '/admin/channel/SetUp';
             let objS = {
                 id: obj.data.id,
                 state: '1',
+                census:census,
                 in: enter,
                 out: buckle
             };
@@ -136,8 +171,12 @@ table.on('tool(channel-setup-table)', function (obj) {
 
     } else if (obj.event === 'del') { // 删除
         layer.confirm('你确定删除该渠道嘛？', function (index) {
-            obj.del();
-            layer.close(index);
+            let url = globalAjaxUrl + '/admin/channel/delete?channelId=' + data.id;
+            pageCommon.getAjax(url, {}, function (res) {
+                pageCommon.layerMsg(res.msg, 1);
+                obj.del();
+                layer.close(index);
+            });
         });
     } else if (obj.event === 'dataStatistics') {  // 统计数据
         let index = layer.open({
@@ -147,7 +186,7 @@ table.on('tool(channel-setup-table)', function (obj) {
                 <div class="is-statistics">
                     <div class="data-main">
                         <span data-type="1" class="active">统计数据</span>
-                        <span data-type="2">不统计数据</span>
+                        <span data-type="0">不统计数据</span>
                     </div>
                     <div class="data-option">
                         <span class="confirm">确定</span>
@@ -163,7 +202,20 @@ table.on('tool(channel-setup-table)', function (obj) {
 
         $(".confirm").click(function () {
             let val = $('.data-main').find('.active').attr('data-type');
-            alert(val);
+            let url = globalAjaxUrl + '/admin/channel/SetUp';
+            let objS = {
+                id: obj.data.id,
+                state: '1',
+                census:val,
+                in: parseInt(obj.data.statistics.substr(1,1)) || 0,
+                out: parseInt(obj.data.statistics.substr(3,1))  || 0
+            };
+            let data = {newData: JSON.stringify(objS)};
+            pageCommon.postAjax(url, data, function (res) {
+                pageCommon.layerMsg(res.msg, 1);
+                layer.close(index);
+                table.reload('channel-setup-table');
+            });
             layer.close(index);
         });
 
@@ -178,7 +230,7 @@ table.on('tool(channel-setup-table)', function (obj) {
                 <div class="is-statistics">
                     <div class="data-main">
                         <span data-type="1">统计数据</span>
-                        <span data-type="2" class="active">不统计数据</span>
+                        <span data-type="0" class="active">不统计数据</span>
                     </div>
                     <div class="data-option">
                         <span class="confirm">确定</span>
@@ -194,7 +246,20 @@ table.on('tool(channel-setup-table)', function (obj) {
 
         $(".confirm").click(function () {
             let val = $('.data-main').find('.active').attr('data-type');
-            alert(val);
+            let url = globalAjaxUrl + '/admin/channel/SetUp';
+            let objS = {
+                id: obj.data.id,
+                state: '1',
+                census:val,
+                in: parseInt(obj.data.statistics.substr(1,1)) || 0,
+                out: parseInt(obj.data.statistics.substr(3,1)) || 0
+            };
+            let data = {newData: JSON.stringify(objS)};
+            pageCommon.postAjax(url, data, function (res) {
+                pageCommon.layerMsg(res.msg, 1);
+                layer.close(index);
+                table.reload('channel-setup-table');
+            });
             layer.close(index);
         });
 
@@ -207,6 +272,7 @@ table.on('tool(channel-setup-table)', function (obj) {
 
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
+    $('.liActive').text($(this).text() +'用户统计');
     let time = $(this).attr('data-time');
     let dateVal;
     if (time != 'all') {
@@ -240,6 +306,7 @@ $('.management-option-date>p').click(function () {
                 time: ''
             }
         });
+        $('.date-start').val('');
     }
 
 });

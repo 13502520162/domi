@@ -227,6 +227,7 @@ let curDare = pageCommon.getTimeForMat();
 $('.date-start').val(curDare.start + ' - ' + curDare.end);
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
+    $('.liActive').text($(this).text() +'用户统计');
     let time = $(this).attr('data-time');
     let dateVal;
     $('.content-main-sel').val('全部来源');

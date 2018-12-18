@@ -148,7 +148,7 @@ html,body,.classification-map{
     line-height: 30px;
     width: 100%;
     margin-top: 50px;
-    padding-left: 185px;
+    text-align: center;
 }
 .rotation-chart-bottom-option > span {
     display: inline-block;

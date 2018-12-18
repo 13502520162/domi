@@ -1,32 +1,18 @@
-$('.label-management-content').perfectScrollbar();
-
-function labelManagementResize() {
-    var modelH = $('.label-management-content>ul').outerWidth(true); //获取宽度
-    $('.label-management-content>ul>li').css('width', (modelH / 3 - 20));  // 因为 li 是要 3个为一排加上外边框
-    $('.label-management-content').perfectScrollbar('update');
-}
-
-setTimeout(() => {
-    labelManagementResize();
-}, 10);
-
 
 // 页面初始化
+getLabelManagement();
 function getLabelManagement() {
     let url = globalAjaxUrl + '/admin/loanPlatform/getLoanPlatformLabel';
     pageCommon.getAjax(url, {}, getLabelManagementSuccess);
 }
 
 function getLabelManagementSuccess(res) {
-    $('.label-management-label').find('.add-li').remove();
-    getLabelManagementList(res);
-    $('.label-management-label-all-num').text(res.data.length);
+    $('.label-management-label>ul').find('.add-li').remove();
     for (let j = 0; j < res.label.length; j++) {
         let label = `<li data-id="${res.label[j].id}" class="add-li">
                             <div class="platform-label-tit">
                                 <span class="label-management-label-tit-span">${res.label[j].name}</span>
                                 <input type="text" class="label-management-label-tit-ipt">
-                                <span class="platform-label-num">${res.label[j].count}</span>
                             </div>
                             <span class="platform-label-down"><i class="fa fa-chevron-down"></i></span>
                             <div class="platform-label-option">
@@ -38,58 +24,62 @@ function getLabelManagementSuccess(res) {
     }
 }
 
-// 根据标签获取文章
-function getLabelManagementList(res) {
-    $('.label-management-content>ul').html('');
-    for (let i = 0; i < res.data.length; i++) {
-        var html = `    <li data-id="${res.data[i].id}" data-labelId="${res.data[i].labelId}" >
-                            <div class="label-management-content-all">
-                                <div class="label-management-content-all-top">
-                                    <img src="${res.data[i].logo}" class="label-management-logo" alt="">
-                                    <div class="label-management-synopsis">
-                                     <p class="fw">${res.data[i].name}</p>
-                                        <p class="fw">最高可借 ￥${res.data[i].maxMoney}</p>
-                                    </div>
-                                </div>
-                                <div class="label-management-content-all-bottom">
-                                    <div class="label-management-cooperation-mode">
-                                             <span>合作模式 : </span>
-                                        <span>${res.data[i].model}</span>
-                                    </div>
-                                    <div class="label-management-price">
-                                       <span>价格 : </span>
-                                        <span>￥${res.data[i].money}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="label-management-content-option">
-                                <span class="label-management-content-time">更新于${res.data[i].update}</span>
-                                <ul class="label-management-content-ul">
-                                    <li class="label-management-content-remove"><i class="fa fa-trash-o"></i></li>
-                                </ul>
-                            </div>
-                        </li>`;
-        $('.label-management-content>ul').append(html);
-    }
-    pageCommon.noRelevantData('.label-management-content>ul li','.label-management-content>ul');
-    labelManagementResize();
-}
 
+let table1 = layui.table;
+
+
+table1.render({
+    elem: '#label-management-content-table'
+    , even: true //开启隔行背景
+    , method: 'GET'
+    , limits: [10, 20, 30, 50, 100, 200]
+    , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
+    , url: globalAjaxUrl + '/admin/channel/getChannelData'
+    , where: {
+        beginDate: '',
+        endDate: '',
+        name: ''
+    }
+    , cols: [[
+        {type: 'checkbox'}
+        , {field: 'channelName', width: '20%', title: '渠道名', align: 'center'}
+        , {field: 'id', title: 'ID', align: 'center', hide: true}
+        , {field: 'register', title: '注册', align: 'center'}
+        , {field: 'activation', title: '激活', align: 'center'}
+        , {field: 'cooperationMode', title: '合作模式', align: 'center'}
+        , {field: 'price', title: '价格', align: 'center'}
+        , {field: 'type', title: '类型', align: 'center'}
+    ]]
+    , page: true
+    , done: function (res, curr, count) {
+        $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+        $('.total-registration>span').text(res.countJson.registerCount); // 注册总数
+        $('.total-activation>span').text(res.countJson.activationCount); // 激活总数
+    }
+});
 
 //标题栏的切换
 $('.label-management-label>ul').on('click', 'li', function () {
     let len = $(this).parent().find('li').length;
     let index = $(this).index();
     let id = $(this).attr('data-id');
-    if (len - index != 1) {
+    if (len - index != 1 && index !=0) {
         $(this).addClass('label-management-active').siblings().removeClass('label-management-active');
-        let url = globalAjaxUrl + '/admin/loanPlatform/getLoanPlatformByLabelId?labelId=' + id;
-        pageCommon.getAjax(url, {}, function (res) {
-            getLabelManagementList(res);
-        })
-    }
-    if (index == 0) {
-        getLabelManagement();
+        table1.reload('label-management-content-table', {
+            url: globalAjaxUrl + '/admin/channel/getChannelData'
+            , cols: [[
+                {field: 'channelName', width: '20%', title: '产品名称', align: 'center'}
+                , {field: 'id', title: 'ID', align: 'center', hide: true}
+                , {field: 'register', title: 'icon', align: 'center'}
+                , {field: 'activation', title: '导流价格', align: 'center'}
+                , {field: 'cooperationMode', title: '排序', align: 'center'}
+                , {field: 'price', title: '更新时间', align: 'center'}
+                , {field: 'type', title: '操作', align: 'center'}
+            ]]
+        });
+    }else {
+        table1.reload('label-management-content-table');
+        $(this).addClass('label-management-active').siblings().removeClass('label-management-active');
     }
 
 });
@@ -207,4 +197,5 @@ $('.label-management-label>ul').on('mouseleave', 'li', function () {
 $('.label-management-label').on('mouseenter', '.platform-label-down', function () {
     $(this).next().show();
 });
+
 

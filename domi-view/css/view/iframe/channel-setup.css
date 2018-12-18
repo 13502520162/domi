@@ -124,14 +124,20 @@ html, body, .platform-data-management {
 
 .content-text-statistics .content-text-statistics-u > li:nth-child(1) {
     margin-left: 20px;
+    background: #209FE3;
+    color: #fff;
 }
 
 .content-text-statistics .content-text-statistics-u > li:nth-child(2) {
     margin: 0 40px;
+    background: #EA6705;
+    color: #fff;
 }
 
 .content-text-statistics .content-text-statistics-u > li:nth-child(3) {
     margin-right: 20px;
+    background: #1A827A;
+    color: #fff;
 }
 
 .content-text-statistics-top {
@@ -143,7 +149,6 @@ html, body, .platform-data-management {
 
 .content-text-statistics-bottom {
     display: flex;
-    padding: 10px;
 }
 
 .content-text-statistics-bottom > div {
@@ -160,8 +165,9 @@ html, body, .platform-data-management {
 }
 
 .content-text-statistics-bottom .num {
-    color: red;
+    color: #fff;
     font-size: 18px;
+    margin-bottom: 10px;
 }
 
 .content-eCharts-statistics {

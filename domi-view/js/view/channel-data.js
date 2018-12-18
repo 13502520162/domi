@@ -57,7 +57,7 @@ table.render({
     , page: true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
-        $('.total-registration>span').text(res.countJson.registerCount); // 注册总数
+        $('.total-registration>span').text(res.countJson.registrationCount); // 注册总数
         $('.total-activation>span').text(res.countJson.activationCount); // 激活总数
     }
 });
@@ -169,6 +169,7 @@ $('.management-option-date>p').click(function () {
                 name: ''
             }
         });
+        $('.channel-data-start').val('');
     }
 
 });

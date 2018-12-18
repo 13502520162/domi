@@ -217,9 +217,10 @@ $(function () {
         } else if (id == 'user-list') { // 用户列表
             $('.user-list').find('iframe').attr('src', 'content/user-list.html')
         } else if (id == 'platform-management') { // 贷款平台管理
-            getPlatformManagement();
+            $('.platform-management').find('iframe').attr('src', 'content/platform-management.html')
         } else if (id == 'label-management') { // 贷款标签管理
-            getLabelManagement();
+            $('.label-management').find('iframe').attr('src', 'content/label-management.html')
+
         } else if (id == 'article-management') { // 新闻文章管理
             getArticleManagement();
         } else if (id == 'popular-management') { // 贷款平台热门管理
@@ -308,6 +309,4 @@ window.onresize = function () {
 function windowResize() {
     rotationResize();
     articleResize();
-    platformResize();
-    labelManagementResize();
 }

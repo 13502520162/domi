@@ -29,8 +29,6 @@ table.render({
 //监听行工具事件
 table.on('tool(channel-management-table)', function(obj){
     var data = obj.data;
-    console.log(obj);
-    console.log(data);
     if(obj.event === 'del'){
         layer.confirm('确定删除嘛？', function(index){
 

@@ -54,7 +54,7 @@ body .active>a {
 }
 .personal-settings{
     position: absolute;
-    right: 12px;
+    right: 40px;
     top: 65px;
     background: #fff;
     border: 1px solid #ccc;
@@ -792,14 +792,14 @@ body .active>a {
 
 
 /* 标签管理start */
-.label-management-top{
+/*.label-management-top{
     line-height: 30px;
 }
 .label-management-label{
     width: 100%;
     display: inline-block;
     border-bottom: 1px solid #e0e0e0;
-    /*    padding-bottom: 15px;*/
+    !*    padding-bottom: 15px;*!
 }
 
 .label-management-label>ul{
@@ -870,7 +870,7 @@ body .active>a {
     cursor: pointer;
     padding: 2px;
 }
-/*.label-management {
+!*.label-management {
     width: 60px;
     height: 30px;
     line-height: 30px;
@@ -880,7 +880,7 @@ body .active>a {
     color: #fff;
     float: right;
     cursor: pointer;
-}*/
+}*!
 .label-management-title-ipt{
     display: none;
     width: 100px;
@@ -984,7 +984,7 @@ body .active>a {
 .label-management-content-all-bottom{
     line-height: 40px;
     margin-top: 20px;
-}
+}*/
 /* 标签管理end */
 
 

@@ -19,12 +19,22 @@ table.render({
     , page: true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+        $('tbody').find('[data-field="roofPlacement"]').find('input').removeAttr('disabled');
+        form.render();
     }
 });
 
 //监听状态的操作
 form.on('switch(state)', function(obj){
     layer.tips(this.name + '：'+ obj.elem.checked, obj.othis);
+    if (obj.elem.checked){
+        $(obj.elem).parents('tr').find('[data-field="roofPlacement"]').find('input').removeAttr('disabled');
+    } else {
+        $(obj.elem).parents('tr').find('[data-field="roofPlacement"]').find('input').attr('disabled','disabled');
+
+        $(obj.elem).parents('tr').find('[data-field="roofPlacement"]').find('input').prop('checked',false)
+    }
+    form.render();
 });
 
 //监听置顶的操作
