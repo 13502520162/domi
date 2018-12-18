@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加文章</title>
+    <link rel="stylesheet" href="../../css/public/reset.css">
+    <link rel="stylesheet" href="../../css/public/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/view/popup/add-article.css">
+    <link rel="stylesheet" href="../../js/public/layui/css/layui.css">
+    <style>
+        .permission-selection {
+            margin-left: 90px
+        }
+
+        .permission-selection p {
+            display: inline-block;
+        }
+
+        .permission-selection-l {
+            margin-bottom: 20px;
+        }
+
+        .permission-selection-r {
+            margin-bottom: 20px;
+            margin-left: 125px;
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #188ae2;
+            background-color: #188ae2;
+            color: #fff;
+        }
+
+        .use-module span {
+            display: inline-block;
+            padding: 2px;
+        }
+
+        .option-p {
+            margin-left: 50px;
+        }
+    </style>
+
+
+
+</head>
+<body>
+<div class="add-article layui-form">
+    <div class="add-article-filed">
+        <span class="add-article-tit"><span class="required">*</span>名称:</span>
+        <input type="text" class="add-article-ipt name" placeholder="请输入权限名称">
+    </div>
+    <div class="add-article-filed">
+        <span class="add-article-tit"><span class="required">*</span>账号:</span>
+        <input type="text" class="add-article-ipt account-number" placeholder="请输入账号">
+    </div>
+    <div class="add-article-filed">
+        <span class="add-article-tit"><span class="required">*</span>密码:</span>
+        <input type="text" class="add-article-ipt password" placeholder="请输入密码">
+    </div>
+<!--    <div class="add-article-filed" style="margin-bottom: 30px;">
+        <span class="add-article-tit" style="position: absolute;">图片管理:</span>
+        <div class="permission-selection">
+            <div class="permission-selection-l picture-management">
+                <p><input type="checkbox" title="使用" class="checkedAll" lay-filter="pictureManagement"
+                          lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="edit" title="编辑" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="add" title="添加" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="remove" title="删除" disabled
+                                           lay-skin="primary"></p>
+            </div>
+        </div>
+    </div>
+    <div class="add-article-filed" style="margin-bottom: 30px;">
+        <span class="add-article-tit" style="position: absolute;">贷款平台:</span>
+        <div class="permission-selection">
+            <div class="permission-selection-l loan-platform">
+                <p><input type="checkbox" title="使用" class="checkedAll" lay-filter="loanPlatform" lay-skin="primary">
+                </p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="edit" title="编辑" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="add" title="添加" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="remove" title="删除" disabled
+                                           lay-skin="primary"></p>
+            </div>
+        </div>
+    </div>
+    <div class="add-article-filed" style="margin-bottom: 30px;">
+        <span class="add-article-tit" style="position: absolute;">新闻资讯:</span>
+        <div class="permission-selection">
+            <div class="permission-selection-l news-and-information">
+                <p><input type="checkbox" title="使用" class="checkedAll" lay-filter="newsAndInformation"
+                          lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="edit" title="编辑" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="add" title="添加" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="remove" title="删除" disabled
+                                           lay-skin="primary"></p>
+            </div>
+        </div>
+    </div>
+    <div class="add-article-filed" style="margin-bottom: 30px;">
+        <span class="add-article-tit" style="position: absolute;">渠道推广:</span>
+        <div class="permission-selection">
+            <div class="permission-selection-l news-and-information">
+                <p><input type="checkbox" title="使用" class="checkedAll" lay-filter="channelPromotion"
+                          lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="edit" title="编辑" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="add" title="添加" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="remove" title="删除" disabled
+                                           lay-skin="primary"></p>
+            </div>
+        </div>
+    </div>
+    <div class="add-article-filed" style="margin-bottom: 30px;">
+        <span class="add-article-tit" style="position: absolute;">平台管理:</span>
+        <div class="permission-selection">
+            <div class="permission-selection-l platform-management">
+                <p><input type="checkbox" title="使用" class="checkedAll" lay-filter="platformManagement"
+                          lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="edit" title="编辑" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="add" title="添加" disabled
+                                           lay-skin="primary"></p>
+                <p class="option-p"><input type="checkbox" lay-filter="checkbox" class="remove" title="删除" disabled
+                                           lay-skin="primary"></p>
+            </div>
+        </div>
+    </div>-->
+    <div class="add-article-filed operationTime">
+        <span class="add-article-tit">操作时间:</span>
+        <input type="text" class="add-article-ipt channel-type" readonly disabled>
+    </div>
+</div>
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../js/public/divScroll/divScroll.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/public/layui/layui.all.js"></script>
+<script src="../../js/view/popup/add-privilege-management.js"></script>
+</body>
+</html>

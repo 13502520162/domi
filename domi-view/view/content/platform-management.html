@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>平台管理</title>
+    <link rel="stylesheet" href="../../js/public/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/public/reset.css">
+    <link rel="stylesheet" href="../../css/public/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/view/iframe/platform-management.css">
+
+
+</head>
+<body>
+<div>
+    <div class="rotation-chart-top platform-top">
+        <p class="platform">新平台</p>
+    </div>
+    <div class="platform-bottom">
+        <div class="platform-label">
+            <ul class="layui-clear">
+                <li class="platform-active">
+                    <span>全部产品</span>
+                </li>
+                <li class="add-platform-li">
+                    <input type="text" placeholder="输入标题名称" class="platform-title-ipt">
+                    <span class="add-platform-title"><i class="fa fa-plus"></i></span>
+                </li>
+            </ul>
+        </div>
+        <div class="platform-content">
+            <div class="channel-data-content-table">
+                <table class="layui-hide" id="channel-data-content-table" lay-filter="channel-management-table"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../js/public/divScroll/divScroll.js"></script>
+<script type="text/javascript" src="../../js/common.js"></script>
+<script src="../../js/public/layui/layui.all.js"></script>
+<script src="../../js/view/platform-management.js"></script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>平台--数据管理</title>
+    <link rel="stylesheet" href="../../js/public/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/public/reset.css">
+    <link rel="stylesheet" href="../../css/public/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/view/iframe/channel-setup.css">
+
+</head>
+<body>
+<div class="platform-data-management layui-form">
+    <div class="platform-data-management-option">
+        <span>渠道名称: </span>
+        <div style="display: inline-block;">
+            <input type="text" class="date-ipt data-management-name">
+        </div>
+        <div class="management-option-date">
+            <p class="date-today" data-time="1">今天</p>
+            <p class="date-yesterday"  data-time="-1">昨天</p>
+            <p class="nearly-7-days"  data-time="7">近7天</p>
+            <p class="date-last-30-days"  data-time="30">最近30天</p>
+            <p class="historical-record active"  data-time="all">历史记录</p>
+        </div>
+        <div class="management-option-select-date">
+            <span>时间选择: </span>
+            <input type="text" class="date-ipt date-start" lay-key="1">
+            <i class="fa fa-calendar"></i>
+        </div>
+    </div>
+    <div class="platform-data-management-content">
+        <div class="platform-data-management-content-main">
+            <div class="platform-content-main-date">
+                <div class="platform-content-main-date-u clear">
+                    <ul>
+                        <li class="liActive">历史记录用户统计</li>
+                        <!--      <li>昨日用户统计</li>-->
+                    </ul>
+                </div>
+            </div>
+            <div class="content-text-statistics">
+                <ul class="content-text-statistics-u">
+                    <li>
+                        <div class="content-text-statistics-d">
+                            <div class="content-text-statistics-top">
+                                <span class="fl">注册人数</span>
+                            </div>
+                            <div class="content-text-statistics-bottom">
+                                <div class="real-data">
+                                    <p>真实数据</p>
+                                    <p class="num">0</p>
+                                </div>
+                                <div class="display-data">
+                                    <p>展示数据</p>
+                                    <p class="num">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="content-text-statistics-d">
+                            <div class="content-text-statistics-top">
+                                <span class="fl">新增/激活人数</span>
+                            </div>
+                            <div class="content-text-statistics-bottom">
+                                <div class="real-data">
+                                    <p>真实数据</p>
+                                    <p class="num">0</p>
+                                </div>
+                                <div class="display-data">
+                                    <p>展示数据</p>
+                                    <p class="num">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="content-text-statistics-d">
+                            <div class="content-text-statistics-top">
+                                <span class="fl">活跃人数</span>
+                            </div>
+                            <div class="content-text-statistics-bottom">
+                                <div class="real-data">
+                                    <p>真实数据</p>
+                                    <p class="num">0</p>
+                                </div>
+                                <div class="display-data">
+                                    <p>展示数据</p>
+                                    <p class="num">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="content-table-statistics">
+                <div class="table">
+                    <table class="layui-table" id="channel-setup-table" lay-filter="channel-setup-table">
+                        <thead>
+                        <tr>
+                            <th lay-data="{field:'channelName', width:150 ,align:'center'}" rowspan="2">渠道名</th>
+                            <th lay-data="{field:'id', width:150 ,align:'center',hide:true}" rowspan="2">id</th>
+                            <th lay-data="{align:'center'}" colspan="2">注册人数</th>
+                            <th lay-data="{align:'center'}" colspan="2">激活人数</th>
+                            <th lay-data="{align:'center'}" colspan="2">活跃人数</th>
+                            <th lay-data="{field:'cooperationMode',align:'center', width:120}" rowspan="2">合作模式</th>
+                            <th lay-data="{field:'price',align:'center', width:120}" rowspan="2" >价格</th>
+                            <th lay-data="{field:'type',align:'center', width:120}" rowspan="2">类型</th>
+                            <th lay-data="{field:'statistics',align:'center', width:120}" rowspan="2">扣量状态</th>
+                            <th lay-data="{field:'census',align:'center', width:120}" rowspan="2">统计状态</th>
+                            <th lay-data="{fixed: 'right',width:'20%', align: 'center', toolbar: '#barDemo'}" rowspan="2">操作
+                            </th>
+                        </tr>
+                        <tr>
+                            <th lay-data="{field:'registerCount',align:'center', width:120}">真实数据</th>
+                            <th lay-data="{field:'registerOut',align:'center', width:120}">展示数据</th>
+                            <th lay-data="{field:'activationCount',align:'center', width:120}">真实数据</th>
+                            <th lay-data="{field:'activationOut',align:'center', width:120}">展示数据</th>
+                            <th lay-data="{field:'loginCount',align:'center', width:120}">真实数据</th>
+                            <th lay-data="{field:'loginOut',align:'center', width:120}">展示数据</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../js/public/divScroll/divScroll.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/public/layui/layui.all.js"></script>
+<script src="../../js/view/channel-setup.js"></script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="setUp">设置</a>
+    {{# if(d.census == '统计'){ }}
+        <a class="layui-btn layui-btn-xs" lay-event="dataStatistics">统计数据</a>
+    {{# } }}
+    {{# if(d.census == '不统计'){ }}
+        <a class="layui-btn layui-btn-xs" lay-event="notDataStatistics">不统计数据</a>
+    {{# } }}
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+</script>
+</body>
+</html>
