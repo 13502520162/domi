@@ -9,9 +9,9 @@ $(function () {
         }
         // 数据填充
         let query = pageCommon.getUrlParams();
-        let data = $(".article-management-content", parent.document).contents().find('.content-edit').parents('li').attr('data-data');
+        let data = $('.article-management-iframe',parent.document).contents().find('.content-data').text();
         if (data) {
-            if (query.field == 'edit') {
+            if (query.field == 'edit' || query.field == 'view') {
                 data = JSON.parse(data);
                 $('.add-article').attr('data-id', data.id);
                 $('.article-title').val(data.title);
@@ -23,6 +23,10 @@ $(function () {
                 $('.article-photo').attr('data-src',data.imgUrl);
                 $('.fileImg').hide();
                 $('.article-img').show();
+                if (query.field == 'view'){
+                    $('input,select,textarea').attr('disabled','disabled');
+                    $('.re-upload').remove();
+                }
             }
         }
     });

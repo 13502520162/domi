@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<!-- cookie domain -->
+	<cookie_domain>localhost</cookie_domain>
+	
+	<!-- 保存cookie的过期时间 -->
+	<customer_cookie_expires>604800</customer_cookie_expires>
+	<customer_default_cookie_expires>86400</customer_default_cookie_expires>
+
+</config>

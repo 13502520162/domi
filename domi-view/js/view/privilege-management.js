@@ -157,7 +157,7 @@ $('.search').click(function () {
 });
 
 function search(){
-    let val = $('.data-management-name').val();
+    let val = $('.search-privilege-management').val();
     table.reload('privilege-management-table', {
         url: globalAjaxUrl + '/admin/employee/getEmployee'
         , where: {

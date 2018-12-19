@@ -1,0 +1,131 @@
+html,body{
+    width: 100%;
+    height: 100%;
+}
+.article-management-top{
+    line-height: 30px;
+}
+.article-management-label{
+    width: 100%;
+    display: inline-block;
+    border-bottom: 1px solid #e0e0e0;
+    /*    padding-bottom: 15px;*/
+}
+
+.article-management-label>ul{
+
+}
+.article-management-label>ul>li{
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    margin: 10px;
+    line-height: 30px;
+    height: 30px;
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-right: 20px;
+    padding-left: 14px;
+}
+.article-management-label>ul{
+    display: inline-block;
+}
+.article-management-label>ul>li.article-active{
+    background: #5cc1f8;
+    color: #fff;
+}
+.article-management-label>ul>li.add-article-li{
+    padding: 0;
+    border: none;
+}
+.article-management-label>ul>li .fa-chevron-down{
+    color: #0C0C0C;
+    display: none;
+}
+.article-management-label-tit-ipt{
+    display: none;
+    width: 100px;
+    border-radius: 4px;
+    padding-left: 8px;
+    border: 1px solid #e0e0e0;
+    margin-right: 5px;
+}
+.article-management-label-num{
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 10px;
+    background: #188ae2;
+    color: #fff;
+    border-radius: 50%;
+}
+.article-management-label-down{
+    position: absolute;
+    top: 0;
+    right: 2px;
+    display: inline-block;
+    width: 16px;
+    height: 30px;
+}
+.article-management-label-option{
+    display: none;
+    min-width: 86px;
+    box-shadow: 0 0 10px #ccc;
+    position: absolute;
+    top: 25px;
+    right: -30px;
+    background: #fff;
+    padding: 5px 13px;
+    z-index: 2;
+}
+.article-management-label-option>p{
+    cursor: pointer;
+    padding: 2px;
+    color: #333;
+}
+.article-management {
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 4px;
+    text-align: center;
+    background: #3CB7F9;
+    color: #fff;
+    float: right;
+    cursor: pointer;
+}
+.article-title-ipt{
+    display: none;
+    width: 100px;
+    border-radius: 4px;
+    padding-left: 8px;
+    border: 1px solid #e0e0e0;
+    margin-right: 5px;
+}
+.add-article-title{
+    display: inline-block;
+    width: 15px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 20px
+}
+.add-article-title i{
+    color: #333;
+}
+
+
+
+.layui-table-page>div{
+    text-align: center;
+}
+
+.layui-table-cell{
+    height:45px;
+    line-height: 45px;
+}

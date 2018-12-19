@@ -1,32 +1,41 @@
-$('.article-management-content').perfectScrollbar();
-function articleResize() {
-    var modelH = $('.article-management-content>ul').outerWidth(true); //获取宽度
-    $('.article-management-content>ul>li').css('width', (modelH / 3 - 20));  // 因为 li 是要 3个为一排加上外边框
-    $('.article-management-content').perfectScrollbar('update');
 
-}
-
-setTimeout(() => {
-    articleResize();
-}, 10);
+let table = layui.table;
 
 
-// 页面初始化
-function getArticleManagement() {
-    let url = globalAjaxUrl + '/admin/article/getArticle';
-    pageCommon.getAjax(url, {}, getArticleManagementSuccess);
-}
+table.render({
+    elem: '#article-management-content-table'
+    , even: true //开启隔行背景
+    , method: 'GET'
+    , limits: [10, 20, 30, 50, 100, 200]
+    , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
+    , url: globalAjaxUrl + '/admin/article/getArticle'
+    , cols: [[
+        {field: 'title', width: '20%', title: '标题', align: 'center'}
+        , {field: 'id', title: 'ID', align: 'center', hide: true}
+        , {field: 'author', width: '10%', title: '作者', align: 'center'}
+        , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
+        , {field: 'content', title: '内容', align: 'center'}
+        , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
+        , {field: 'update', title: '更新时间', align: 'center'}
+        , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
+    ]]
+    , page: true
+    , done: function (res, curr, count) {
+        getArticleManagementSuccess(res);
+    }
+});
+
+
 
 function getArticleManagementSuccess(res) {
-    getArticleManagementList(res);
-    $('.article-management-label-all-num').text(res.data.length);
-    $('.article-management-label').find('.add-li').remove();
-    for (let j = 0; j < res.type.length; j++) {
-      let html =`<li class="add-li" data-id="${res.type[j].id}">
+    let liLen = $('.article-management-label>ul').find('.add-li').length;
+    if (res.msg) {
+        if (liLen != res.type.length) {
+            for (let j = 0; j < res.type.length; j++) {
+                let html = `<li class="add-li" data-id="${res.type[j].id}">
                             <div class="article-management-label-tit">
                                 <span class="article-management-label-tit-span">${res.type[j].name}</span>
                                 <input type="text" class="article-management-label-tit-ipt">
-                                <span class="article-management-label-num">${res.type[j].count}</span>
                             </div>
                             <span class="article-management-label-down"><i class="fa fa-chevron-down"></i></span>
                             <div class="article-management-label-option">
@@ -34,50 +43,133 @@ function getArticleManagementSuccess(res) {
                                 <p class="article-title-remove">删除标题</p>
                             </div>
                         </li>`;
-        $('.add-article-li').before(html);
-
+                $('.add-article-li').before(html);
+            }
+        }
     }
-
-}
-
-function getArticleManagementList(res) {
-    $('.article-management-content>ul').html('');
-    for (let i = 0; i < res.data.length; i++) {
-        let html = `<li  data-data='${JSON.stringify(res.data[i])}'  data-id="${res.data[i].id}" data-typeId="${res.data[i].typeId}" >
-                            <p class="article-management-content-tit">${res.data[i].title}</p>
-                            <img src="${res.data[i].imgUrl}" alt="" class="article-management-content-img">
-                            <p class="article-management-content-con">${res.data[i].content}</p>
-                            <div class="article-management-content-option">
-                                <span class="article-management-content-time">更新于${res.data[i].update}</span>
-                                <ul class="article-management-content-ul">
-                                    <li class="article-management-content-edit" onclick="articleManagementContentEdit(this)"><i class="fa fa-edit"></i></li>
-                                    <li class="article-management-content-remove" onclick="articleManagementContentRemove(this)"><i class="fa fa-trash-o"></i></li>
-                                </ul>
-                            </div>
-                        </li>`;
-        $('.article-management-content>ul').append(html);
-    }
-    pageCommon.noRelevantData('.article-management-content>ul li','.article-management-content>ul');
-    articleResize();
 }
 
 
-//标题栏的切换
-$('.article-management-label>ul').on('click', 'li', function () {
-    var len = $(this).parent().find('li').length;
-    var index = $(this).index();
-    let id = $(this).attr('data-id');
+
+table.on('tool(article-management-content-table)', function (obj) {
+    let data = obj.data;
+    if (obj.event === 'del') {
+        layer.confirm('确定删除嘛？', function (index) {
+            let url = globalAjaxUrl + '/admin/article/deleteArticle?articleId='+ data.id;
+            pageCommon.getAjax(url, {}, function (res) {
+                pageCommon.layerMsg(res.msg, 1);
+                obj.del();
+                layer.close(index);
+            });
+        });
+    }else if (obj.event == 'edit'){
+        $('.content-data').text(JSON.stringify(data));
+        let index = pageCommon.layerParentOpenIframe({
+            url: globalUrl + '/view/popup/add-article.html?field=edit',
+            title: '编辑文章',
+            confirm: function () {
+                var body = parent.layer.getChildFrame('body', index);
+                var tit = body.find('.article-title').val();
+                var id = body.find('.add-article').attr('data-id');
+                var author = body.find('.article-author').val();
+                var classification = body.find('.article-classification').val();
+                var photo = body.find('.article-photo').attr('data-src');
+                var content = body.find('.add-article-content').val();
+                if (tit == '') {
+                    pageCommon.layerMsg('标题不能为空', 2);
+                    return false;
+                }
+                if (author == '') {
+                    pageCommon.layerMsg('作者不能为空', 2);
+                    return false;
+                }
+                if (photo == undefined) {
+                    pageCommon.layerMsg('图片不能为空', 2);
+                    return false;
+                }
+                if (content == '') {
+                    pageCommon.layerMsg('内容不能为空', 2);
+                    return false;
+                }
+                let arr = [];
+                let obj = {
+                    id:id,
+                    title: tit,
+                    author: author,
+                    typeId: classification,
+                    updateTime:"",
+                    content: content,
+                    imgUrl: photo
+                };
+                arr.push(obj);
+                let url = globalAjaxUrl + '/admin/article/updateArticle';
+                let data = {newData: JSON.stringify(arr)};
+                pageCommon.postAjax(url, data, function (res) {
+                    pageCommon.layerMsg(res.msg, 1);
+                    parent.layer.close(index);
+                    labelSelection('.article-active');
+                });
+            },
+            cancel: function (index, layero) {
+                parent.layer.close(index);
+            }
+        });
+    }else if (obj.event == 'view'){
+        $('.content-data').text(JSON.stringify(data));
+        let index = pageCommon.layerParentOpenIframe({
+            url: globalUrl + '/view/popup/add-article.html?field=view',
+            title: '预览文章',
+            btn:['关闭'],
+            confirm: function (index, layero) {
+                parent.layer.close(index);
+            }
+        });
+    }
+});
+
+
+function labelSelection(e){
+    let len = $(e).parent().find('li').length;
+    let index = $(e).index();
+    let id = $(e).attr('data-id');
     if (len - index != 1) {
-        $(this).addClass('article-active').siblings().removeClass('article-active');
-        let url = globalAjaxUrl + '/admin/article/getArticleByArticleType?articleTypeId='+id;
-        pageCommon.getAjax(url, {}, function (res) {
-            getArticleManagementList(res);
-        })
+        $(e).addClass('article-active').siblings().removeClass('article-active');
+        table.reload('article-management-content-table', {
+            url: globalAjaxUrl + '/admin/article/getArticleByArticleType'
+            , where: {
+                articleTypeId: id
+            }
+        });
     }
 
     if (index == 0){
-        getArticleManagement();
+        table.render({
+            elem: '#article-management-content-table'
+            , even: true //开启隔行背景
+            , method: 'GET'
+            , limits: [10, 20, 30, 50, 100, 200]
+            , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
+            , url: globalAjaxUrl + '/admin/article/getArticle'
+            , cols: [[
+                {field: 'title', width: '20%', title: '标题', align: 'center'}
+                , {field: 'id', title: 'ID', align: 'center', hide: true}
+                , {field: 'author', width: '10%', title: '作者', align: 'center'}
+                , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
+                , {field: 'content', title: '内容', align: 'center'}
+                , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
+                , {field: 'update',width: '10%', title: '更新时间', align: 'center'}
+                , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
+            ]]
+            , page: true
+            , done: function (res, curr, count) {
+                getArticleManagementSuccess(res);
+            }
+        });
     }
+}
+//标题栏的切换
+$('.article-management-label>ul').on('click', 'li', function () {
+    labelSelection(this);
 
 });
 
@@ -223,82 +315,16 @@ $('.article-management-top').on('click', '.article-management', function () {
     });
 });
 
-//  编辑文章
-function articleManagementContentEdit(a){
-    $(a).addClass('content-edit');
-    var index = pageCommon.layerParentOpenIframe({
-        url: globalUrl + '/view/popup/add-article.html?field=edit',
-        title: '编辑文章',
-        confirm: function () {
-            var body = parent.layer.getChildFrame('body', index);
-            var tit = body.find('.article-title').val();
-            var id = body.find('.add-article').attr('data-id');
-            var author = body.find('.article-author').val();
-            var classification = body.find('.article-classification').val();
-            var photo = body.find('.article-photo').attr('data-src');
-            var content = body.find('.add-article-content').val();
-            if (tit == '') {
-                pageCommon.layerMsg('标题不能为空', 2);
-                return false;
-            }
-            if (author == '') {
-                pageCommon.layerMsg('作者不能为空', 2);
-                return false;
-            }
-            if (photo == undefined) {
-                pageCommon.layerMsg('图片不能为空', 2);
-                return false;
-            }
-            if (content == '') {
-                pageCommon.layerMsg('内容不能为空', 2);
-                return false;
-            }
-            let arr = [];
-            let obj = {
-                id:id,
-                title: tit,
-                author: author,
-                typeId: classification,
-                updateTime:"",
-                content: content,
-                imgUrl: photo
-            };
-            arr.push(obj);
-            let url = globalAjaxUrl + '/admin/article/updateArticle';
-            let data = {newData: JSON.stringify(arr)};
-            pageCommon.postAjax(url, data, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
-                layer.close(index);
-                $(a).removeClass('content-edit');
-                getArticleManagement();
-            });
-        },
-        cancel: function (index, layero) {
-            layer.close(index);
-            $(a).removeClass('content-edit');
-        }
-    });
-}
-
-
-// 删除文章
-function articleManagementContentRemove(a) {
-    pageCommon.layerConfirm(function () {
-        let id = $(a).parents('li').attr('data-id');
-        let url = globalAjaxUrl + '/admin/article/deleteArticle?articleId='+ id;
-        pageCommon.getAjax(url, {},function (res) {
-            pageCommon.layerMsg(res.msg, 1);
-            getArticleManagement();
-        });
-    });
-
-}
 
 
 
-$('.article-management-content-ul').on('click', '.article-management-content-remove', function () {
-    alert('123')
-});
+
+
+
+
+
+
+
 
 
 $('.article-management-label>ul').on('mouseenter', 'li', function () {

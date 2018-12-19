@@ -411,14 +411,14 @@ body .active>a {
 
 
 /* 文章管理 start */
-.article-management-top{
+/*.article-management-top{
     line-height: 30px;
 }
 .article-management-label{
     width: 100%;
     display: inline-block;
     border-bottom: 1px solid #e0e0e0;
-/*    padding-bottom: 15px;*/
+!*    padding-bottom: 15px;*!
 }
 
 .article-management-label>ul{
@@ -526,7 +526,7 @@ body .active>a {
 
 .article-management-content{
     height: calc(100% - 30px);
-/*    overflow: auto;*/
+!*    overflow: auto;*!
     padding: 20px 20px 0 0;
 }
 
@@ -590,7 +590,7 @@ body .active>a {
 }
 .article-management-content-ul>li i{
     color: #999;
-}
+}*/
 /* 文章管理 end */
 
 

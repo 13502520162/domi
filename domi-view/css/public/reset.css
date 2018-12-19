@@ -1,7 +1,7 @@
 
 
 body, dl, dt, dd, ul, ol, li, pre,div, form, fieldset, input,span, p, blockquote, th, td {
-    font-weight: 400;
+    font-weight: 100;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -139,4 +139,8 @@ ins {
 }
 a:hover {
     color: #fff;
+}
+.layui-table-cell{
+    color: #333;
+    font-weight: 400;
 }

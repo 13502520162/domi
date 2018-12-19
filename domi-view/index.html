@@ -24,12 +24,9 @@
         .login-con {
             width: 800px;
             height: 400px;
-            background: #fff;
-            margin: -200px auto auto auto; /*水平居中*/
+            margin: -200px auto auto auto;
             position: relative;
-            top: 50%; /*偏移*/
-            border-radius: 30px;
-            display: flex;
+            top: 50%;
         }
 
         .login-con > div {
@@ -43,13 +40,16 @@
         }
 
         .login-con .right {
-
+            position: absolute;
+            top: 0;
+            right: -160px;
         }
 
         .system-backstage {
             font-weight: 700;
             font-size: 30px;
             margin-top: 20px;
+            color: #fff;
         }
 
         .permission-login {
@@ -63,9 +63,10 @@
         }
 
         .account-number, .password {
-            border-bottom: 1px solid #e0e0e0;
+            border: 1px solid #625C93;
             width: 290px;
             position: relative;
+            border-radius: 20px;
         }
 
         .account-number input, .password input {
@@ -74,22 +75,23 @@
             height: 50px;
             line-height: 50px;
             padding-left: 40px;
+            color: #fff;
         }
 
         .password {
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .account-number span, .password span {
             position: absolute;
             top: 10px;
-            left: 0;
+            left: 10px;
         }
 
         .account-number span > i, .password span > i {
             display: inline-block;
             font-size: 25px;
-            color: #188ae2;
+            color: #fff;
         }
 
         .account-number input:focus, .password input:focus {
@@ -107,30 +109,29 @@
             margin: 40px 0 0 40px;
             border-radius: 25px;
         }
+        input{
+            background: transparent!important;
+        }
     </style>
 </head>
 <body>
 <div class="login-con">
-    <div class="left">
-        <img src="images/login_bg_con.png" alt="">
-    </div>
     <div class="right">
         <p class="system-backstage">系统后台管理</p>
         <p class="permission-login">权限登陆</p>
         <div class="input-box">
             <div class="account-number">
                 <span><i class="fa fa-user"></i></span>
-                <input type="text" value="123" id="account-number" placeholder="登录账号">
+                <input type="text" value="123" id="account-number" placeholder="请输入登录账号">
             </div>
             <div class="password">
                 <span><i class="fa fa-lock"></i></span>
-                <input type="password" value="123" id="password" placeholder="登录密码">
+                <input type="password" value="123" id="password" placeholder="请输入登录密码">
             </div>
         </div>
         <div class="login">登录</div>
     </div>
 </div>
-
 <script src="js/public/jquery/jquery-3.3.1.min.js"></script>
 <script src="js/public/layui/layui.all.js"></script>
 <script type="text/javascript" src="js/common.js"></script>

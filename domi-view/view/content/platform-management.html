@@ -12,7 +12,7 @@
 
 </head>
 <body>
-<div>
+<div class="platform-management">
     <div class="rotation-chart-top platform-top">
         <p class="platform">新平台</p>
     </div>
@@ -32,6 +32,7 @@
             <div class="channel-data-content-table">
                 <table class="layui-hide" id="channel-data-content-table" lay-filter="channel-management-table"></table>
             </div>
+            <span class="fn-hide content-data"></span>
         </div>
     </div>
 </div>
@@ -44,7 +45,12 @@
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">预览</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="logo">
+    <img src="{{d.logo}}" alt="">
 </script>
 </body>
 </html>

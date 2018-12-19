@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.domi.mapper.UserMapper">
+	
+	<insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			insert into user( cellphone, password, cookie, platform, token, registerTime, os_name, os_version, hasSubmitInfo, inviteId) 
+			values(#{cellphone}, #{password}, #{cookie}, #{platform}, #{token}, now(), #{os_name}, #{os_version}, #{hasSubmitInfo}, #{inviteId})
+		]]>
+	</insert>
+	
+
+	<select id="queryAll" resultType="UserCacheObj">
+		<![CDATA[
+			select id, cookie, cellphone from user
+		]]>
+	</select>
+	
+	
+	<select id="queryByUserId" parameterType="Integer" resultType="User">
+		<![CDATA[
+			select * from user where id=#{id}
+		]]>
+	</select>
+	
+	<update id="updatePassword" parameterType="User">
+		<![CDATA[
+			update user set password=#{password} where id=#{id}
+		]]>
+	</update>
+	
+	<update id="updateAddress" parameterType="Map">
+		<![CDATA[
+			update user set address=#{address} where id=#{id}
+		]]>
+	</update>
+	
+	<update id="updateCookie" parameterType="User">
+		<![CDATA[
+			update user set cookie=#{cookie} where id=#{id}
+		]]>
+	</update>
+		
+	<update id="updateLoanInfo" parameterType="User">
+		<![CDATA[
+			update user set hasSubmitInfo=1,  name=#{name}, idNumber=#{idNumber}, zmScore=#{zmScore}, educationBackground=#{educationBackground},
+					loanMoney=#{loanMoney}, loanType=#{loanType}, labels=#{labels}, submitInfoTime=NOW() where id=#{id}
+		]]>
+	</update>
+	
+	
+	
+	
+	<select id="queryAppData" parameterType="Map" resultType="AppData">
+		<![CDATA[
+			SELECT  y.date, IFNULL(registerCount,0) registerCount, IFNULL(submitInfoPeopleCount,0) submitInfoPeopleCount
+				, IFNULL(clickCount,0) clickCount, IFNULL(clickPeopleCount,0) clickPeopleCount, IFNULL(plamformRegisteCount,0) plamformRegisteCount, IFNULL(plamformRegistePeopleCount,0) plamformRegistePeopleCount
+			FROM
+			(SELECT date FROM date_table WHERE date BETWEEN #{beginDate} AND #{endDate})y
+			LEFT JOIN
+			(SELECT DATE(registerTime) date, COUNT(*) registerCount FROM `user` WHERE DATE(registerTime) BETWEEN #{beginDate} AND #{endDate} GROUP BY DATE(registerTime))x ON y.date=x.date
+			LEFT JOIN
+			(SELECT DATE(submitInfoTime) date, COUNT(*) submitInfoPeopleCount FROM `user` WHERE DATE(submitInfoTime) BETWEEN #{beginDate} AND #{endDate} GROUP BY DATE(submitInfoTime))x1 ON y.date=x1.date
+			LEFT JOIN
+			(
+				SELECT date, IFNULL(SUM(clickCount),0) clickCount, COUNT(*) clickPeopleCount FROM
+				(SELECT DATE(visitTime) date, COUNT(*) clickCount FROM visit_history_info WHERE type=0 AND DATE(visitTime) BETWEEN #{beginDate} AND #{endDate} GROUP BY userId)x
+				GROUP BY date
+			)x2 ON y.date=x2.date
+			LEFT JOIN
+			(
+				SELECT date, IFNULL(SUM(plamformRegisteCount),0) plamformRegisteCount, COUNT(*) plamformRegistePeopleCount FROM
+				(SELECT DATE(visitTime) date, COUNT(*) plamformRegisteCount FROM visit_history_info WHERE type=1 AND DATE(visitTime) BETWEEN #{beginDate} AND #{endDate} GROUP BY userId)x
+				GROUP BY date
+			)x3 ON y.date=x3.date
+		]]>
+	</select>
+	
+	<select id="queryUserData" parameterType="Map" resultType="UserData">
+		
+			SELECT x.id,  cellphone, `name`, idNumber, zmScore, educationBackground, loanType, labels, clickCount, registerPlatformCount, hasSubmitInfo,address,hadGenInviteLink FROM
+				(SELECT id, cellphone,  `name`, idNumber, zmScore, educationBackground, loanType, labels, hasSubmitInfo, address, hadGenInviteLink FROM `user` WHERE 1=1 
+					<if test="info==''"> AND DATE(registerTime)	BETWEEN #{beginDate} AND #{endDate} </if>
+					<if test="hasSubmitInfo!=-1">AND hasSubmitInfo=1</if>
+					<if test="info!=''">and (cellphone=#{info} or name=#{info} or idNumber=#{info})</if>				
+				)x
+			LEFT JOIN
+			(SELECT userId, COUNT(*) clickCount FROM visit_history_info WHERE type=0 GROUP BY userId)x1 ON x.id=x1.userId
+			LEFT JOIN
+			(SELECT userId, COUNT(*) registerPlatformCount  FROM  visit_history_info WHERE type=1 GROUP BY userId)x2 ON x.id=x2.userId
+		
+	</select>
+	
+	<select id="queryUserCount" parameterType="Map" resultType="Integer">
+			SELECT count(*) FROM `user` WHERE DATE(registerTime) BETWEEN #{beginDate} AND #{endDate} 
+				<if test="hasSubmitInfo!=-1">AND hasSubmitInfo=1</if>
+				<if test="info!=''">and (cellphone=#{info} or name=#{info} or idNumber=#{info})</if>				
+	</select>
+		
+	
+	<select id="queryByInfo" parameterType="String" resultType="User">
+		<![CDATA[
+			select * from user where name=#{name} OR cellphone=#{info} OR idNumber=#{info}
+		]]>
+	</select>
+	
+	<update id="updateHadGenInviteLink">
+		update user set hadGenInviteLink=1 where id=#{userId} and hadGenInviteLink=0
+	</update>
+	
+	<select id="getTodayInviteCount" resultType="int">
+		select count(1) from user where inviteId=#{inviteId} and curdate()= date(registerTime)
+	</select>
+</mapper>

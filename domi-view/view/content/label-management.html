@@ -29,7 +29,7 @@
         </div>
         <div class="label-management-content">
             <div class="label-management-content-table">
-                <table class="layui-hide" id="label-management-content-table"></table>
+                <table class="layui-hide" id="label-management-content-table" lay-filter="label-management-content-table"></table>
             </div>
         </div>
     </div>
@@ -40,5 +40,12 @@
 <script type="text/javascript" src="../../js/common.js"></script>
 <script src="../../js/public/layui/layui.all.js"></script>
 <script src="../../js/view/label-management.js"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/html" id="logo">
+    <img src="{{d.logo}}" alt="">
+</script>
 </body>
 </html>

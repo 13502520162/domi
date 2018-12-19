@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.domi.mapper.ManagerMapper">
+
+	<insert id="insert" parameterType="Manager" useGeneratedKeys="true" keyProperty="id">
+		<![CDATA[
+			insert into manager(name, password, addTime,loginKey,type ) values 
+			(#{name}, #{password}, #{addTime}, #{loginKey},#{type})
+		]]>
+	</insert>
+	
+	<update id="update" parameterType="Manager">
+		<![CDATA[
+			update manager set name=#{name}, password=#{password}, addTime=#{addTime}, loginKey=#{loginKey}  where id=#{id}
+		]]>
+	</update>
+	
+	<update id="updatePassword" parameterType="Manager">
+		<![CDATA[
+			update manager set password=#{password},type=#{type} where id=#{id}
+		]]>
+	</update>
+	<delete id="delManager" parameterType="Integer">
+		<![CDATA[
+			delete from manager where id=#{id}
+		]]>
+	</delete>
+	
+	
+	<select id="queryAll" resultType="Manager">
+		<![CDATA[
+			select * from manager
+		]]>
+	</select>
+	<select id="getManagerListBytype" resultType="Manager">
+	     select * from manager where type=#{type}
+	</select>
+	
+	<select id="getIdAndNameBytype" parameterType="Integer"  resultType="CommonKeyValue">
+	     select id,name from manager where type=#{type}
+	</select>
+	
+	<select id="getManagerByName" parameterType="String"  resultType="Manager">
+	     select * from manager where name=#{name}
+	</select>
+	
+</mapper>

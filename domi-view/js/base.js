@@ -222,7 +222,7 @@ $(function () {
             $('.label-management').find('iframe').attr('src', 'content/label-management.html')
 
         } else if (id == 'article-management') { // 新闻文章管理
-            getArticleManagement();
+            $('.article-management').find('iframe').attr('src', 'content/article-management.html')
         } else if (id == 'popular-management') { // 贷款平台热门管理
             $('.popular-management').find('iframe').attr('src', 'content/popular-management.html')
         }
@@ -308,5 +308,4 @@ window.onresize = function () {
 
 function windowResize() {
     rotationResize();
-    articleResize();
 }

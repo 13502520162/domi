@@ -126,6 +126,11 @@ html, body {
 .platform-content{
     margin-top: 20px;
 }
-#layui-table-page1{
+.layui-table-page>div{
     text-align: center;
+}
+
+.layui-table-cell{
+    height:45px;
+    line-height: 45px;
 }

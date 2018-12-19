@@ -247,3 +247,12 @@ html, body {
     border: 1px solid #e0e0e0;
     margin-right: 5px;
 }
+
+.layui-table-page>div{
+    text-align: center;
+}
+
+.layui-table-cell {
+    height: 45px;
+    line-height: 45px;
+}

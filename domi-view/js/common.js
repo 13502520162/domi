@@ -56,10 +56,10 @@ let pageCommon = {
      * 获取 参数值
      * @returns {{"": string}}
      */
-    getUrlParams:function(){
-        if (window.location.search==''){
-            return{
-                "":'无URL参数'
+    getUrlParams: function () {
+        if (window.location.search == '') {
+            return {
+                "": '无URL参数'
             }
         }
         let q = window.location.search.substr(1).split('&');
@@ -93,10 +93,10 @@ let pageCommon = {
             area: area,
             content: url,
             scrollbar: false,
-            yes:function (index, layero) {
-                confirm(index,layero );
+            yes: function (index, layero) {
+                confirm(index, layero);
             },
-            btn2:function (index, layero) {
+            btn2: function (index, layero) {
                 cancel(index, layero)
             }
         });
@@ -108,41 +108,22 @@ let pageCommon = {
         time = time || 2000;
         isParent = isParent || true;
         let indexLayer;
+        indexLayer = parent.layer.msg(msg, {
+                icon: icon,
+                time: time,
+                offset: 'auto',
+                isOutAnim: false
+                , success: function (index, layero) {
 
-        if (isParent == true) {
-            indexLayer = parent.layer.msg(msg, {
-                    icon: icon,
-                    time: time,
-                    offset: 'auto',
-                    isOutAnim: false
-                    , success: function (index, layero) {
+                }
+            },
+            function () { //关闭后回调
+                if (success) {
+                    success();
 
-                    }
-                },
-                function () { //关闭后回调
-                    if (success) {
-                        success();
+                }
 
-                    }
-
-                });
-        } else {
-            indexLayer = layer.msg(msg, {
-                    icon: icon,
-                    time: time,
-                    offset: 'auto',
-                    isOutAnim: false
-                    , success: function (index, layero) {
-                    }
-                },
-                function () { //关闭后回调
-                    if (success) {
-                        success();
-
-                    }
-
-                });
-        }
+            });
 
         return indexLayer;
     },
@@ -152,21 +133,21 @@ let pageCommon = {
     layerLoad: function (isParent) {
         let indexLayer;
         isParent = isParent || false;
-        if(isParent){
+        if (isParent) {
             indexLayer = top.layer.load(1, {
-                shade:[0.1, '#000'],
+                shade: [0.1, '#000'],
                 scrollbar: false,
-                isOutAnim : false
-                ,fixed: false
+                isOutAnim: false
+                , fixed: false
                 , success: function (index, layero) {
                 }
             });
-        }else {
+        } else {
             indexLayer = layer.load(1, {
-                shade:[0.1, '#000'],
+                shade: [0.1, '#000'],
                 scrollbar: false,
-                isOutAnim : false
-                ,fixed: false
+                isOutAnim: false
+                , fixed: false
                 , success: function (index, layero) {
                 }
             });
@@ -183,19 +164,19 @@ let pageCommon = {
      * @param {String} btn   按钮
      * @returns {*}
      */
-    layerConfirm: function (cancelCallback, confirmCallback,title,content, btn) {
+    layerConfirm: function (cancelCallback, confirmCallback, title, content, btn) {
         let indexLayer;
         title = title || '取消确认';
         content = content || '确定删除?';
-        btn = btn ||['确定', '取消'];
+        btn = btn || ['确定', '取消'];
         indexLayer = layer.confirm(content, {
             title: title,
             resize: false,
             btn: btn //按钮
-            ,isOutAnim: false
-            ,closeBtn:0
-            ,move: false
-            ,success:function (layero, index) {
+            , isOutAnim: false
+            , closeBtn: 0
+            , move: false
+            , success: function (layero, index) {
             }
         }, function () {
             if (cancelCallback) {
@@ -214,7 +195,7 @@ let pageCommon = {
      * @param base
      * @returns {*}
      */
-    getTokenUrl:function (base) {
+    getTokenUrl: function (base) {
         let src;
         let token = localStorage.getItem('token');
         let pic = base.split("base64,")[1];
@@ -222,20 +203,20 @@ let pageCommon = {
         $.ajax({
             url: url,
             type: 'POST',
-            async:false,
-            beforeSend (request) {
+            async: false,
+            beforeSend(request) {
                 request.setRequestHeader('Content-Type', 'application/octet-stream');
                 request.setRequestHeader('Authorization', 'UpToken ' + token) // token服务端请求
             },
             data: pic,
             success: function (data) {
-                let domain =  localStorage.getItem('domain');
-                src = ' http://' + domain +'/'+ data.key;
+                let domain = localStorage.getItem('domain');
+                src = ' http://' + domain + '/' + data.key;
             }
         });
         return src;
     },
-    noRelevantData:function (Length, el, tip) {
+    noRelevantData: function (Length, el, tip) {
         let liLenGht = $(Length).length;
         tip = tip || '暂无数据';
         if (liLenGht <= 0) {
@@ -251,7 +232,7 @@ let pageCommon = {
      * @param params  参数
      * @param url  后台接口
      */
-    postExcelFile:function (params, url) {
+    postExcelFile: function (params, url) {
         let form = document.createElement("form");
         form.style.display = 'none';
         form.action = url;
@@ -273,9 +254,9 @@ let pageCommon = {
      * @param count
      * @returns {string}
      */
-    getTimeForMat(count){
+    getTimeForMat(count) {
         // 拼接时间
-        count = parseInt(count)  || 0;
+        count = parseInt(count) || 0;
         let time1 = new Date();
         let Y1 = time1.getFullYear();
         let M1 = ((time1.getMonth() + 1) > 10 ? (time1.getMonth() + 1) : '0' + (time1.getMonth() + 1));

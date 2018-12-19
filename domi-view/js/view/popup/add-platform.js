@@ -25,9 +25,9 @@ $(function () {
 
         // 数据填充
         let query = pageCommon.getUrlParams();
-        let data = $(".platform-content", parent.document).contents().find('.content-edit').parents('li').attr('data-data');
+        let data = $('.platform-management-iframe',parent.document).contents().find('.content-data').text();
         if (data) {
-            if (query.field == 'edit') {
+            if (query.field == 'edit' || query.field == 'view') {
                 data = JSON.parse(data);
                 $('.add-platform').attr('data-id', data.id);
                 $('.platform-title').val(data.name);
@@ -45,6 +45,12 @@ $(function () {
                 $('.platform-img').show();
                 $('.platform-img img').attr('src', data.logo);
                 $('.platform-photo').attr('data-src', data.logo);
+
+                if (query.field == 'view'){
+                    $('input,select,textarea').attr('disabled','disabled');
+                    $('.re-upload').remove();
+                    $('.tagsinput').find('a').remove();
+                }
             }
         }
     });
