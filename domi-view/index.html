@@ -54,8 +54,13 @@
 
         .permission-login {
             color: #ccc;
-            margin-top: 10px;
+            margin-top: 5px;
             font-size: 16px;
+            cursor: pointer;
+        }
+        .permission-login i{
+            font-size: 12px;
+            font-weight: 100;
         }
 
         .input-box {
@@ -116,10 +121,10 @@
     </style>
 </head>
 <body>
-<div class="login-con">
+<div class="login-con login-admin">
     <div class="right">
-        <p class="system-backstage">系统后台管理</p>
-        <p class="permission-login">权限登陆</p>
+        <p class="system-backstage">系统后台登录</p>
+        <p class="permission-login permission-login-admin">切换为渠道用户登录 <i class="fa  fa-share"></i></p>
         <div class="input-box">
             <div class="account-number">
                 <span><i class="fa fa-user"></i></span>
@@ -130,14 +135,33 @@
                 <input type="password" value="123" id="password" placeholder="请输入登录密码">
             </div>
         </div>
-        <div class="login">登录</div>
+        <div class="login" id="login-admin">登录</div>
+    </div>
+</div>
+
+<div class="login-con login-channel fn-hide">
+    <div class="right">
+        <p class="system-backstage">渠道用户登录</p>
+        <p class="permission-login permission-login-channel">切换为系统后台登录 <i class="fa  fa-share"></i></p>
+        <div class="input-box">
+            <div class="account-number">
+                <span><i class="fa fa-user"></i></span>
+                <input type="text" value="1234 " id="channel-number" placeholder="请输入渠道账号">
+            </div>
+            <div class="password">
+                <span><i class="fa fa-lock"></i></span>
+                <input type="password" value="123" id="channel-password" placeholder="请输入渠道密码">
+            </div>
+        </div>
+        <div  class="login" id="login-channel">登录</div>
     </div>
 </div>
 <script src="js/public/jquery/jquery-3.3.1.min.js"></script>
 <script src="js/public/layui/layui.all.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 <script>
-    $('.login').click(function () {
+    // 后台登录
+    $('#login-admin').click(function () {
         let account =$("#account-number").val();
         let password =$("#password").val();
         let obj = {
@@ -147,7 +171,6 @@
         let data = {newData: JSON.stringify(obj)};
         let url = globalAjaxUrl + '/admin/employee/employeeLogin';
         pageCommon.postAjax(url,data,function (data) {
-
             if (data.msg == true){
                 pageCommon.layerMsg('登录成功',1);
                 setTimeout( () =>{
@@ -163,6 +186,46 @@
             }
         })
     });
+
+
+    // 渠道用户登录
+    $('#login-channel').click(function () {
+        let account =$("#channel-number").val();
+        let password =$("#channel-password").val();
+        let obj = {
+            accountName:account,
+            password:password
+        };
+        let data = {newData: JSON.stringify(obj)};
+        let url = globalAjaxUrl + '/admin/channel/channelLogin';
+        pageCommon.postAjax(url,data,function (data) {
+            console.log(data);
+            if (data.msg == true){
+                pageCommon.layerMsg('登录成功',1);
+                setTimeout( () =>{
+                    window.location.href= globalUrl + '/view/channel-user.html';
+                },1000);
+                let loginInfo = {
+                    employeeId:data.employeeId,
+                    account:account
+                };
+                localStorage.setItem('loginChannelInfo',JSON.stringify(loginInfo));
+            }else {
+                pageCommon.layerMsg(data.msg,2);
+            }
+        })
+    });
+
+    $('.permission-login-admin').click(function () {
+        $('.login-admin').toggle();
+        $('.login-channel').toggle();
+    });
+
+    $('.permission-login-channel').click(function () {
+        $('.login-channel').toggle();
+        $('.login-admin').toggle();
+    });
+
 </script>
 </body>
 </html>

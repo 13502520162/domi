@@ -4,6 +4,10 @@ $('.personal').click(function () {
     $('.personal-settings').toggle();
 });
 
+let loginChannelInfo =  localStorage.getItem('loginChannelInfo');
+loginChannelInfo = JSON.parse(loginChannelInfo);
+$('.account').text(loginChannelInfo.account);
+
 // 修改密码
 $('.change-password').click(function () {
     let content = `
