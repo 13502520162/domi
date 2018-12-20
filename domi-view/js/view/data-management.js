@@ -1,13 +1,13 @@
 let start = '', end = '', laydate = layui.laydate, table = layui.table;
-
 laydate.render({
     elem: '.data-management-start',
     range: true,
     max: 0,
     done: function (value, date, endDate) {
         if (value) {
-            start = date.year + '-' + date.month + '-' + date.date;
-            end = endDate.year + '-' + endDate.month + '-' + endDate.date;
+            let arr = value.split(' - ');
+            let start = arr[0],
+                end =  arr[1];
             let val = $('.data-management-name').val();
             table.reload('data-management-content-table', {
                 url: globalAjaxUrl + '/admin/loanPlatform/getLoanPlatformData'

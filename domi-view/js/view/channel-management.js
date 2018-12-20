@@ -1,5 +1,5 @@
 let table = layui.table;
-
+let permissionValue = pageCommon.getPermissionValue();
 table.render({
     elem: '#channel-management-table'
     , method: 'GET'
@@ -30,6 +30,10 @@ table.render({
 table.on('tool(channel-management-table)', function(obj){
     var data = obj.data;
     if(obj.event === 'del'){
+        if (!permissionValue.remove){
+            pageCommon.layerMsg('你没有权限删除',2);
+            return false;
+        }
         layer.confirm('确定删除嘛？', function(index){
 
             let url = globalAjaxUrl + '/admin/channel/deleteChannel?channelId='+data.id;
@@ -40,6 +44,10 @@ table.on('tool(channel-management-table)', function(obj){
             });
         });
     } else if(obj.event === 'edit'){
+        if (!permissionValue.edit){
+            pageCommon.layerMsg('你没有权限编辑',2);
+            return false;
+        }
         $('#channel-management-data').text(JSON.stringify(data));
         let index = pageCommon.layerParentOpenIframe({
             url: globalUrl + '/view/popup/add-channel-management.html?filed=edit',
@@ -133,6 +141,10 @@ table.on('tool(channel-management-table)', function(obj){
 
 //  创建渠道
 $('.add-channel-management').click(function () {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限创建',2);
+        return false;
+    }
     $('#channel-management-data').text('');
     let index = pageCommon.layerParentOpenIframe({
         url: globalUrl + '/view/popup/add-channel-management.html',

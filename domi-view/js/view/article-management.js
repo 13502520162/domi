@@ -1,6 +1,6 @@
 
 let table = layui.table;
-
+let permissionValue = pageCommon.getPermissionValue();
 
 table.render({
     elem: '#article-management-content-table'
@@ -54,6 +54,10 @@ function getArticleManagementSuccess(res) {
 table.on('tool(article-management-content-table)', function (obj) {
     let data = obj.data;
     if (obj.event === 'del') {
+        if (!permissionValue.remove){
+            pageCommon.layerMsg('你没有权限删除',2);
+            return false;
+        }
         layer.confirm('确定删除嘛？', function (index) {
             let url = globalAjaxUrl + '/admin/article/deleteArticle?articleId='+ data.id;
             pageCommon.getAjax(url, {}, function (res) {
@@ -63,6 +67,10 @@ table.on('tool(article-management-content-table)', function (obj) {
             });
         });
     }else if (obj.event == 'edit'){
+        if (!permissionValue.edit){
+            pageCommon.layerMsg('你没有权限编辑',2);
+            return false;
+        }
         $('.content-data').text(JSON.stringify(data));
         let index = pageCommon.layerParentOpenIframe({
             url: globalUrl + '/view/popup/add-article.html?field=edit',
@@ -177,6 +185,10 @@ $('.article-management-label>ul').on('click', 'li', function () {
 
 // 编辑标题 ok
 $('.article-management-label').on('click', '.article-title-edit', function (e) {
+    if (!permissionValue.edit){
+        pageCommon.layerMsg('你没有权限编辑',2);
+        return false;
+    }
     var span = $(this).parents('li').find('.article-management-label-tit-span');
     var input = $(this).parents('li').find('.article-management-label-tit-ipt');
     var id = $(this).parents('li').attr('data-id');
@@ -209,6 +221,10 @@ $('.article-management-label').on('click', '.article-title-edit', function (e) {
 
 // 删除标题 ok
 $('.article-management-label').on('click', '.article-title-remove', function (e) {
+    if (!permissionValue.remove){
+        pageCommon.layerMsg('你没有权限删除',2);
+        return false;
+    }
     let $this = $(this);
     let id = $(this).parents('li').attr('data-id');
     let url = globalAjaxUrl + '/admin/articleType/deleteArticleTypeCount?articleTypeId='+id;
@@ -223,6 +239,10 @@ $('.article-management-label').on('click', '.article-title-remove', function (e)
 
 // 添加标题  ok
 $('.add-article-title').click(function () {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限添加',2);
+        return false;
+    }
     $('.article-title-ipt').show();
     $('.article-title-ipt').focus();
     document.onkeydown = function (e) {
@@ -265,6 +285,10 @@ $('.add-article-title').click(function () {
 
 // 创建文章
 $('.article-management-top').on('click', '.article-management', function () {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限创建',2);
+        return false;
+    }
     var index = pageCommon.layerParentOpenIframe({
         url: globalUrl + '/view/popup/add-article.html',
         title: '创建文章',

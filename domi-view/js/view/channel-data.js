@@ -6,8 +6,9 @@ laydate.render({
     max: 0,
     done: function (value, date, endDate) {
         if (value) {
-            let start = date.year + '-' + date.month + '-' + date.date,
-                end = endDate.year + '-' + endDate.month + '-' + endDate.date,
+            let arr = value.split(' - ');
+            let start = arr[0],
+                end =  arr[1],
                 val = $('.data-management-name').val();
             table.reload('channel-data-content-table', {
                 url: globalAjaxUrl + '/admin/channel/getChannelData'
@@ -134,7 +135,7 @@ $('.channel-data-batch-export').click(function () {
 
 
 
-
+// 筛选切换
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let time = $(this).attr('data-time');

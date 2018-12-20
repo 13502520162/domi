@@ -1,6 +1,5 @@
 let table = layui.table
     , form = layui.form;
-
 table.render({
     elem: '#popular-management-table'
     , even: true //开启隔行背景

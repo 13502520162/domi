@@ -1,6 +1,6 @@
 let laydate = layui.laydate,
     table = layui.table;
-
+let permissionValue = pageCommon.getPermissionValue();
 laydate.render({
     elem: '.date-start',
     range: true,
@@ -65,6 +65,10 @@ document.onkeydown = function (e) {
 table.on('tool(channel-setup-table)', function (obj) {
     let data = obj.data;
     if (obj.event === 'setUp') {  // 设置
+        if (!permissionValue.add){
+            pageCommon.layerMsg('你没有权限操作',2);
+            return false;
+        }
         let index = layer.open({
             type: 1,
             area: ['300px', '200px'], //宽高
@@ -170,6 +174,10 @@ table.on('tool(channel-setup-table)', function (obj) {
         });
 
     } else if (obj.event === 'del') { // 删除
+        if (!permissionValue.remove){
+            pageCommon.layerMsg('你没有权限删除',2);
+            return false;
+        }
         layer.confirm('你确定删除该渠道嘛？', function (index) {
             let url = globalAjaxUrl + '/admin/channel/delete?channelId=' + data.id;
             pageCommon.getAjax(url, {}, function (res) {
@@ -179,6 +187,10 @@ table.on('tool(channel-setup-table)', function (obj) {
             });
         });
     } else if (obj.event === 'dataStatistics') {  // 统计数据
+        if (!permissionValue.add){
+            pageCommon.layerMsg('你没有权限操作',2);
+            return false;
+        }
         let index = layer.open({
             type: 1,
             area: ['420px', '240px'], //宽高

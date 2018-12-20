@@ -1,5 +1,6 @@
 
 let table = layui.table;
+let permissionValue = pageCommon.getPermissionValue();
 
 function LabelManagement() {
 
@@ -95,6 +96,10 @@ LabelManagement.prototype = {
         table.on('tool(label-management-content-table)', function (obj) {
             let data = obj.data;
             if (obj.event === 'del') {
+                if (!permissionValue.remove){
+                    pageCommon.layerMsg('你没有权限删除',2);
+                    return false;
+                }
                 layer.confirm('确定删除嘛？', function (index) {
                     let url = globalAjaxUrl + '/admin/loanPlatform/deleteByLabel?loanPlatformId=' + data.id + '&labelId=' + data.labelId;
                     pageCommon.getAjax(url, {}, function (res) {
@@ -123,6 +128,11 @@ $('.label-management-label>ul').on('click', 'li', function () {
 
 // 标题编辑 ok
 $('.label-management-label').on('click', '.label-management-title-edit', function (e) {
+
+    if (!permissionValue.edit){
+        pageCommon.layerMsg('你没有权限编辑',2);
+        return false;
+    }
     let span = $(this).parents('li').find('.label-management-label-tit-span');
     let input = $(this).parents('li').find('.label-management-label-tit-ipt');
     $(this).parents('.label-management-label-option').hide();
@@ -154,6 +164,10 @@ $('.label-management-label').on('click', '.label-management-title-edit', functio
 
 // 标题删除 ok
 $('.label-management-label').on('click', '.label-management-title-remove', function (e) {
+    if (!permissionValue.remove){
+        pageCommon.layerMsg('你没有权限删除',2);
+        return false;
+    }
     let $this = $(this);
     let id = $(this).parents('li').attr('data-id');
     let url = globalAjaxUrl + '/admin/loanPlatform/deleteLoanPlatformLabel?typeId=' + id;
@@ -169,6 +183,10 @@ $('.label-management-label').on('click', '.label-management-title-remove', funct
 
 // 添加标题
 $('.add-label-management-title').click(function () {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限添加',2);
+        return false;
+    }
     $('.label-management-title-ipt').show();
     $('.label-management-title-ipt').focus();
     document.onkeydown = function (e) {
