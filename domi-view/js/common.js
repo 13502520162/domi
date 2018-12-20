@@ -21,6 +21,9 @@ let pageCommon = {
                 async: true,
                 data: data,
                 dataType: datatype,
+                beforeSend(request) {
+                    /*request.setRequestHeader('token', '123333333333');*/
+                },
                 success: function (response) {
                     succ_fn(response);
                 },
@@ -278,13 +281,13 @@ let pageCommon = {
      *  获取模块操作权限
      * @returns {*}
      */
-    getPermissionValue:function () {
+    getPermissionValue: function () {
         let data;
         // 获取员工权限  员工ID 和 模块 ID
-        let loginInfo =  localStorage.getItem('loginInfo');
+        let loginInfo = localStorage.getItem('loginInfo');
         loginInfo = JSON.parse(loginInfo);
         let modelId = localStorage.getItem('modelId');
-        let getEmpPermissionUrl = globalAjaxUrl + '/admin/employee/getPermission?modelId='+modelId+'&employeeId='+loginInfo.employeeId;
+        let getEmpPermissionUrl = globalAjaxUrl + '/admin/employee/getPermission?modelId=' + modelId + '&employeeId=' + loginInfo.employeeId;
         $.ajax({
                 type: "GET",
                 url: getEmpPermissionUrl,
