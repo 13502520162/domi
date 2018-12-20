@@ -21,15 +21,40 @@
             font-weight: bold;
             font-size: 50px;
         }
+        .test{
+            font-size: 50px;
+        }
 
+        .animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        .fadeIn{
+            -webkit-animation-name: fadeInDownBig;
+            animation-name: fadeInDownBig;
+        }
+        @keyframes fadeInDownBig {
+            0% {
+                opacity: 0;
+                -webkit-transform: translate3d(0, -2000px, 0);
+                transform: translate3d(0, -2000px, 0);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(10, 0, 0);
+            }
+        }
 
     </style>
-    <link rel="stylesheet" href="../../css/public/animate.css">
 
 </head>
 <body>
 <div class="test">
-    <span>0</span><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span>
+    <span>0</span><span>0</span><span>0</span>,<span>0</span><span>0</span><span>0</span>
 </div>
 <script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
 <script>
@@ -40,8 +65,7 @@
     let span5 = $('.test span').eq(4);
     let span6 = $('.test span').eq(5);
     $('.test>span').addClass('animated');
-    let Animate = 'bounceOut';
-
+    let Animate = 'fadeIn';
 
     let spanCount1 = 0;
     let timer = setInterval(function () {
@@ -54,7 +78,6 @@
             span1.text('2');
         }
     }, 100);
-
     let spanCount2 = 0;
     let timer1 = setInterval(function () {
         span2.removeClass(Animate);

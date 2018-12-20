@@ -88,22 +88,15 @@ laydate.render({
             let start = arr[0],
                 end =  arr[1];
             table.reload('channel-user', {
-                url: globalAjaxUrl + '/admin/userData/getUserList'
+                url: globalAjaxUrl + '/admin/channel/getChannelByTime'
                 , where: {
                     beginDate: start,
                     endDate: end
                 }
             });
         } else {
-            table.reload('channel-user', {
-                url: globalAjaxUrl + '/admin/userData/getUserList'
-                , where: {
-                    beginDate: '',
-                    endDate: ''
-                }
-            });
+            table.reload('channel-user');
         }
-
     }
 });
 
@@ -112,11 +105,12 @@ table.render({
     , method: 'GET'
     , limits: [10, 20, 30, 50, 100, 200]
     , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
-    , url: globalAjaxUrl + '/admin/userData/getUserList'
+    , url: globalAjaxUrl + '/admin/channel/getChannelById'
     ,height: 'full-160'
     , where: {
         beginDate: '',
-        endDate: ''
+        endDate: '',
+        channelId:loginChannelInfo.channelId
     }
     , cols: [[
         {field: 'phone',  title: '用户号码', align: 'center'}
@@ -133,4 +127,29 @@ table.render({
 
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
+    let time = $(this).attr('data-time');
+    let dateVal;
+    if (time != 'all') {
+        if (time == '1') {
+            dateVal = pageCommon.getTimeForMat();
+            $('.channel-data-start').val(dateVal.start + ' - ' + dateVal.end);
+        } else if (time == '-1') {
+            dateVal = pageCommon.getTimeForMat(1);
+            $('.channel-data-start').val(dateVal.start + ' - ' + dateVal.start);
+        } else {
+            dateVal = pageCommon.getTimeForMat(time);
+            $('.channel-data-start').val(dateVal.start + ' - ' + dateVal.end);
+        }
+        table.reload('channel-user', {
+            url: globalAjaxUrl + '/admin/channel/getChannelByTime'
+            , where: {
+                beginDate:dateVal.start,
+                endDate: dateVal.end
+
+            }
+        });
+    } else {
+        table.reload('channel-user');
+        $('.channel-data-start').val('');
+    }
 });

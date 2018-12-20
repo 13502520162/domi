@@ -128,7 +128,7 @@
         <div class="input-box">
             <div class="account-number">
                 <span><i class="fa fa-user"></i></span>
-                <input type="text" value="123" id="account-number" placeholder="请输入登录账号">
+                <input type="text" value="admin" id="account-number" placeholder="请输入登录账号">
             </div>
             <div class="password">
                 <span><i class="fa fa-lock"></i></span>
@@ -146,7 +146,7 @@
         <div class="input-box">
             <div class="account-number">
                 <span><i class="fa fa-user"></i></span>
-                <input type="text" value="1234 " id="channel-number" placeholder="请输入渠道账号">
+                <input type="text" value="999 " id="channel-number" placeholder="请输入渠道账号">
             </div>
             <div class="password">
                 <span><i class="fa fa-lock"></i></span>
@@ -206,7 +206,7 @@
                     window.location.href= globalUrl + '/view/channel-user.html';
                 },1000);
                 let loginInfo = {
-                    employeeId:data.employeeId,
+                    channelId:data.channelId,
                     account:account
                 };
                 localStorage.setItem('loginChannelInfo',JSON.stringify(loginInfo));
