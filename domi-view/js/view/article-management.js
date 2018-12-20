@@ -263,11 +263,11 @@ $('.add-article-title').click(function () {
 });
 
 
-// 添加文章
+// 创建文章
 $('.article-management-top').on('click', '.article-management', function () {
     var index = pageCommon.layerParentOpenIframe({
         url: globalUrl + '/view/popup/add-article.html',
-        title: '添加文章',
+        title: '创建文章',
         confirm: function () {
             var body = parent.layer.getChildFrame('body', index);
             var tit = body.find('.article-title').val();

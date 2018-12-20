@@ -90,7 +90,6 @@ html,body{
     color: #333;
 }
 .article-management {
-    width: 60px;
     height: 30px;
     line-height: 30px;
     border-radius: 4px;
@@ -99,6 +98,7 @@ html,body{
     color: #fff;
     float: right;
     cursor: pointer;
+    padding: 0 5px;
 }
 .article-title-ipt{
     display: none;
