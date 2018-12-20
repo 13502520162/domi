@@ -1,5 +1,10 @@
+let permissionValue = pageCommon.getPermissionValue();
 // 上传icon
 function upFile(a) {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限上传',2);
+        return false;
+    }
     let $this = $(a);
     let fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
     let files = $this[0].files[0]; // files可以获取当前文件输入框中选择的所有文件，返回列表
@@ -14,8 +19,14 @@ function upFile(a) {
 }
 
 
+
+
 // 上传图片
 function upFilePhoto(a) {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限上传',2);
+        return false;
+    }
     let $this = $(a);
     let fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
     let files = $this[0].files[0]; // files可以获取当前文件输入框中选择的所有文件，返回列表
@@ -31,6 +42,10 @@ function upFilePhoto(a) {
 
 
 $('.re-upload').click(function () {
+    if (!permissionValue.remove){
+        pageCommon.layerMsg('你没有权限删除',2);
+        return false;
+    }
     $(this).parents('.img-file').find('input').val('');
     $(this).prev().attr('src', '');
     $(this).parents('.img-file').find('.fileImg').show();
@@ -43,6 +58,10 @@ let iconTwo = $('.icon2');
 let iconThree = $('.icon3');
 // 确定
 $('.rotation-chart-confirm').click(function () {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限保存',2);
+        return false;
+    }
 
     //icon图片和内容
     let oneSrc = iconOne.attr('data-src') || '';

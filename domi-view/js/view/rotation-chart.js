@@ -1,3 +1,4 @@
+let permissionValue = pageCommon.getPermissionValue();
 // 计算元素宽高
 function rotationResize() {
     let modelH = $('.rotation-chart-bottom>ul').outerWidth(true); //获取宽度
@@ -93,6 +94,10 @@ function upFile(a) {
 
 // 添加按钮
 $('.add-rotation-chart').click(function () {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限添加',2);
+        return false;
+    }
     let html = `<li flag="true" class="new-li">
                         <div class="photo-left"}">
                           <div class="option">
@@ -138,6 +143,10 @@ $('.add-rotation-chart').click(function () {
 
 // 编辑
 $('.rotation-chart-bottom-ul').on('click', '.edit', function () {
+    if (!permissionValue.edit){
+        pageCommon.layerMsg('你没有权限编辑',2);
+        return false;
+    }
     let flag = $(this).parents('li').attr('flag');
     if (flag) {
         $(this).parents('.option').next().show();
@@ -150,6 +159,10 @@ $('.rotation-chart-bottom-ul').on('click', '.edit', function () {
 
 // 删除
 $('.rotation-chart-bottom-ul').on('click', '.remove', function () {
+    if (!permissionValue.remove){
+        pageCommon.layerMsg('你没有权限删除',2);
+        return false;
+    }
     let $this = $(this);
     let index = layer.confirm('确定删除该分组嘛？', {
         btn: ['确认', '取消'] //按钮
@@ -176,6 +189,10 @@ $('.rotation-chart-bottom-ul').on('click', '.remove', function () {
 
 // 确定按钮
 $('.rotation-chart-confirm').click(function () {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限保存',2);
+        return false;
+    }
     let data = [];
     let len = $('.rotation-chart-bottom-ul>.new-li').length;
     if (len) {

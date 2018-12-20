@@ -273,6 +273,29 @@ let pageCommon = {
             start: timer2,
             end: timer1
         }
+    },
+    /**
+     *  获取模块操作权限
+     * @returns {*}
+     */
+    getPermissionValue:function () {
+        let data;
+        // 获取员工权限  员工ID 和 模块 ID
+        let loginInfo =  localStorage.getItem('loginInfo');
+        loginInfo = JSON.parse(loginInfo);
+        let modelId = localStorage.getItem('modelId');
+        let getEmpPermissionUrl = globalAjaxUrl + '/admin/employee/getPermission?modelId='+modelId+'&employeeId='+loginInfo.employeeId;
+        $.ajax({
+                type: "GET",
+                url: getEmpPermissionUrl,
+                async: false,
+                success: function (res) {
+                    res = JSON.parse(res);
+                    data = res.data[0]
+                }
+            }
+        );
+        return data;
     }
 };
 

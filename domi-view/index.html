@@ -147,12 +147,17 @@
         let data = {newData: JSON.stringify(obj)};
         let url = globalAjaxUrl + '/admin/employee/employeeLogin';
         pageCommon.postAjax(url,data,function (data) {
-            console.log(data);
+
             if (data.msg == true){
                 pageCommon.layerMsg('登录成功',1);
                 setTimeout( () =>{
                     window.location.href= globalUrl + '/view/administration.html';
                 },1000);
+                let loginInfo = {
+                    employeeId:data.employeeId,
+                    account:account
+                };
+                localStorage.setItem('loginInfo',JSON.stringify(loginInfo));
             }else {
                 pageCommon.layerMsg(data.msg,2);
             }

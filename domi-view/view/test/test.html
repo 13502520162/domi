@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数字动态改变</title>
+    <style>
+        .test {
+            width: 500px;
+            height: 500px;
+            margin: 0 auto;
+            text-align: center;
+            line-height: 500px;
+            position: relative;
+        }
+
+        .test > span {
+            padding-left: 1px;
+            font-weight: bold;
+            font-size: 50px;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="../../css/public/animate.css">
+
+</head>
+<body>
+<div class="test">
+    <span>0</span><span>0</span><span>0</span><span>0</span><span>0</span><span>0</span>
+</div>
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script>
+    let span1 = $('.test span').eq(0);
+    let span2 = $('.test span').eq(1);
+    let span3 = $('.test span').eq(2);
+    let span4 = $('.test span').eq(3);
+    let span5 = $('.test span').eq(4);
+    let span6 = $('.test span').eq(5);
+    $('.test>span').addClass('animated');
+    let Animate = 'bounceOut';
+
+
+    let spanCount1 = 0;
+    let timer = setInterval(function () {
+        span1.removeClass(Animate);
+        spanCount1++;
+        span1.text(Math.floor(Math.random() * 9 + 1));
+        span1.addClass(Animate);
+        if (spanCount1 > 2) {
+            clearInterval(timer);
+            span1.text('2');
+        }
+    }, 100);
+
+    let spanCount2 = 0;
+    let timer1 = setInterval(function () {
+        span2.removeClass(Animate);
+        spanCount2++;
+        span2.text(Math.floor(Math.random() * 9 + 1));
+        span2.addClass(Animate);
+        if (spanCount2 > 9) {
+            clearInterval(timer1);
+            span2.text('0');
+        }
+    }, 200);
+    let spanCount3 = 0;
+    let timer2 = setInterval(function () {
+        span3.removeClass(Animate);
+        spanCount3++;
+        span3.text(Math.floor(Math.random() * 9 + 1));
+        span3.addClass(Animate);
+        if (spanCount3 > 9) {
+            clearInterval(timer2);
+            span3.text('0');
+        }
+    }, 200);
+    let spanCount4 = 0;
+    let timer3 = setInterval(function () {
+        span4.removeClass(Animate);
+        spanCount4++;
+        span4.text(Math.floor(Math.random() * 9 + 1));
+        span4.addClass(Animate);
+        if (spanCount4 > 9) {
+            clearInterval(timer3);
+            span4.text('0');
+        }
+    }, 220);
+    let spanCount5 = 0;
+    let timer4 = setInterval(function () {
+        span5.removeClass(Animate);
+        spanCount5++;
+        span5.text(Math.floor(Math.random() * 9 + 1));
+        span5.addClass(Animate);
+        if (spanCount5 > 9) {
+            clearInterval(timer4);
+            span5.text('0');
+        }
+    }, 250);
+    let spanCount6 = 0;
+    let timer5 = setInterval(function () {
+        span6.removeClass(Animate);
+        spanCount6++;
+        span6.text(Math.floor(Math.random() * 9 + 1));
+        span6.addClass(Animate);
+        if (spanCount6 > 9) {
+            clearInterval(timer5);
+            span6.text('0');
+        }
+    }, 300);
+</script>
+</body>
+</html>

@@ -1,5 +1,11 @@
+let permissionValue = pageCommon.getPermissionValue();
+
 // 上传图片
 function upFileBackground(a) {
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限上传',2);
+        return false;
+    }
     var $this = $(a);
     var fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
     var files = $this[0].files[0]; // files可以获取当前文件输入框中选择的所有文件，返回列表
@@ -14,6 +20,10 @@ function upFileBackground(a) {
 }
 
 $('.re-upload').click(function () {
+    if (!permissionValue.remove){
+        pageCommon.layerMsg('你没有权限删除',2);
+        return false;
+    }
     $(this).parents('.list-background-map-upload').find('input').val('');
     $(this).prev().attr('src', '');
     $(this).parents('.list-background-map-upload').find('.fileImg').show();
@@ -34,6 +44,10 @@ if (arrId) {
 $('.list-background-map-confirm').click(function () {
     if (!arrId){
         pageCommon.layerMsg('请先上传分类模块的图片',2);
+        return false;
+    }
+    if (!permissionValue.add){
+        pageCommon.layerMsg('你没有权限保存',2);
         return false;
     }
     let iconLen = $('.list-background-map-upload-icon').length;
