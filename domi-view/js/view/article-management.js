@@ -329,12 +329,12 @@ $('.article-management-top').on('click', '.article-management', function () {
             let data = {newData: JSON.stringify(arr)};
             pageCommon.postAjax(url, data, function (res) {
                 pageCommon.layerMsg(res.msg, 1);
-                layer.close(index);
-                getArticleManagement();
+                parent.layer.close(index);
+                table.reload('article-management-content-table');
             });
         },
         cancel: function (index, layero) {
-            layer.close(index);
+            parent.layer.close(index);
         }
     });
 });
