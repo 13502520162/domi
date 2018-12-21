@@ -94,6 +94,7 @@ function upFile(a) {
 
 // 添加按钮
 $('.add-rotation-chart').click(function () {
+    $('.rotation-chart-bottom-ul>div').remove();
     if (!permissionValue.add){
         pageCommon.layerMsg('你没有权限添加',2);
         return false;
@@ -181,6 +182,7 @@ $('.rotation-chart-bottom-ul').on('click', '.remove', function () {
         } else {
             $this.parents('li').remove();
         }
+        pageCommon.noRelevantData('.rotation-chart-bottom-ul>li','.rotation-chart-bottom-ul')
 
     }, function () {
         layer.close(index);

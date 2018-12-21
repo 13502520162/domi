@@ -106,8 +106,7 @@ function photoInit(){
     // 列表背景初始化
     let url = globalAjaxUrl + '/admin/icon/getBackground';
     pageCommon.getAjax(url, {}, function (res) {
-        if (res.msg == '获取成功'){
-            console.log(res);
+        if (res.icon.length || res.photo.length){
             for (let i = 0; i < res.icon.length; i++) {
                 $('.list-background-map-upload-icon').eq(i).attr('data-icon-id',res.icon[i].id);
                 $('.list-background-map-upload-icon').eq(i).attr('data-src',res.icon[i].background);
@@ -119,8 +118,6 @@ function photoInit(){
                 $('.list-background-map-upload-photo').eq(i).attr('data-src',res.photo[i].background);
                 $('.list-background-map-upload-photo').eq(i).find('img').attr('src', res.photo[i].background);
             }
-
-
             $('.img-src').show();
             $('.fileImg').hide();
         }
