@@ -285,11 +285,16 @@ let pageCommon = {
      * @returns {*}
      */
     getPermissionValue: function () {
+        let _this = this;
         let data;
         // 获取员工权限  员工ID 和 模块 ID
         let loginInfo = localStorage.getItem('loginInfo');
         loginInfo = JSON.parse(loginInfo);
         let modelId = localStorage.getItem('modelId');
+        if (modelId == null){
+            _this.returnLogin();
+            return false;
+        }
         let getEmpPermissionUrl = globalAjaxUrl + '/admin/employee/getPermission?modelId=' + modelId + '&employeeId=' + loginInfo.employeeId;
         $.ajax({
                 type: "GET",
@@ -302,14 +307,17 @@ let pageCommon = {
                     res = JSON.parse(res);
                     data = res.data[0];
                    if (!res.msg){
-                       setTimeout( () =>{
-                           window.location.href = globalUrl + '/index.html';
-                       },1000);
+                       _this.returnLogin();
                    }
                 }
             }
         );
         return data;
+    },
+    returnLogin:function () {
+        setTimeout( () =>{
+            window.location.href = globalUrl + '/index.html';
+        },1000);
     }
 };
 
