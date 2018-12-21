@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #fff;
+}
+
+.register-top{
+    height: 10rem;
+    width: 100%;
+    background: url('../images/bg-2x.png') no-repeat;
+    background-size: 100% 100%;
+}
+.register-top>img{
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: .15rem 0 0 .15rem;
+}
+.maximum-borrowable{
+    padding: .15rem 0 0 .15rem;
+    color: #fff;
+}
+.maximum-borrowable>.may-borrow{
+    font-size: .7rem;
+}
+.maximum-borrowable .may-borrow-num{
+    position: relative;
+    text-align: center;
+}
+.maximum-borrowable .may-borrow-money{
+    font-size: 1.5rem;
+}
+.may-borrow--symbol{
+    position: absolute;
+    top: .3rem;
+    font-size: .7rem;
+    left: 1rem;
+}
+.register-info{
+    text-align: center;
+    padding-left: 1rem;
+    color: #fff;
+}
+.register-info i{
+    font-size: .5rem;
+}

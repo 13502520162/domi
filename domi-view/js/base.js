@@ -233,7 +233,7 @@ $(function () {
         }
         $('.active').parents('.s-firstDrop').show();
         $('.active').parent().show();
-        localStorage.setItem('modelId', $('.active').parents('li').attr('data-parentId'));
+        sessionStorage.setItem('modelId', $('.active').parents('li').attr('data-parentId'));
 
         if (id == 'rotation-chart') {
             getRotationChart();

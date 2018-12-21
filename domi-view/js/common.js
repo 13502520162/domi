@@ -289,7 +289,7 @@ let pageCommon = {
         // 获取员工权限  员工ID 和 模块 ID
         let loginInfo = localStorage.getItem('loginInfo');
         loginInfo = JSON.parse(loginInfo);
-        let modelId = localStorage.getItem('modelId');
+        let modelId = sessionStorage.getItem('modelId');
         if (loginInfo == null){
             _this.returnLogin();
             return false;
