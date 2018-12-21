@@ -58,7 +58,7 @@ function getRotationChartSuccess(data) {
             rotationResize();
             hoverEle();
         }
-        pageCommon.noRelevantData('.rotation-chart-bottom-ul>li','.rotation-chart-bottom-ul')
+        pageCommon.noRelevantData('.rotation-chart-bottom-ul>li','.rotation-chart-bottom-ul','暂无数据,请添加图片')
 
     }
 }
