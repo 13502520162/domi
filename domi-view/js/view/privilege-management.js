@@ -71,7 +71,7 @@ table.on('tool(privilege-management-table)', function (obj) {
                     newArr.push(objFor);
                 }
                 let obj = {
-                    empId:id,
+                    empId: id,
                     name: name,
                     accountNumber: accountNumber,
                     password: password,
@@ -138,9 +138,16 @@ $('.add-privilege-management').click(function () {
             let data = {newData: JSON.stringify(obj)};
             let url = globalAjaxUrl + '/admin/employee/addEmployee';
             pageCommon.postAjax(url, data, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
-                parent.layer.close(index);
-                table.reload('privilege-management-table');
+                console.log(res);
+                if (!res.state) {
+                    pageCommon.layerMsg(res.msg, 2);
+                    return false;
+                } else {
+                    parent.layer.close(index);
+                    pageCommon.layerMsg(res.msg, 1);
+                    table.reload('privilege-management-table');
+                }
+
             });
 
         },
@@ -156,7 +163,7 @@ $('.search').click(function () {
     search();
 });
 
-function search(){
+function search() {
     let val = $('.search-privilege-management').val();
     table.reload('privilege-management-table', {
         url: globalAjaxUrl + '/admin/employee/getEmployee'
