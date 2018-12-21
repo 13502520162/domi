@@ -26,7 +26,6 @@ let pageCommon = {
                 },
                 success: function (response) {
                     succ_fn(response);
-                    console.log(response);
                 },
                 error: err_fn
             }
@@ -301,7 +300,12 @@ let pageCommon = {
                 },
                 success: function (res) {
                     res = JSON.parse(res);
-                    data = res.data[0]
+                    data = res.data[0];
+                   if (!res.msg){
+                       setTimeout( () =>{
+                           window.location.href = globalUrl + '/index.html';
+                       },1000);
+                   }
                 }
             }
         );
