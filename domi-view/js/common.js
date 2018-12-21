@@ -1,7 +1,7 @@
 let globalHttp = 'http://';
 let globalAjaxUrl = globalHttp + "192.168.0.104";
 let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
-let loginToken = localStorage.getItem('loginToken');
+let loginToken = sessionStorage.getItem('loginToken');
 let pageCommon = {
     /**
      * get ajax 请求
