@@ -182,7 +182,7 @@ $('.rotation-chart-bottom-ul').on('click', '.remove', function () {
         } else {
             $this.parents('li').remove();
         }
-        pageCommon.noRelevantData('.rotation-chart-bottom-ul>li','.rotation-chart-bottom-ul')
+        pageCommon.noRelevantData('.rotation-chart-bottom-ul>li','.rotation-chart-bottom-ul','暂无数据,请添加图片')
 
     }, function () {
         layer.close(index);

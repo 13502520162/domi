@@ -246,7 +246,6 @@ body .active>a {
 }
 
 .add-rotation-chart {
-    width: 60px;
     height: 30px;
     line-height: 30px;
     border-radius: 4px;
@@ -256,6 +255,7 @@ body .active>a {
     color: #fff;
     float: right;
     cursor: pointer;
+    padding: 0 5px;
 }
 
 .rotation-chart-bottom {
