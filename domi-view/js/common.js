@@ -108,11 +108,10 @@ let pageCommon = {
         });
         return layIndex;
     },
-    layerMsg: function (msg, icon, isParent, time, success) {
+    layerMsg: function (msg, icon, time, success) {
         msg = msg || "内容";
         icon = icon || 6;
         time = time || 2000;
-        isParent = isParent || true;
         let indexLayer;
         indexLayer = parent.layer.msg(msg, {
                 icon: icon,
@@ -291,7 +290,7 @@ let pageCommon = {
         let loginInfo = localStorage.getItem('loginInfo');
         loginInfo = JSON.parse(loginInfo);
         let modelId = localStorage.getItem('modelId');
-        if (modelId == null){
+        if (loginInfo == null){
             _this.returnLogin();
             return false;
         }
@@ -315,9 +314,10 @@ let pageCommon = {
         return data;
     },
     returnLogin:function () {
+        this.layerMsg('请先登录账号',2);
         setTimeout( () =>{
             window.location.href = globalUrl + '/index.html';
-        },1000);
+        },1500);
     }
 };
 

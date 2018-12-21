@@ -144,3 +144,6 @@ a:hover {
     color: #333;
     font-weight: 400;
 }
+.layui-layer-msg{
+    max-width: 300px!important;
+}
