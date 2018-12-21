@@ -1,15 +1,15 @@
 $(function () {
 
 
-    let loginInfo =  localStorage.getItem('loginInfo');
+    let loginInfo = localStorage.getItem('loginInfo');
     loginInfo = JSON.parse(loginInfo);
     $('.account').text(loginInfo.account);
 
     // 左边树 初始化
     let ssideuLen = $('.s-side-u>li').length;
-    if (!ssideuLen){
-        let infoUrl = globalAjaxUrl +'/admin/employee/getEmployeePermission?employeeId=' +loginInfo.employeeId;
-        pageCommon.getAjax(infoUrl,{},function (res) {
+    if (!ssideuLen) {
+        let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId;
+        pageCommon.getAjax(infoUrl, {}, function (res) {
             let domiLen = res.data.length;
             for (let i = 0; i < domiLen; i++) {
                 let html = '';
@@ -29,138 +29,137 @@ $(function () {
                 html += '</ul>';
                 html += '</li>';
                 $('.s-side-u').append(html);
+            }
+            // 菜单栏显示
+            var hash = window.location.hash,
+                hash_len = hash.length,
+                hash_r = hash.substring(1, hash_len);
 
-                // 菜单栏显示
-                var hash = window.location.hash,
-                    hash_len = hash.length,
-                    hash_r = hash.substring(1, hash_len);
+            // 如果空 就等于 rotation-chart
+            if (hash_r == '') {
+                hash_r = 'rotation-chart';
+            }
+            tab(hash_r);
+        }, function (res) {
+            let domi = [
+                {
+                    title: '图片管理',
+                    icon: 'fa-photo',
+                    child: [
+                        {
+                            name: '轮播图',
+                            id: 'rotation-chart'
+                        },
+                        {
+                            name: '分类',
+                            id: 'classification-map'
+                        },
+                        {
+                            name: '列表背景图',
+                            id: 'list-background-map'
+                        },
+                    ]
+                },
+                {
+                    title: '贷款平台',
+                    icon: 'fa-cloud',
+                    child: [
+                        {
+                            name: '平台管理',
+                            id: 'platform-management'
+                        },
+                        {
+                            name: '标签管理',
+                            id: 'label-management'
+                        },
+                        {
+                            name: '数据管理',
+                            id: 'data-management'
+                        },
+                        {
+                            name: '热门管理',
+                            id: 'popular-management'
+                        }
+                    ]
+                },
+                {
+                    title: '新闻资讯',
+                    icon: 'fa-newspaper-o',
+                    child: [
+                        {
+                            name: '文章管理',
+                            id: 'article-management'
+                        }
+                    ]
+                },
+                {
+                    title: '渠道推广',
+                    icon: 'fa-share-alt-square',
+                    child: [
+                        {
+                            name: '渠道管理',
+                            id: 'channel-management'
+                        },
+                        {
+                            name: '渠道数据',
+                            id: 'channel-data'
+                        }
+                    ]
+                },
+                {
+                    title: '平台管理',
+                    icon: 'fa-home',
+                    child: [
+                        {
+                            name: '数据管理',
+                            id: 'platform-data-management'
+                        },
+                        {
+                            name: '渠道设置',
+                            id: 'channel-setup'
+                        }
+                    ]
+                }/*,
+                {
+                    title: '系统管理',
+                    icon: 'fa-cog',
+                    child: [
+                        {
+                            name: '权限管理',
+                            id: 'privilege-management'
+                        },
+                        {
+                            name: '用户列表',
+                            id: 'user-list'
+                        }
+                    ]
+                }*/
+            ];
 
-                // 如果空 就等于 rotation-chart
-                if (hash_r == '') {
-                    hash_r = 'rotation-chart';
+            let domiLen = domi.length;
+
+            for (let i = 0; i < domiLen; i++) {
+                let html = '';
+                html += '<li class="first">';
+                html += '<div class="d-firstNav s-firstNav clearfix">';
+                html += '<i class="fa ' + domi[i].icon + '"></i>';
+                html += '<span>' + domi[i].title + '</span>';
+                html += '<i class="fa fa-caret-right fr "></i>';
+                html += '</div>';
+                html += '<ul class="d-firstDrop s-firstDrop">';
+                for (let j = 0; j < domi[i].child.length; j++) {
+                    html += '<li class="s-secondItem" data-id="' + domi[i].child[j].id + '">';
+                    html += '<a href="#' + domi[i].child[j].id + '">' + domi[i].child[j].name + '</a>';
+                    html += ' </li>';
+
                 }
-                tab(hash_r);
+                html += '</ul>';
+                html += '</li>';
+                $('.s-side-u').append(html);
             }
         });
     }
 
-
-/*    let domi = [
-        {
-            title: '图片管理',
-            icon: 'fa-photo',
-            child: [
-                {
-                    name: '轮播图',
-                    id: 'rotation-chart'
-                },
-                {
-                    name: '分类',
-                    id: 'classification-map'
-                },
-                {
-                    name: '列表背景图',
-                    id: 'list-background-map'
-                },
-            ]
-        },
-        {
-            title: '贷款平台',
-            icon: 'fa-cloud',
-            child: [
-                {
-                    name: '平台管理',
-                    id: 'platform-management'
-                },
-                {
-                    name: '标签管理',
-                    id: 'label-management'
-                },
-                {
-                    name: '数据管理',
-                    id: 'data-management'
-                },
-                {
-                    name: '热门管理',
-                    id: 'popular-management'
-                }
-            ]
-        },
-        {
-            title: '新闻资讯',
-            icon: 'fa-newspaper-o',
-            child: [
-                {
-                    name: '文章管理',
-                    id: 'article-management'
-                }
-            ]
-        },
-        {
-            title: '渠道推广',
-            icon: 'fa-share-alt-square',
-            child: [
-                {
-                    name: '渠道管理',
-                    id: 'channel-management'
-                },
-                {
-                    name: '渠道数据',
-                    id: 'channel-data'
-                }
-            ]
-        },
-        {
-            title: '平台管理',
-            icon: 'fa-home',
-            child: [
-                {
-                    name: '数据管理',
-                    id: 'platform-data-management'
-                },
-                {
-                    name: '渠道设置',
-                    id: 'channel-setup'
-                }
-            ]
-        },
-        {
-            title: '系统管理',
-            icon: 'fa-cog',
-            child: [
-                {
-                    name: '权限管理',
-                    id: 'privilege-management'
-                },
-                {
-                    name: '用户列表',
-                    id: 'user-list'
-                }
-            ]
-        }
-    ];
-
-    let domiLen = domi.length;
-
-    for (let i = 0; i < domiLen; i++) {
-        let html = '';
-        html += '<li class="first">';
-        html += '<div class="d-firstNav s-firstNav clearfix">';
-        html += '<i class="fa ' + domi[i].icon + '"></i>';
-        html += '<span>' + domi[i].title + '</span>';
-        html += '<i class="fa fa-caret-right fr "></i>';
-        html += '</div>';
-        html += '<ul class="d-firstDrop s-firstDrop">';
-        for (let j = 0; j < domi[i].child.length; j++) {
-            html += '<li class="s-secondItem" data-id="' + domi[i].child[j].id + '">';
-            html += '<a href="#' + domi[i].child[j].id + '">' + domi[i].child[j].name + '</a>';
-            html += ' </li>';
-
-        }
-        html += '</ul>';
-        html += '</li>';
-        $('.s-side-u').append(html);
-    }*/
 
     /**
      * 七牛云的 domain 和 token 值
@@ -229,8 +228,7 @@ $(function () {
         }
         $('.active').parents('.s-firstDrop').show();
         $('.active').parent().show();
-        localStorage.setItem('modelId',$('.active').parents('li').attr('data-parentId'));
-
+        localStorage.setItem('modelId', $('.active').parents('li').attr('data-parentId'));
 
         if (id == 'rotation-chart') {
             getRotationChart();
@@ -264,7 +262,6 @@ $(function () {
         }
         windowResize();
     }
-
 
 
     //   菜单下拉
@@ -304,7 +301,7 @@ $(function () {
             let originalPassword = $(".original-password").val();
             let newPassword = $(".new-password").val();
             let confirmNewPassword = $(".confirm-new-password").val();
-            if ($.trim(originalPassword)== '') {
+            if ($.trim(originalPassword) == '') {
                 pageCommon.layerMsg('原密码不能为空', 2);
                 return false;
             }
@@ -312,14 +309,14 @@ $(function () {
                 pageCommon.layerMsg('请输入新密码', 2);
                 return false;
             }
-            if ($.trim(confirmNewPassword) =='') {
+            if ($.trim(confirmNewPassword) == '') {
                 pageCommon.layerMsg('确认输入新密码', 2);
                 return false;
             }
             let obj = {
-                originalPassword:originalPassword,
-                newPassword:newPassword,
-                confirmNewPassword:confirmNewPassword
+                originalPassword: originalPassword,
+                newPassword: newPassword,
+                confirmNewPassword: confirmNewPassword
             };
             alert(JSON.stringify(obj));
         });

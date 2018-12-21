@@ -181,6 +181,7 @@
                     account:account
                 };
                 localStorage.setItem('loginInfo',JSON.stringify(loginInfo));
+                localStorage.setItem('loginToken',data.token);
             }else {
                 pageCommon.layerMsg(data.msg,2);
             }
@@ -211,7 +212,7 @@
                 };
                 localStorage.setItem('loginChannelInfo',JSON.stringify(loginInfo));
             }else {
-                pageCommon.layerMsg(data.msg,2);
+                pageCommon.layerMsg('账号或密码不匹配',2);
             }
         })
     });
@@ -224,6 +225,18 @@
     $('.permission-login-channel').click(function () {
         $('.login-channel').toggle();
         $('.login-admin').toggle();
+    });
+
+    $(document).keyup(function(event){
+        if(event.keyCode ==13){
+            if (!$('.login-admin').is(':hidden')){
+                $("#login-admin").trigger("click");
+            }else {
+                $("#login-channel").trigger("click");
+            }
+
+
+        }
     });
 
 </script>

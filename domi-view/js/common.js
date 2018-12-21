@@ -1,7 +1,7 @@
 let globalHttp = 'http://';
 let globalAjaxUrl = globalHttp + "192.168.0.104";
 let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
-
+let loginToken = localStorage.getItem('loginToken');
 let pageCommon = {
     /**
      * get ajax 请求
@@ -22,10 +22,11 @@ let pageCommon = {
                 data: data,
                 dataType: datatype,
                 beforeSend(request) {
-                    /*request.setRequestHeader('token', '123333333333');*/
+                    request.setRequestHeader('Authorization', loginToken);
                 },
                 success: function (response) {
                     succ_fn(response);
+                    console.log(response);
                 },
                 error: err_fn
             }
@@ -48,6 +49,9 @@ let pageCommon = {
                 async: true,
                 data: data,
                 dataType: datatype,
+                beforeSend(request) {
+                    request.setRequestHeader('Authorization', loginToken);
+                },
                 success: function (response) {
                     succ_fn(response);
                 },
@@ -292,6 +296,9 @@ let pageCommon = {
                 type: "GET",
                 url: getEmpPermissionUrl,
                 async: false,
+                beforeSend(request) {
+                    request.setRequestHeader('Authorization', loginToken);
+                },
                 success: function (res) {
                     res = JSON.parse(res);
                     data = res.data[0]
