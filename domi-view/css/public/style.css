@@ -1,5 +1,5 @@
 
-html ,body {
+html, body {
     font-size: 14px;
     font-family: "微软雅黑";
     color: #333;
@@ -68,55 +68,67 @@ ul {
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
 .required {
     color: red;
 }
-.br{
+
+.br {
     border-radius: 4px;
 }
-.layui-layer-iframe .layui-layer-btn, .layui-layer-page .layui-layer-btn{
+
+.layui-layer-iframe .layui-layer-btn, .layui-layer-page .layui-layer-btn {
     padding-top: 5px;
 }
 
-.fw{
+.fw {
     font-weight: 700;
 }
 
 
-
 /*滚动条设置，仅对chrome生效*/
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
-::-webkit-scrollbar
-{
+::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     background-color: #F5F5F5;
 }
+
 /*定义滚动条轨道 内阴影+圆角*/
-::-webkit-scrollbar-track
-{
+::-webkit-scrollbar-track {
     border-radius: 6px;
     background-color: #F5F5F5;
 }
+
 /*定义滑块 内阴影+圆角*/
-::-webkit-scrollbar-thumb
-{
+::-webkit-scrollbar-thumb {
     border-radius: 6px;
     background-color: #ccc;
 }
 
-.layui-form-checked[lay-skin=primary] i{
-    background: #188ae2;
-}
-.layui-laypage .layui-laypage-curr .layui-laypage-em{
+.layui-form-checked[lay-skin=primary] i {
     background: #188ae2;
 }
 
-iframe{
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background: #188ae2;
+}
+
+iframe {
     width: 100%;
     height: 100%;
 }
 
-.dsl{
+.dsl {
     display: inline-block;
+}
+
+.no-authority {
+    position: relative;
+    top: 30%;
+    font-weight: bold;
+    text-align: center;
+    display: inherit;
+    font-size: 30px;
+    color: #333;
 }

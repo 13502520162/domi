@@ -11,37 +11,42 @@ $(function () {
         let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId;
         pageCommon.getAjax(infoUrl, {}, function (res) {
             let domiLen = res.data.length;
-            for (let i = 0; i < domiLen; i++) {
-                let html = '';
-                html += '<li class="first" data-parentId="' + res.data[i].id + '" >';
-                html += '<div class="d-firstNav s-firstNav clearfix">';
-                html += '<i class="fa ' + res.data[i].icon + '"></i>';
-                html += '<span>' + res.data[i].title + '</span>';
-                html += '<i class="fa fa-caret-right fr "></i>';
-                html += '</div>';
-                html += '<ul class="d-firstDrop s-firstDrop">';
-                for (let j = 0; j < res.data[i].child.length; j++) {
-                    html += '<li class="s-secondItem" data-id="' + res.data[i].child[j].id + '"  data-child="' + res.data[i].child[j].childId + '">';
-                    html += '<a href="#' + res.data[i].child[j].id + '">' + res.data[i].child[j].name + '</a>';
-                    html += ' </li>';
+            if (domiLen){
+                for (let i = 0; i < domiLen; i++) {
+                    let html = '';
+                    html += '<li class="first" data-parentId="' + res.data[i].id + '" >';
+                    html += '<div class="d-firstNav s-firstNav clearfix">';
+                    html += '<i class="fa ' + res.data[i].icon + '"></i>';
+                    html += '<span>' + res.data[i].title + '</span>';
+                    html += '<i class="fa fa-caret-right fr "></i>';
+                    html += '</div>';
+                    html += '<ul class="d-firstDrop s-firstDrop">';
+                    for (let j = 0; j < res.data[i].child.length; j++) {
+                        html += '<li class="s-secondItem" data-id="' + res.data[i].child[j].id + '"  data-child="' + res.data[i].child[j].childId + '">';
+                        html += '<a href="#' + res.data[i].child[j].id + '">' + res.data[i].child[j].name + '</a>';
+                        html += ' </li>';
 
+                    }
+                    html += '</ul>';
+                    html += '</li>';
+                    $('.s-side-u').append(html);
                 }
-                html += '</ul>';
-                html += '</li>';
-                $('.s-side-u').append(html);
-            }
-            // 菜单栏显示
-            var hash = window.location.hash,
-                hash_len = hash.length,
-                hash_r = hash.substring(1, hash_len);
+                // 菜单栏显示
+                var hash = window.location.hash,
+                    hash_len = hash.length,
+                    hash_r = hash.substring(1, hash_len);
 
-            // 如果空 就等于 rotation-chart
-            if (hash_r == '') {
-                hash_r = 'rotation-chart';
+                // 如果空 就等于 rotation-chart
+                if (hash_r == '') {
+                    hash_r = 'rotation-chart';
+                }
+                tab(hash_r);
+            } else {
+                $('body').append('<span class="no-authority">很抱歉，你没有任何权限，请联系管理员！</span>')
             }
-            tab(hash_r);
+
         }, function (res) {
-            let domi = [
+          /*  let domi = [
                 {
                     title: '图片管理',
                     icon: 'fa-photo',
@@ -119,7 +124,7 @@ $(function () {
                             id: 'channel-setup'
                         }
                     ]
-                }/*,
+                }/!*,
                 {
                     title: '系统管理',
                     icon: 'fa-cog',
@@ -133,7 +138,7 @@ $(function () {
                             id: 'user-list'
                         }
                     ]
-                }*/
+                }*!/
             ];
 
             let domiLen = domi.length;
@@ -156,7 +161,7 @@ $(function () {
                 html += '</ul>';
                 html += '</li>';
                 $('.s-side-u').append(html);
-            }
+            }*/
         });
     }
 
