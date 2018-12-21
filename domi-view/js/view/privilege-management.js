@@ -113,8 +113,9 @@ $('.add-privilege-management').click(function () {
                 pageCommon.layerMsg('账号不能为空', 2);
                 return false;
             }
-            if ($.trim(password) == '') {
-                pageCommon.layerMsg('密码不能为空', 2);
+            console.log($.trim(password).length);
+            if ($.trim(password) == '' || $.trim(password).length < 6) {
+                pageCommon.layerMsg('密码不能为空并且长度应小于6位', 2);
                 return false;
             }
             let arr = ['pictureManagement', 'loanPlatform', 'newsAndInformation', 'channelPromotion', 'platformManagement'];
