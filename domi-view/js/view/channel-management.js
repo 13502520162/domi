@@ -207,11 +207,17 @@ $('.add-channel-management').click(function () {
             arr.push(obj);
             let data = {newData: JSON.stringify(arr)};
             pageCommon.postAjax(url, data, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
-                parent.layer.close(index);
-                table.reload('channel-management-table', {
-                    url: globalAjaxUrl + '/admin/channel/getChannel'
-                });
+
+               if (!res.state){
+                   pageCommon.layerMsg(res.msg, 2);
+                   return false;
+               } else {
+                   table.reload('channel-management-table', {
+                       url: globalAjaxUrl + '/admin/channel/getChannel'
+                   });
+                   parent.layer.close(index);
+                   pageCommon.layerMsg(res.msg, 1);
+               }
             });
         },
         cancel: function (index, layero) {
