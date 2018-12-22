@@ -316,7 +316,7 @@ let pageCommon = {
     returnLogin:function () {
         this.layerMsg('请先登录账号',2);
         setTimeout( () =>{
-            window.location.href = globalUrl + '/index.html';
+            window.location.href = globalUrl + '/admin/index.html';
         },1500);
     }
 };

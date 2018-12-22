@@ -335,7 +335,7 @@ $(function () {
     // 退出
     $('.sign-out').click(function () {
         setTimeout(() => {
-            window.location.href = globalUrl + '/index.html';
+            window.location.href = globalUrl + '/admin/index.html';
         }, 100);
     });
 });
