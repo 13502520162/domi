@@ -1,236 +1,159 @@
-let permissionValue = pageCommon.getPermissionValue();
-// 计算元素宽高
-function rotationResize() {
-    let modelH = $('.rotation-chart-bottom>ul').outerWidth(true); //获取宽度
-    $('.rotation-chart-bottom>ul>li').css('width', modelH / 2 - 20);  // 因为 li 是要 2个为一排加上外边框
-}
+let table = layui.table;
 
-// getRotationChart页面请求
-function getRotationChart() {
-    let url = globalAjaxUrl + '/admin/banner/getBanners';
-    pageCommon.getAjax(url, {}, getRotationChartSuccess);
-}
-
-// 页面请求成功回调
-function getRotationChartSuccess(data) {
-    if (data.mag = 'ok') {
-        $('.rotation-chart-bottom-ul').html('');
-        for (let i = 0; i < data.data.length; i++) {
-            let html = `<li flag="true" data-id="${data.data[i].id}">
-                        <div class="photo-left" data-base="${data.data[i].imgUrl}">
-                          <div class="option">
-                                <p class="option-p"><i class="fa fa-ellipsis-h"></i></p>
-                                <ul class="option-ul">
-                                    <li class="edit">编辑</li>
-                                </ul>
-                            </div>
-                            <a href="javascript:;" class="file" style="display: none;">
-                                <p><i class="fa fa-plus"></i></p>
-                                <p>banner</p>
-                                <input type="file" onchange="upFile(this)" accept="image/jpg,image/jpeg,image/png" name="">
-                            </a>
-                            <img src="${data.data[i].imgUrl}" alt="" class="file-img">
-                        </div>
-                        <div class="photo-right" data-base="${data.data[i].background}">
-                            <div class="option">
-                                <p class="option-p"><i class="fa fa-ellipsis-h"></i></p>
-                                <ul class="option-ul">
-                                    <li class="edit">编辑</li>
-                                </ul>
-                            </div>
-                            <a href="javascript:;" class="file" style="display: none;">
-                                <p><i class="fa fa-plus"></i></p>
-                                <p>banner背景</p>
-                                <input type="file" onchange="upFile(this)" accept="image/jpg,image/jpeg,image/png" name="">
-                            </a>
-                            <img src="${data.data[i].background}" alt="" class="file-img">
-                            <p class="sort"><span>${i + 1}</span><span>/</span><span>${data.data.length}</span></p>
-                            <span class="remove"><i class="fa fa-remove"></i></span>
-                        </div>
-                    </li>`;
-
-            let len = $('.rotation-chart-bottom-ul>li').length;
-            if (len < 6) {
-                $('.rotation-chart-bottom-ul').append(html);
-            } else {
-                pageCommon.layerMsg('添加不能超过6组',2)
-            }
-            rotationResize();
-            hoverEle();
-        }
-        pageCommon.noRelevantData('.rotation-chart-bottom-ul>li','.rotation-chart-bottom-ul','暂无数据,请添加图片')
-
-    }
-}
-
-function hoverEle() {
-    $('.option-p').hover(function () {
-        $(this).next().show();
-    });
-
-    $('.rotation-chart-bottom-ul>li').mouseleave(function () {
-        $(this).find('.option-ul').hide();
-    });
-}
-
-
-// 上传图片
-function upFile(a) {
-    let $this = $(a);
-    let fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
-    let files = $this[0].files[0]; // files可以获取当前文件输入框中选择的所有文件，返回列表
-    fr.readAsDataURL(files); // 读取的内容是加密以后的本地文件路径
-    fr.onload = function (e) { // 数据读取完成时触发onload对应的响应函数
-        let src =   pageCommon.getTokenUrl(e.target.result);
-        $this.parent().parent().attr('data-base', src);
-        $this.parent().hide();
-        $this.parent().parent().find('.file-img').removeClass('fn-hide').show();
-        $this.parent().parent().find('.file-img').attr('src',src);
-        $this.parents('li').attr('flag', true);
-        $this.val('');
-    };
-}
-
-
-// 添加按钮
-$('.add-rotation-chart').click(function () {
-    $('.rotation-chart-bottom-ul>div').remove();
-    if (!permissionValue.add){
-        pageCommon.layerMsg('你没有权限添加',2);
-        return false;
-    }
-    let html = `<li flag="true" class="new-li">
-                        <div class="photo-left"}">
-                          <div class="option">
-                                <p class="option-p"><i class="fa fa-ellipsis-h"></i></p>
-                                <ul class="option-ul">
-                                    <li class="edit">编辑</li>
-                                </ul>
-                            </div>
-                            <a href="javascript:;" class="file">
-                                <p><i class="fa fa-plus"></i></p>
-                                <p>banner</p>
-                                <input type="file" onchange="upFile(this)" accept="image/jpg,image/jpeg,image/png" name="">
-                            </a>
-                            <img src="" alt="" class="file-img fn-hide">
-                        </div>
-                        <div class="photo-right">
-                            <div class="option">
-                                <p class="option-p"><i class="fa fa-ellipsis-h"></i></p>
-                                <ul class="option-ul">
-                                    <li class="edit">编辑</li>
-                                </ul>
-                            </div>
-                            <a href="javascript:;" class="file">
-                                <p><i class="fa fa-plus"></i></p>
-                                <p>banner背景</p>
-                                <input type="file" onchange="upFile(this)" accept="image/jpg,image/jpeg,image/png" name="">
-                            </a>
-                            <img src="" alt="" class="file-img fn-hide">
-                            <span class="remove"><i class="fa fa-remove"></i></span>
-                        </div>
-                    </li>`;
-    let len = $('.rotation-chart-bottom-ul>li').length;
-    if (len < 6) {
-        $('.rotation-chart-bottom-ul').append(html);
-    } else {
-        pageCommon.layerMsg('添加不能超过6组',2)
-    }
-
-    let modelH = $('.rotation-chart-bottom>ul').outerWidth(true); //获取宽度
-    $('.rotation-chart-bottom>ul>li').css('width', modelH / 2 - 20);  // 因为 li 是要 2个为一排加上外边框
-    hoverEle();
-});
-
-// 编辑
-$('.rotation-chart-bottom-ul').on('click', '.edit', function () {
-    if (!permissionValue.edit){
-        pageCommon.layerMsg('你没有权限编辑',2);
-        return false;
-    }
-    let flag = $(this).parents('li').attr('flag');
-    if (flag) {
-        $(this).parents('.option').next().show();
-        $(this).parents('.option').next().next().hide();
-        $(this).parents('li').attr('flag', false);
-        $(this).parents('li').addClass('new-li');
+table.render({
+    elem: '#privilege-management-table'
+    , method: 'GET'
+    , limits: [10, 20, 30, 50, 100, 200]
+    , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
+    , url: globalAjaxUrl + '/admin/employee/getEmployee'
+    , cols: [[
+        {field: 'name', title: 'banner图',width:'15%',templet: '#banner',  align: 'center'}
+        , {field: 'id', title: 'ID', align: 'center', hide: true}
+        , {field: 'accountNumber',  title: 'banner背景图',width:'15%',templet: '#bannerBg',  align: 'center'}
+        , {field: 'password', title: 'banner链接',  align: 'center'}
+        , {field: 'permission', title: '排序',width:'10%', align: 'center'}
+        , {field: 'updateTime', width: '13%', title: '操作时间', align: 'center'}
+        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: '15%', align: 'center'}
+    ]]
+    , page: true
+    , done: function (res, curr, count) {
+        $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
     }
 });
 
-
-// 删除
-$('.rotation-chart-bottom-ul').on('click', '.remove', function () {
-    if (!permissionValue.remove){
-        pageCommon.layerMsg('你没有权限删除',2);
-        return false;
-    }
-    let $this = $(this);
-    let index = layer.confirm('确定删除该分组嘛？', {
-        btn: ['确认', '取消'] //按钮
-    }, function () {
-        layer.close(index);
-        let id = $this.parents('li').attr('data-id');
-        if (id) {
-            $this.parents('li').remove();
-            let url = globalAjaxUrl + '/admin/banner/delBanner?bannerId=' + id;
+//监听行工具事件
+table.on('tool(privilege-management-table)', function (obj) {
+    var data = obj.data;
+    //console.log(obj)
+    if (obj.event === 'del') {
+        layer.confirm('确定删除嘛？', function (index) {
+            let url = globalAjaxUrl + '/admin/employee/deleteEmployee?empId=' + data.id;
             pageCommon.getAjax(url, {}, function (res) {
-                pageCommon.layerMsg(res.msg)
+                pageCommon.layerMsg(res.msg, 1);
+                obj.del();
+                layer.close(index);
             });
-            setTimeout(() => {
-                getRotationChart();
-            }, 1000);
-        } else {
-            $this.parents('li').remove();
-        }
-        pageCommon.noRelevantData('.rotation-chart-bottom-ul>li','.rotation-chart-bottom-ul','暂无数据,请添加图片')
+        });
+    } else if (obj.event === 'edit') {
+        $('#privilege-management-data').text(JSON.stringify(data));
+        let index = pageCommon.layerParentOpenIframe({
+            url: globalUrl + '/view/popup/add-photos.html?empId=' + data.id,
+            title: '编辑权限',
+            area: ['800px', '600px'],
+            confirm: function () {
+                let body = parent.layer.getChildFrame('body', index);
+                let id = body.find('.add-article').attr('data-id'); // id
+                let name = body.find('.name').val(); // 名称
+                let accountNumber = body.find('.account-number').val(); // 账号
+                let password = body.find('.password').val();  // 密码
+                if ($.trim(name) == '') {
+                    pageCommon.layerMsg('名称不能为空', 2);
+                    return false;
+                }
+                if ($.trim(accountNumber) == '') {
+                    pageCommon.layerMsg('账号不能为空', 2);
+                    return false;
+                }
+                if ($.trim(password) == '') {
+                    pageCommon.layerMsg('密码不能为空', 2);
+                    return false;
+                }
+                let arr = ['pictureManagement', 'loanPlatform', 'newsAndInformation', 'channelPromotion', 'platformManagement'];
+                let newArr = [];
+                for (let j = 0; j < arr.length; j++) {
+                    let objFor = {
+                        id: body.find('.' + arr[j]).attr('data-id'),
+                        use: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
+                        edit: body.find('.' + arr[j] + ' .edit').prop('checked'),
+                        add: body.find('.' + arr[j] + ' .add').prop('checked'),
+                        remove: body.find('.' + arr[j] + ' .remove').prop('checked')
+                    };
+                    newArr.push(objFor);
+                }
+                let obj = {
+                    empId: id,
+                    name: name,
+                    accountNumber: accountNumber,
+                    password: password,
+                    arr: newArr
+                };
+                let data = {newData: JSON.stringify(obj)};
+                let url = globalAjaxUrl + '/admin/employee/updateEmployee';
+                pageCommon.postAjax(url, data, function (res) {
+                    pageCommon.layerMsg(res.msg, 1);
+                    parent.layer.close(index);
+                    table.reload('privilege-management-table');
+                });
 
-    }, function () {
-        layer.close(index);
+            },
+            cancel: function (index, layero) {
+                parent.layer.close(index);
+            }
+        });
+    }
+});
+
+//  新增图片
+$('.new-photos').click(function () {
+    $('#privilege-management-data').text('');
+    let index = pageCommon.layerParentOpenIframe({
+        url: globalUrl + '/view/popup/add-photos.html',
+        title: '新增图片',
+        area: ['800px', '600px'],
+        confirm: function () {
+            let body = parent.layer.getChildFrame('body', index);
+            let name = body.find('.name').val(); // 名称
+            let accountNumber = body.find('.account-number').val(); // 账号
+            let password = body.find('.password').val();  // 密码
+            if ($.trim(name) == '') {
+                pageCommon.layerMsg('名称不能为空', 2);
+                return false;
+            }
+            if ($.trim(accountNumber) == '') {
+                pageCommon.layerMsg('账号不能为空', 2);
+                return false;
+            }
+            console.log($.trim(password).length);
+            if ($.trim(password) == '' || $.trim(password).length < 6) {
+                pageCommon.layerMsg('密码不能为空并且长度应小于6位', 2);
+                return false;
+            }
+            let arr = ['pictureManagement', 'loanPlatform', 'newsAndInformation', 'channelPromotion', 'platformManagement'];
+            let newArr = [];
+            for (let j = 0; j < arr.length; j++) {
+                let objFor = {
+                    id: body.find('.' + arr[j]).attr('data-id'),
+                    use: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
+                    edit: body.find('.' + arr[j] + ' .edit').prop('checked'),
+                    add: body.find('.' + arr[j] + ' .add').prop('checked'),
+                    remove: body.find('.' + arr[j] + ' .remove').prop('checked')
+                };
+                newArr.push(objFor);
+            }
+            let obj = {
+                name: name,
+                accountNumber: accountNumber,
+                password: password,
+                arr: newArr
+            };
+            let data = {newData: JSON.stringify(obj)};
+            let url = globalAjaxUrl + '/admin/employee/addEmployee';
+            pageCommon.postAjax(url, data, function (res) {
+                console.log(res);
+                if (!res.state) {
+                    pageCommon.layerMsg(res.msg, 2);
+                    return false;
+                } else {
+                    parent.layer.close(index);
+                    pageCommon.layerMsg(res.msg, 1);
+                    table.reload('privilege-management-table');
+                }
+
+            });
+
+        },
+        cancel: function (index, layero) {
+            parent.layer.close(index);
+        }
     });
 });
-
-// 确定按钮
-$('.rotation-chart-confirm').click(function () {
-    if (!permissionValue.add){
-        pageCommon.layerMsg('你没有权限保存',2);
-        return false;
-    }
-    let data = [];
-    let len = $('.rotation-chart-bottom-ul>.new-li').length;
-    if (len) {
-        for (let i = 0; i < len; i++) {
-            let left = $('.rotation-chart-bottom-ul>.new-li').eq(i).find(' .photo-left').attr('data-base');
-            let right = $('.rotation-chart-bottom-ul>.new-li').eq(i).find('.photo-right').attr('data-base');
-            let id = $('.rotation-chart-bottom-ul>.new-li').eq(i).attr('data-id');
-            id = id || 'null';
-            if (left != undefined || right != undefined) {
-                let obj = {
-                    'imgUrl': left,
-                    'background': right,
-                    'id': id
-                };
-                data.push(obj)
-            }
-        }
-        let post = {newData: JSON.stringify(data)};
-        let url = globalAjaxUrl + '/admin/banner/addBanner';
-        pageCommon.postAjax(url, post, function (data) {
-            getRotationChart();
-            pageCommon.layerMsg(data.msg)
-        });
-        /* if (!data){
-
-         }else {
-             layer.msg('请添加图片');
-         }*/
-    } else {
-        pageCommon.layerMsg('请添加或修改图片',2);
-    }
-});
-
-// 取消
-$('.rotation-chart-cancel').click(function () {
-    getRotationChart();
-});
-
-

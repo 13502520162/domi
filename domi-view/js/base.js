@@ -235,8 +235,8 @@ $(function () {
         $('.active').parent().show();
         sessionStorage.setItem('modelId', $('.active').parents('li').attr('data-parentId'));
 
-        if (id == 'rotation-chart') {
-            getRotationChart();
+        if (id == 'rotation-chart') {  // 轮播图
+            $('.rotation-chart').find('iframe').attr('src', 'content/rotation-chart.html')
         } else if (id == 'data-management') { // 贷款数据管理
             $('.data-management').find('iframe').attr('src', 'content/data-management.html')
         } else if (id == 'channel-data') { // 渠道数据
@@ -265,7 +265,6 @@ $(function () {
         } else if (id == 'popular-management') { // 贷款平台热门管理
             $('.popular-management').find('iframe').attr('src', 'content/popular-management.html')
         }
-        windowResize();
     }
 
 
@@ -339,11 +338,3 @@ $(function () {
         }, 100);
     });
 });
-
-window.onresize = function () {
-    windowResize();
-};
-
-function windowResize() {
-    rotationResize();
-}
