@@ -1,16 +1,18 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body,html ,.register{
     background: #fff;
     width: 100%;
     height: 100%;
+    font-family: Avenir;
 }
 
 .register-top{
-    height: 55%;
+    height: 9.8rem;
     width: 100%;
     background: url('../images/bg-2x.png') no-repeat;
     background-size: 100% 100%;
@@ -25,25 +27,28 @@ body,html ,.register{
     color: #fff;
 }
 .maximum-borrowable>.may-borrow{
-    font-size: .6rem;
+    font-size: .5rem;
 }
 .maximum-borrowable .may-borrow-num{
     position: relative;
     text-align: center;
 }
-.maximum-borrowable .may-borrow-money{
-    font-size: 1.5rem;
-    font-weight: bold;
+.maximum-borrowable #may-borrow-money{
+    font-size: 2rem;
+    font-weight: 400;
 }
 .may-borrow--symbol{
     position: absolute;
     top: .3rem;
     font-size: .7rem;
-    left: 1rem;
+    left: .6rem;
 }
 .register-info{
-    text-align: center;
+    text-align: right;
     color: #fff;
+    padding: 0 1.8rem;
+    position: relative;
+    top: -.1rem;
 }
 .register-info i{
     font-size: .3rem;
@@ -59,24 +64,25 @@ body,html ,.register{
 .register-bottom{
     width: 100%;
     height: 45%;
-    padding: 1rem;
     box-sizing: border-box;
+    padding: .5rem 1rem 1rem 1rem;
 }
 .register-bottom-ipt{
     width: 100%;
-    margin-bottom: .4rem;
+    margin-bottom: .3rem;
     position: relative;
+    height: 1.2rem;
+
 }
 .register-bottom-ipt>span{
     padding: .1rem;
     position: absolute;
     top: 0;
     left: 0;
+    width: 1.1rem;
     display: inline-block;
-    height: .9rem;
-    width: .9rem;
     text-align: center;
-    line-height: .8rem;
+    line-height: .9rem;
     box-sizing: border-box;
     border-right: 1px solid #ccc;
 }
@@ -86,8 +92,9 @@ body,html ,.register{
 }
 .register-bottom-ipt input{
     width: 100%;
-    height: .9rem;
+    height: 1.2rem;
     font-size: .8rem;
+    color: #ccc;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding-left:1.1rem;
@@ -98,6 +105,7 @@ body,html ,.register{
     top: 0;
     left: auto;
     width: 2rem;
+    line-height: 1rem;
     right: 0;
     background: #188ae2;
     color: #fff;
@@ -120,11 +128,11 @@ body,html ,.register{
 }
 .register-now-btn{
     width: 100%;
-    height: .9rem;
+    height: 1rem;
     background: #188ae2;
     color: #fff;
     text-align: center;
-    line-height: .9rem;
+    line-height: 1rem;
     cursor: pointer;
     box-sizing: border-box;
     border-radius: 10px;
@@ -139,4 +147,9 @@ body,html ,.register{
 .registration-agreement>span{
     color: #188ae2;
     cursor: pointer;
+}
+input {
+    outline: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
