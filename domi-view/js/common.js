@@ -1,5 +1,5 @@
 let globalHttp = 'http://';
-let globalAjaxUrl = globalHttp + "192.168.0.104";
+let globalAjaxUrl = globalHttp + "192.168.0.105";
 let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
 let loginToken = sessionStorage.getItem('loginToken');
 let pageCommon = {
