@@ -51,14 +51,14 @@ function eChartsInit(data) {
             bottom: '3%',
             containLabel: true
         },
-        /*   toolbox: {
-               feature: {
-                   dataView: {show: true, readOnly: false},
-                   magicType: {show: true, type: ['line', 'bar']},
-                   restore: {show: true},
-                   saveAsImage: {show: true}
-               }
-           },*/
+        toolbox: {
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
         legend: {
             data: ['注册人数', '新增/激活人数', '活跃人数']
         },
@@ -79,17 +79,17 @@ function eChartsInit(data) {
         series: [
             {
                 name: '注册人数',
-                type: 'bar',
+                type: 'line',
                 data: data.seriesData.register
             },
             {
                 name: '新增/激活人数',
-                type: 'bar',
+                type: 'line',
                 data: data.seriesData.newActivation
             },
             {
                 name: '活跃人数',
-                type: 'bar',
+                type: 'line',
                 data: data.seriesData.active
             }
         ]
@@ -227,7 +227,7 @@ let curDare = pageCommon.getTimeForMat();
 $('.date-start').val(curDare.start + ' - ' + curDare.end);
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
-    $('.liActive').text($(this).text() +'用户统计');
+    $('.liActive').text($(this).text() + '用户统计');
     let time = $(this).attr('data-time');
     let dateVal;
     $('.content-main-sel').val('全部来源');

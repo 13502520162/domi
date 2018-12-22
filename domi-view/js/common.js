@@ -81,7 +81,7 @@ let pageCommon = {
         // 检测请求方式
         let url = obj.url || '没有传数据';
         let title = obj.title || '信息';
-        let area = obj.area || ['800px', '480px'];
+        let area = obj.area || ['800px', '850px'];
         let btn = obj.btn || ['保存', '取消'];
         let confirm = obj.confirm;
         let cancel = obj.cancel;

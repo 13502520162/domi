@@ -99,7 +99,7 @@ $('.add-privilege-management').click(function () {
     let index = pageCommon.layerParentOpenIframe({
         url: globalUrl + '/view/popup/add-privilege-management.html',
         title: '新增权限',
-        area: ['800px', '520px'],
+        area: ['800px', '650px'],
         confirm: function () {
             let body = parent.layer.getChildFrame('body', index);
             let name = body.find('.name').val(); // 名称

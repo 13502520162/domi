@@ -21,8 +21,19 @@
         <input type="text" class="add-platform-ipt maximum-borrowable" placeholder="请输入最高可借">
     </div>
     <div class="add-platform-filed">
-        <span class="add-platform-tit"><span class="required">*</span>日利率:</span>
-        <input type="text" class="add-platform-ipt daily-interest-rate" placeholder="请输入日利率">
+        <span class="add-platform-tit"><span class="required">*</span>利率:</span>
+        <input type="text" class="add-platform-ipt daily-interest-rate" placeholder="请输入利率">
+    </div>
+    <div class="add-platform-filed">
+        <span class="add-platform-tit"><span class="required">*</span>借款期限:</span>
+        <div class="borrowing-cycle">
+            <span data-num="1">0-1个月</span>
+            <span data-num="3">1-3个月</span>
+            <span data-num="6">3-6个月</span>
+            <span data-num="12">6-12个月</span>
+            <span data-num="36">12-36个月</span>
+            <span data-num="36+">36个月以上</span>
+        </div>
     </div>
     <div class="add-platform-filed" style="height: 65px;">
         <span class="add-platform-tit"><span class="required">*</span>平台logo:</span>
@@ -38,26 +49,26 @@
         </div>
     </div>
     <div class="add-platform-filed">
-        <span class="add-platform-tit"><span class="required">*</span>简介:</span>
+        <span style=" position: relative;top: -14px;" class="add-platform-tit"><span class="required">*</span>简介:</span>
         <input type="text" class="add-platform-ipt platform-synopsis" placeholder="请输入简介">
     </div>
     <div class="add-platform-filed">
         <span class="add-platform-tit">分类:</span>
         <select class="platform-sel platform-classification">
             <option value="-1">无</option>
-<!--            <option value="全部">全部</option>
-            <option value="分类1">分类1</option>
-            <option value="分类2">分类2</option>
-            <option value="分类3">分类3</option>-->
+            <!--            <option value="全部">全部</option>
+                        <option value="分类1">分类1</option>
+                        <option value="分类2">分类2</option>
+                        <option value="分类3">分类3</option>-->
         </select>
     </div>
     <div class="add-platform-filed">
         <span class="add-platform-tit">标签:</span>
         <select class="platform-sel platform-label">
-         <!--   <option value="全部">全部</option>
-            <option value="标签1">标签1</option>
-            <option value="标签2">标签2</option>
-            <option value="标签3">标签3</option>-->
+            <!--   <option value="全部">全部</option>
+               <option value="标签1">标签1</option>
+               <option value="标签2">标签2</option>
+               <option value="标签3">标签3</option>-->
         </select>
     </div>
     <div class="add-platform-filed">
@@ -81,20 +92,18 @@
         <span class="add-platform-tit"><span class="required">*</span>联系方式:</span>
         <input type="text" class="add-platform-ipt contact-information" placeholder="请输入联系方式">
     </div>
-    <!--    <div class="add-platform-filed add-platform-filed-photo">
-            <span class="add-platform-tit"><span class="required">*</span>图片:</span>
-            <div class="platform-photo">
-                <a href="javascript:void (0);" class="file fileImg">
-                    <span class="upload-pictures-span"><i class="fa fa-cloud-upload"></i>点击上传图片</span>
-                    <input type="file" accept="im
-                    age/*" name="" id="fileImg" multiple="multiple">
-                </a>
-                <div class="platform-img">
-                    <img src="" alt="" class="">
-                    <span class="re-upload br">重新上传</span>
-                </div>
-            </div>
-        </div>-->
+    <div class="add-platform-filed">
+        <span class="add-platform-tit">后台账号:</span>
+        <input type="text" class="add-platform-ipt background-account" placeholder="请输入后台账号">
+    </div>
+    <div class="add-platform-filed">
+        <span class="add-platform-tit">后台密码:</span>
+        <input type="text" class="add-platform-ipt background-password" placeholder="请输入后台密码">
+    </div>
+    <div class="add-platform-filed">
+        <span class="add-platform-tit">后台链接:</span>
+        <input type="text" class="add-platform-ipt background-link" placeholder="请输入后台链接">
+    </div>
 </div>
 <script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
 <script src="../../js/common.js"></script>
