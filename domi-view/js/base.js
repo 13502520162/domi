@@ -2,6 +2,9 @@ $(function () {
 
 
     let loginInfo = localStorage.getItem('loginInfo');
+    if (loginInfo == null){
+        pageCommon.returnLogin();
+    }
     loginInfo = JSON.parse(loginInfo);
     $('.account').text(loginInfo.account);
 
@@ -279,15 +282,15 @@ $(function () {
             <div class="change-password">
                 <div class="password">
                     <span class="fw dsl">原密码:</span>
-                    <input type="text" placeholder="请输入原密码" class="password-ipt original-password">
+                    <input type="password" placeholder="请输入原密码" class="password-ipt original-password">
                 </div> 
                 <div class="password">
                     <span class="fw dsl">新密码:</span>
-                    <input type="text" placeholder="请输入新密码"  class="password-ipt new-password">
+                    <input type="password" placeholder="请输入新密码"  class="password-ipt new-password">
                 </div> 
                 <div class="password">
                     <span class="fw dsl">确认密码:</span>
-                    <input type="text" placeholder="确认输入新密码" class="password-ipt confirm-new-password">
+                    <input type="password" placeholder="确认输入新密码" class="password-ipt confirm-new-password">
                 </div>
                 <div class="password-opi">
                     <span class="confirm dsl">确认</span>
@@ -317,12 +320,25 @@ $(function () {
                 pageCommon.layerMsg('确认输入新密码', 2);
                 return false;
             }
-            let obj = {
-                originalPassword: originalPassword,
-                newPassword: newPassword,
-                confirmNewPassword: confirmNewPassword
-            };
-            alert(JSON.stringify(obj));
+
+            if ($.trim(newPassword) != $.trim(confirmNewPassword)){
+                pageCommon.layerMsg('两次密码不一致，请重新输入', 2);
+                return false;
+            }
+
+            let url = globalAjaxUrl +'/admin/employee/updatePassword?id=' +loginInfo.employeeId + '&newPassword='+ newPassword +'&oldPassword='+originalPassword;
+            pageCommon.getAjax(url,{},function (res) {
+               if (res.state){
+                   pageCommon.layerMsg(res.msg);
+                   setTimeout( () =>{
+                       window.location.href = globalUrl + '/admin/index.html';
+                   },1500);
+               } else {
+                   pageCommon.layerMsg('密码修改失败，请检原密码是否正确!',2)
+               }
+            })
+
+
         });
 
         // 取消
