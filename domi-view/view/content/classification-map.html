@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>分类</title>
+    <link rel="stylesheet" href="../../js/public/layui/css/layui.css">
     <link rel="stylesheet" href="../../css/public/reset.css">
     <link rel="stylesheet" href="../../css/public/style.css">
     <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
@@ -10,7 +11,7 @@
 
 </head>
 <body>
-<div class="classification-map">
+<!--<div class="classification-map">
     <p class="classification-map-tit">分类</p>
     <div class="icon-upload">
         <span>icon上传:</span>
@@ -111,10 +112,23 @@
         <span class="rotation-chart-confirm">确认</span>
         <span class="rotation-chart-cancel">取消</span>
     </div>
+</div>-->
+
+<div class="privilege-management">
+    <table class="layui-hide" id="classification-map-table" lay-filter="classification-map-table"></table>
+    <span class="fn-hide content-data"></span>
 </div>
 
 <script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../../js/common.js"></script>
+<script src="../../js/public/layui/layui.all.js"></script>
 <script src="../../js/view/classification-map.js"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+
+<script type="text/html" id="imgUrl">
+    <img src="{{d.imgUrl}}" alt="">
+</script>
 </body>
 </html>

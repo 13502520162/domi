@@ -1,17 +1,17 @@
 let table = layui.table;
 
 table.render({
-    elem: '#privilege-management-table'
+    elem: '#rotation-chart-table'
     , method: 'GET'
     , limits: [10, 20, 30, 50, 100, 200]
     , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
-    , url: globalAjaxUrl + '/admin/employee/getEmployee'
+    , url: globalAjaxUrl + '/admin/banner/getBanners'
     , cols: [[
-        {field: 'name', title: 'banner图',width:'15%',templet: '#banner',  align: 'center'}
+        {field: 'imgUrl', title: 'banner图', width: '15%', templet: '#imgUrl', align: 'center'}
         , {field: 'id', title: 'ID', align: 'center', hide: true}
-        , {field: 'accountNumber',  title: 'banner背景图',width:'15%',templet: '#bannerBg',  align: 'center'}
-        , {field: 'password', title: 'banner链接',  align: 'center'}
-        , {field: 'permission', title: '排序',width:'10%', align: 'center'}
+        , {field: 'background', title: 'banner背景图', width: '15%', templet: '#background', align: 'center'}
+        , {field: 'url', title: 'banner链接', align: 'center'}
+        , {field: 'sort', title: '排序', edit: 'text', width: '10%', align: 'center'}
         , {field: 'updateTime', width: '13%', title: '操作时间', align: 'center'}
         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: '15%', align: 'center'}
     ]]
@@ -22,75 +22,98 @@ table.render({
 });
 
 //监听行工具事件
-table.on('tool(privilege-management-table)', function (obj) {
+table.on('tool(rotation-chart-table)', function (obj) {
     var data = obj.data;
-    //console.log(obj)
     if (obj.event === 'del') {
         layer.confirm('确定删除嘛？', function (index) {
-            let url = globalAjaxUrl + '/admin/employee/deleteEmployee?empId=' + data.id;
+            let url = globalAjaxUrl + '/admin/banner/delBanner?bannerId=' + data.id;
             pageCommon.getAjax(url, {}, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
+                pageCommon.layerMsg(res.info, 1);
                 obj.del();
                 layer.close(index);
             });
         });
     } else if (obj.event === 'edit') {
-        $('#privilege-management-data').text(JSON.stringify(data));
+        $('.content-data').text(JSON.stringify(data));
         let index = pageCommon.layerParentOpenIframe({
-            url: globalUrl + '/view/popup/add-photos.html?empId=' + data.id,
-            title: '编辑权限',
+            url: globalUrl + '/view/popup/add-photos.html?field=edit',
+            title: '编辑图片',
             area: ['800px', '600px'],
             confirm: function () {
                 let body = parent.layer.getChildFrame('body', index);
-                let id = body.find('.add-article').attr('data-id'); // id
-                let name = body.find('.name').val(); // 名称
-                let accountNumber = body.find('.account-number').val(); // 账号
-                let password = body.find('.password').val();  // 密码
-                if ($.trim(name) == '') {
-                    pageCommon.layerMsg('名称不能为空', 2);
+                let banner = body.find('.banner .article-photo').attr('data-src'); // banner
+                let bannerBg = body.find('.bannerBg .article-photo').attr('data-src'); //  banner背景
+                let bannerUrl = body.find('.banner-url').val();  // banner链接
+                if ($.trim(banner) == '') {
+                    pageCommon.layerMsg('banner图不能为空', 2);
                     return false;
                 }
-                if ($.trim(accountNumber) == '') {
-                    pageCommon.layerMsg('账号不能为空', 2);
+                if ($.trim(bannerBg) == '') {
+                    pageCommon.layerMsg('banner背景不能为空', 2);
                     return false;
                 }
-                if ($.trim(password) == '') {
-                    pageCommon.layerMsg('密码不能为空', 2);
-                    return false;
-                }
-                let arr = ['pictureManagement', 'loanPlatform', 'newsAndInformation', 'channelPromotion', 'platformManagement'];
-                let newArr = [];
-                for (let j = 0; j < arr.length; j++) {
-                    let objFor = {
-                        id: body.find('.' + arr[j]).attr('data-id'),
-                        use: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
-                        edit: body.find('.' + arr[j] + ' .edit').prop('checked'),
-                        add: body.find('.' + arr[j] + ' .add').prop('checked'),
-                        remove: body.find('.' + arr[j] + ' .remove').prop('checked')
-                    };
-                    newArr.push(objFor);
-                }
-                let obj = {
-                    empId: id,
-                    name: name,
-                    accountNumber: accountNumber,
-                    password: password,
-                    arr: newArr
-                };
-                let data = {newData: JSON.stringify(obj)};
-                let url = globalAjaxUrl + '/admin/employee/updateEmployee';
-                pageCommon.postAjax(url, data, function (res) {
-                    pageCommon.layerMsg(res.msg, 1);
-                    parent.layer.close(index);
-                    table.reload('privilege-management-table');
-                });
 
+                if ($.trim(bannerUrl) == '') {
+                    pageCommon.layerMsg('banner链接不能为空', 2);
+                    return false;
+                }
+
+                let arr = [];
+                let obj = {
+                    id: data.id,
+                    imgUrl: banner,
+                    background: bannerBg,
+                    url: bannerUrl
+                };
+                arr.push(obj);
+                let post = {newData: JSON.stringify(arr)};
+                let url = globalAjaxUrl + '/admin/banner/addBanner';
+                pageCommon.postAjax(url, post, function (res) {
+                    if (!res.state) {
+                        pageCommon.layerMsg('编辑失败', 2);
+                        return false;
+                    } else {
+                        parent.layer.close(index);
+                        pageCommon.layerMsg('编辑成功', 1);
+                        table.reload('rotation-chart-table');
+                    }
+
+                });
             },
             cancel: function (index, layero) {
                 parent.layer.close(index);
             }
         });
+    } else if (obj.event === 'view') {
+        $('.content-data').text(JSON.stringify(data));
+        let index = pageCommon.layerParentOpenIframe({
+            url: globalUrl + '/view/popup/add-photos.html?field=view',
+            title: '预览图片',
+            area: ['800px', '600px'],
+            btn:['关闭'],
+            confirm: function (index, layero) {
+                parent.layer.close(index);
+            }
+        });
     }
+});
+
+
+table.on('edit(rotation-chart-table)', function (obj) {
+    let value = obj.value //得到修改后的值
+        , data = obj.data //得到所在行所有键值
+        , id = data.id;
+
+    let url = globalAjaxUrl + '/admin/banner/bannerSort?id=' + id + '&sort=' + parseInt(value);
+    pageCommon.getAjax(url, {}, function (res) {
+        if (res.state) {
+            pageCommon.layerMsg(res.msg, 1);
+            table.reload('rotation-chart-table');
+        } else {
+            pageCommon.layerMsg(res.msg, 2);
+            table.reload('rotation-chart-table');
+        }
+    });
 });
 
 //  新增图片
@@ -102,51 +125,41 @@ $('.new-photos').click(function () {
         area: ['800px', '600px'],
         confirm: function () {
             let body = parent.layer.getChildFrame('body', index);
-            let name = body.find('.name').val(); // 名称
-            let accountNumber = body.find('.account-number').val(); // 账号
-            let password = body.find('.password').val();  // 密码
-            if ($.trim(name) == '') {
-                pageCommon.layerMsg('名称不能为空', 2);
+            let banner = body.find('.banner .article-photo').attr('data-src'); // banner
+            let bannerBg = body.find('.bannerBg .article-photo').attr('data-src'); //  banner背景
+            let bannerUrl = body.find('.banner-url').val();  // banner链接
+            if ($.trim(banner) == '') {
+                pageCommon.layerMsg('banner图不能为空', 2);
                 return false;
             }
-            if ($.trim(accountNumber) == '') {
-                pageCommon.layerMsg('账号不能为空', 2);
+            if ($.trim(bannerBg) == '') {
+                pageCommon.layerMsg('banner背景不能为空', 2);
                 return false;
             }
-            console.log($.trim(password).length);
-            if ($.trim(password) == '' || $.trim(password).length < 6) {
-                pageCommon.layerMsg('密码不能为空并且长度应小于6位', 2);
+
+            if ($.trim(bannerUrl) == '') {
+                pageCommon.layerMsg('banner链接不能为空', 2);
                 return false;
             }
-            let arr = ['pictureManagement', 'loanPlatform', 'newsAndInformation', 'channelPromotion', 'platformManagement'];
-            let newArr = [];
-            for (let j = 0; j < arr.length; j++) {
-                let objFor = {
-                    id: body.find('.' + arr[j]).attr('data-id'),
-                    use: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
-                    edit: body.find('.' + arr[j] + ' .edit').prop('checked'),
-                    add: body.find('.' + arr[j] + ' .add').prop('checked'),
-                    remove: body.find('.' + arr[j] + ' .remove').prop('checked')
-                };
-                newArr.push(objFor);
-            }
+
+            let arr = [];
             let obj = {
-                name: name,
-                accountNumber: accountNumber,
-                password: password,
-                arr: newArr
+                imgUrl: banner,
+                background: bannerBg,
+                url: bannerUrl
             };
-            let data = {newData: JSON.stringify(obj)};
-            let url = globalAjaxUrl + '/admin/employee/addEmployee';
+            arr.push(obj);
+            let data = {newData: JSON.stringify(arr)};
+            let url = globalAjaxUrl + '/admin/banner/addBanner';
             pageCommon.postAjax(url, data, function (res) {
                 console.log(res);
                 if (!res.state) {
-                    pageCommon.layerMsg(res.msg, 2);
+                    pageCommon.layerMsg('添加失败', 2);
                     return false;
                 } else {
                     parent.layer.close(index);
-                    pageCommon.layerMsg(res.msg, 1);
-                    table.reload('privilege-management-table');
+                    pageCommon.layerMsg('添加成功', 1);
+                    table.reload('rotation-chart-table');
                 }
 
             });

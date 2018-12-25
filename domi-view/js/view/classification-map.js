@@ -1,183 +1,61 @@
-let permissionValue = pageCommon.getPermissionValue();
-// 上传icon
-function upFile(a) {
-    if (!permissionValue.add){
-        pageCommon.layerMsg('你没有权限上传',2);
-        return false;
+let table = layui.table;
+
+table.render({
+    elem: '#classification-map-table'
+    , method: 'GET'
+    , limits: [10, 20, 30, 50, 100, 200]
+    , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
+    , url: globalAjaxUrl + '/admin/icon/getIcon'
+    , cols: [[
+        {field: 'id', title: 'ID', align: 'center'}
+        , {field: 'name', title: '名称', align: 'center'}
+        , {field: 'imgUrl', title: '图片', templet: '#imgUrl', align: 'center'}
+        , {field: 'updateTime', title: '操作时间', align: 'center'}
+        , {fixed: 'right', title: '操作', toolbar: '#barDemo', align: 'center'}
+    ]]
+    , done: function (res, curr, count) {
     }
-    let $this = $(a);
-    let fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
-    let files = $this[0].files[0]; // files可以获取当前文件输入框中选择的所有文件，返回列表
-    fr.readAsDataURL(files); // 读取的内容是加密以后的本地文件路径
-    fr.onload = function (e) { // 数据读取完成时触发onload对应的响应函数
-        let src =   pageCommon.getTokenUrl(e.target.result);
-        $this.parent().hide();
-        $this.parents('.img-file').find('.img-src').show();
-        $this.parents('.img-file').find('img').attr('src', src);
-        $this.parents('li').attr('data-src', src);
-    };
-}
-
-
-
-
-// 上传图片
-function upFilePhoto(a) {
-    if (!permissionValue.add){
-        pageCommon.layerMsg('你没有权限上传',2);
-        return false;
-    }
-    let $this = $(a);
-    let fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
-    let files = $this[0].files[0]; // files可以获取当前文件输入框中选择的所有文件，返回列表
-    fr.readAsDataURL(files); // 读取的内容是加密以后的本地文件路径
-    fr.onload = function (e) { // 数据读取完成时触发onload对应的响应函数
-        let src =   pageCommon.getTokenUrl(e.target.result);
-        $this.parent().hide();
-        $this.parents('.img-file').find('.img-src').show();
-        $this.parents('.img-file').find('img').attr('src', src);
-        $this.parents('.img-file').attr('data-src', src);
-    };
-}
-
-
-$('.re-upload').click(function () {
-    if (!permissionValue.remove){
-        pageCommon.layerMsg('你没有权限删除',2);
-        return false;
-    }
-    $(this).parents('.img-file').find('input').val('');
-    $(this).prev().attr('src', '');
-    $(this).parents('.img-file').find('.fileImg').show();
-    $(this).parent().hide();
 });
 
+//监听行工具事件
+table.on('tool(classification-map-table)', function (obj) {
+    var data = obj.data;
+    if (obj.event === 'edit') {
+        console.log(data);
+        let index = pageCommon.layerParentOpenIframe({
+            url: globalUrl + '/view/popup/editorial-category-background.html?photoUrl='+data.imgUrl+'&name='+ data.name,
+            title: '编辑图片',
+            area: ['800px', '330px'],
+            confirm: function () {
+                let body = parent.layer.getChildFrame('body', index);
+                let photo = body.find('.article-photo').attr('data-src'); // banner
+                if ($.trim(photo) == '') {
+                    pageCommon.layerMsg('图片不能为空', 2);
+                    return false;
+                }
+                let arr = [];
+                let obj = {
+                    id: data.id,
+                    imgUrl: photo
+                };
+                arr.push(obj);
+                let post = {newData: JSON.stringify(arr)};
+                let url = globalAjaxUrl + '/admin/icon/addLoanPlatform';
+                pageCommon.postAjax(url, post, function (res) {
+                    if (!res.state) {
+                        pageCommon.layerMsg('编辑失败', 2);
+                        return false;
+                    } else {
+                        parent.layer.close(index);
+                        pageCommon.layerMsg('编辑成功', 1);
+                        table.reload('classification-map-table');
+                    }
 
-let iconOne = $('.icon1');
-let iconTwo = $('.icon2');
-let iconThree = $('.icon3');
-// 确定
-$('.rotation-chart-confirm').click(function () {
-    if (!permissionValue.add){
-        pageCommon.layerMsg('你没有权限保存',2);
-        return false;
-    }
-
-    //icon图片和内容
-    let oneSrc = iconOne.attr('data-src') || '';
-    let twoSrc = iconTwo.attr('data-src') || '';
-    let threeSrc = iconThree.attr('data-src') || '';
-    let oneVal = iconOne.find('.icon-ipt').val() || '';
-    let twoVal = iconTwo.find('.icon-ipt').val() || '';
-    let threeVal = iconThree.find('.icon-ipt').val() || '';
-    let oneId = iconOne.attr('data-id') || '';
-    let twoId = iconTwo.attr('data-id') || '';
-    let threeId = iconThree.attr('data-id') || '';
-
-    // 图片
-    let photoOne = $('.photo-content-left .img-file').attr('data-src') || '';
-    let photoTwo = $('.photo-content-right-top .img-file').attr('data-src') || '';
-    let photoThree = $('.photo-content-right-bottom .img-file').attr('data-src') || '';
-    let photoOneId = $('.photo-content-left').attr('data-id') || '';
-    let photoTwoId = $('.photo-content-right-top').attr('data-id') || '';
-    let photoThreeId = $('.photo-content-right-bottom').attr('data-id') || '';
-
-    if (oneSrc == ''||twoSrc == ''||threeSrc == ''||photoOne == ''||photoTwo == ''||photoThree == ''){
-        pageCommon.layerMsg('请选择图片',2);
-        return false;
-    }
-
-    if (oneVal == ''||twoVal == ''||threeVal == ''){
-        pageCommon.layerMsg('请输入内容',2);
-        return false;
-    }
-    let obj = {
-        icon: [
-            {
-                id: oneId,
-                imgUrl: oneSrc,
-                name: oneVal,
+                });
             },
-            {
-                id: twoId,
-                imgUrl: twoSrc,
-                name: twoVal
-            },
-            {
-                id: threeId,
-                imgUrl: threeSrc,
-                name: threeVal,
+            cancel: function (index, layero) {
+                parent.layer.close(index);
             }
-        ],
-        photo: [
-            {
-                id: photoOneId,
-                imgUrl: photoOne,
-            },
-            {
-                id: photoTwoId,
-                imgUrl: photoTwo,
-            },
-            {
-                id: photoThreeId,
-                imgUrl: photoThree
-            }
-        ]
-    };
-
-    let post = {newData: JSON.stringify(obj)};
-    let url = globalAjaxUrl + '/admin/icon/addLoanPlatform';
-    pageCommon.postAjax(url, post, function (res) {
-        pageCommon.layerMsg(res.msg);
-        iconInit();
-    });
+        });
+    }
 });
-
-
-// 取消
-$('.rotation-chart-cancel').click(function () {
-    $('.img-src').hide();
-    $('.fileImg').show();
-    $('.icon-ipt').val('');
-    iconInit();
-});
-
-
-iconInit();
-function iconInit(){
-    // 分类初始化
-    let url = globalAjaxUrl + '/admin/icon/getIcon';
-    pageCommon.getAjax(url, {}, function (res) {
-        let arrId = [];
-        if (res.icon.length && res.photo.length) {
-            let iconArr = ['icon1', 'icon2', 'icon3'];
-            for (let i = 0; i < res.icon.length; i++) {
-                res.icon[i].field = iconArr[i];
-                arrId.push( res.icon[i].id);
-            }
-            for (let j = 0; j < res.icon.length; j++) {
-                $('.' + res.icon[j].field).attr('data-id', res.icon[j].id);
-                $('.' + res.icon[j].field).attr('data-src', res.icon[j].imgUrl);
-                $('.' + res.icon[j].field).find('.img-src img').attr('src', res.icon[j].imgUrl);
-                $('.' + res.icon[j].field).find('.icon-ipt').val(res.icon[j].name);
-            }
-
-            let photoArr = ['photo-content-left', 'photo-content-right-top', 'photo-content-right-bottom'];
-            for (let y = 0; y < res.photo.length; y++) {
-                res.photo[y].field = photoArr[y];
-                arrId.push( res.photo[y].id);
-            }
-
-            for (let k = 0; k < res.photo.length; k++) {
-                $('.' + res.photo[k].field).attr('data-id', res.photo[k].id);
-                $('.' + res.photo[k].field).find('.img-file').attr('data-src', res.photo[k].imgUrl);
-                $('.' + res.photo[k].field).find('.img-src img').attr('src', res.photo[k].imgUrl);
-            }
-
-            $('.img-src').show();
-            $('.fileImg').hide();
-            localStorage.setItem('arrId',arrId);
-        }
-    });
-}
-

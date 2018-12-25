@@ -1,33 +1,27 @@
 $(function () {
 
-    let url = globalAjaxUrl + '/admin/articleType/getAllArticleType';
-    pageCommon.getAjax(url, {}, function (res) {
-        for (let i = 0; i < res.data.length; i++) {
-            $('.article-classification').append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>');
-        }
-        // 数据填充
-        let query = pageCommon.getUrlParams();
-        let data = $('.article-management-iframe', parent.document).contents().find('.content-data').text();
-        if (data) {
-            if (query.field == 'edit' || query.field == 'view') {
-                data = JSON.parse(data);
-                $('.add-article').attr('data-id', data.id);
-                $('.article-title').val(data.title);
-                $('.article-author').val(data.author);
-                $('.article-classification').val(data.typeId);
-                $('.add-article-content').val(data.content);
-                $('.platform-url').val(data.url);
-                $('.article-img img').attr('src', data.imgUrl);
-                $('.article-photo').attr('data-src', data.imgUrl);
-                $('.fileImg').hide();
-                $('.article-img').show();
-                if (query.field == 'view') {
-                    $('input,select,textarea').attr('disabled', 'disabled');
-                    $('.re-upload').remove();
-                }
+    let query = pageCommon.getUrlParams();
+    let data = $('.rotation-chart-iframe', parent.document).contents().find('.content-data').text();
+    if (data) {
+        if (query.field == 'edit' || query.field == 'view') {
+            data = JSON.parse(data);
+            $('.banner .article-photo').attr('data-src', data.imgUrl);
+            $('.banner .article-img img').attr('src', data.imgUrl);
+            $('.bannerBg .article-photo').attr('data-src', data.background);
+            $('.bannerBg .article-img img').attr('src', data.background);
+            $('.banner-url').val(data.url);
+            $('.fileImg').hide();
+            $('.article-img').show();
+
+            if (query.field == 'view') {
+                $('input,select,textarea').attr('disabled', 'disabled');
+                $('.re-upload').remove();
+                $('.tagsinput').find('a').remove();
             }
         }
-    });
+    }
+
+
 
 
     $('#fileImg').change(function () {
