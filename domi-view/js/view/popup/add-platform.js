@@ -45,11 +45,31 @@ $(function () {
                 $('.platform-img').show();
                 $('.platform-img img').attr('src', data.logo);
                 $('.platform-photo').attr('data-src', data.logo);
+                $('.background-account').val(data.accountName);
+                $('.background-password').val(data.password);
 
                 if (query.field == 'view') {
                     $('input,select,textarea').attr('disabled', 'disabled');
                     $('.re-upload').remove();
                     $('.tagsinput').find('a').remove();
+
+                    $('.borrowing-cycle>span').css('pointer-events','none')
+                }
+
+                Array.prototype.contains = function (obj) {
+                    let i = this.length;
+                    while (i--) {
+                        if (this[i] === obj) {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+                let period = $('.borrowing-cycle>span');
+                for (let i = 0; i < period.length; i++) {
+                    if (data.period.contains($(period[i]).attr('data-num'))) {
+                        $(period[i]).addClass('spanActive')
+                    }
                 }
             }
         }
@@ -82,4 +102,6 @@ $(function () {
     $('.borrowing-cycle>span').click(function () {
         $(this).toggleClass('spanActive');
     })
+
+
 });
