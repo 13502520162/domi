@@ -6,7 +6,7 @@ var options = {
 };
 
 setTimeout(function () {
-    var demo = new CountUp('may-borrow-money', 0, 200000, 0, 2.5, options);
+    var demo = new CountUp('may-borrow-money', 0, 200000, 0, 4, options);
     if (!demo.error) {
         demo.start();
     } else {
@@ -21,8 +21,11 @@ window.onresize = function () {
             window.scrollTo(0,top);
         }, 0);
     }
-    $('input').scrollIntoView();
 };
+
+$('.registration-agreement a').click(function () {
+    window.location.href = 'user-agreement.html'
+});
 
 
 

@@ -3,7 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+a{
+    text-decoration: none;
+}
 body,html ,.register{
     background: #fff;
     width: 100%;
@@ -28,6 +30,7 @@ body,html ,.register{
 }
 .maximum-borrowable>.may-borrow{
     font-size: .5rem;
+    font-weight: bold;
 }
 .maximum-borrowable .may-borrow-num{
     position: relative;
@@ -35,13 +38,13 @@ body,html ,.register{
 }
 .maximum-borrowable #may-borrow-money{
     font-size: 2rem;
-    font-weight: 400;
+    font-weight: 700;
 }
 .may-borrow--symbol{
     position: absolute;
     top: .3rem;
     font-size: .7rem;
-    left: .6rem;
+    left: .1rem;
 }
 .register-info{
     text-align: right;
@@ -82,7 +85,7 @@ body,html ,.register{
     width: 1.1rem;
     display: inline-block;
     text-align: center;
-    line-height: .9rem;
+    line-height: .85rem;
     box-sizing: border-box;
     border-right: 1px solid #ccc;
 }
