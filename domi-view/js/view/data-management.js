@@ -14,7 +14,7 @@ laydate.render({
                 , where: {
                     beginDate: start,
                     endDate: end,
-                    name: val
+                    name: ''
                 }
             });
         } else {
@@ -41,6 +41,8 @@ document.onkeydown = function (e) {
             , where: {
                 beginDate: '',
                 endDate: '',
+                page:1,
+                limit:100,
                 name: val
             }
         });
@@ -131,6 +133,7 @@ $('.data-management-batch-export').click(function () {
 });
 
 
+// 天数筛选
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let time = $(this).attr('data-time');

@@ -90,6 +90,8 @@ document.onkeydown = function (e) {
             , where: {
                 beginDate: '',
                 endDate: '',
+                page:1,
+                limit:100,
                 phone: val
             }
         });

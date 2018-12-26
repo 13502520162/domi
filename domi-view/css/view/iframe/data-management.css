@@ -106,7 +106,7 @@ html,body,.data-management{
 .layui-table, .layui-table-view{
     margin: 0;
 }
-#layui-table-page1{
+.layui-table-page>div{
     text-align: center;
 }
 
