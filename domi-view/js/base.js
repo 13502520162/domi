@@ -351,6 +351,8 @@ $(function () {
     $('.sign-out').click(function () {
         setTimeout(() => {
             window.location.href = globalUrl + '/admin/index.html';
+            localStorage.clear();
+            sessionStorage.clear();
         }, 100);
     });
 });
