@@ -63,16 +63,36 @@ table.render({
     }
     , cols: [[
         {type: 'checkbox'}
-        , {field: 'productName', width: '20%', title: '产品名称', align: 'center'}
+        , {field: 'productName',  title: '产品名称', align: 'center'}
         , {field: 'id', title: 'ID', align: 'center', hide: true}
-        , {field: 'creationTime', width: '20%', title: '创建时间', align: 'center'}
-        , {field: 'displayData', title: '展示数据', align: 'center'}
-        , {field: 'clickData', title: '点击数据', align: 'center'}
-        , {field: 'conversionRate', width: '20%', title: '转化率', align: 'center'}
+        , {field: 'creationTime', title: '创建时间', align: 'center'}
+       /* , {field: 'displayData', title: '展示数据', align: 'center'}*/
+        , {field: 'clickData',width: '20%',  title: '点击数据', align: 'center'}
+        , { title: '点击分布',width:'15%', templet:'#clickDistribution', align: 'center'}
+/*        , {field: 'conversionRate', width: '20%', title: '转化率', align: 'center'}*/
     ]]
     , page: true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+    }
+});
+
+table.on('tool(data-management-content-table)',function (obj) {
+    let data = obj.data;
+    if (obj.event == 'view'){
+        let index = pageCommon.layerParentOpenIframe({
+            url: globalUrl + '/view/popup/click-distribution.html?id='+data.id+'&name='+ data.productName,
+            title: '查看点击分布',
+            btn:['关闭'],
+            shadeClose:true,
+            area:['800px','520px'],
+            confirm: function (index, layero) {
+                parent.layer.close(index);
+            },
+            success:function (layero, index) {
+                $(layero[0]).find('.layui-layer-btn').remove();
+            }
+        });
     }
 });
 

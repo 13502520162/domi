@@ -37,7 +37,7 @@
             <span class="data-management-batch-export">批量导出</span>
         </div>
         <div class="data-management-content-table">
-            <table  class="layui-hide" id="data-management-content-table"></table>
+            <table  class="layui-hide" id="data-management-content-table" lay-filter="data-management-content-table"></table>
         </div>
     </div>
 </div>
@@ -47,5 +47,8 @@
 <script type="text/javascript" src="../../js/common.js"></script>
 <script src="../../js/public/layui/layui.all.js"></script>
 <script src="../../js/view/data-management.js" defer></script>
+<script type="text/html" id="clickDistribution">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">查看</a>
+</script>
 </body>
 </html>

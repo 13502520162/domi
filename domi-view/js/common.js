@@ -85,10 +85,12 @@ let pageCommon = {
         let btn = obj.btn || ['保存', '取消'];
         let confirm = obj.confirm;
         let cancel = obj.cancel;
+        let success = obj.success;
+        let shadeClose = obj.shadeClose || false;
         let layIndex = parent.layer.open({
             type: 2,
             anim: false,
-            shadeClose: false,
+            shadeClose: shadeClose,
             move: false,
             btn: btn,
             loading: false, //是否显示加载条
@@ -104,6 +106,9 @@ let pageCommon = {
             },
             btn2: function (index, layero) {
                 cancel(index, layero)
+            },
+            success:function (index, layero) {
+                success(index, layero)
             }
         });
         return layIndex;
