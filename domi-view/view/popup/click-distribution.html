@@ -28,16 +28,31 @@
 <script>
 
     let query = pageCommon.getUrlParams();
-    console.log(query);
 
-    eChartsInit();
+    let url = globalAjaxUrl + '/admin/loanPlatform/getSource?loanPlatformId=' + query.id;
+    pageCommon.getAjax(url, {}, function (res) {
+        if (res.msg){
+            if (res.data.length){
+                eChartsInit(res.data);
+            } else {
+                $('#main').html('<p style="line-height: 300px;font-weight: 500;text-align: center;font-size: 50px;">暂无数据</p>');
+            }
+        }
+
+    });
 
     //  图表初始化
-    function eChartsInit() {
+    function eChartsInit(data) {
+        let newArr = [];
+        let num = 0;
+        for (let i = 0; i < data.length; i++) {
+            newArr.push(data[i].name);
+            num += data[i].value
+        }
         let myChart = echarts.init(document.getElementById('main'));
         let option = {
             title: {
-                text: query.name +'点击分布图',
+                text: query.name + '点击分布图',
                 x: 'center'
             },
             tooltip: {
@@ -47,7 +62,7 @@
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                data: newArr
             },
             series: [
                 {
@@ -55,13 +70,7 @@
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
-                    data: [
-                        {value: 335, name: '直接访问'},
-                        {value: 310, name: '邮件营销'},
-                        {value: 234, name: '联盟广告'},
-                        {value: 135, name: '视频广告'},
-                        {value: 1548, name: '搜索引擎'}
-                    ],
+                    data: data,
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
@@ -76,13 +85,13 @@
                     type: 'text',
                     z: 100,
                     id: 'sum',
-               /*     left: 'center',
-                    top: 'middle',*/
+                    /*     left: 'center',
+                         top: 'middle',*/
                     right: 320,
                     bottom: 0,
                     style: {
                         color: '#333',
-                        text: "总点击:123",
+                        text: "总点击:" + num,
                         font: 'bolder 18px Microsoft YaHei'
                     }
                 }

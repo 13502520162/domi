@@ -2,28 +2,45 @@
 let table = layui.table;
 let permissionValue = pageCommon.getPermissionValue();
 
-table.render({
-    elem: '#article-management-content-table'
-    , even: true //开启隔行背景
-    , method: 'GET'
-    , limits: [10, 20, 30, 50, 100, 200]
-    , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
-    , url: globalAjaxUrl + '/admin/article/getArticle'
-    , cols: [[
-        {field: 'title', width: '20%', title: '标题', align: 'center'}
-        , {field: 'id', title: 'ID', align: 'center', hide: true}
-        , {field: 'author', width: '10%', title: '作者', align: 'center'}
-        , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
-        , {field: 'content', title: '内容', align: 'center'}
-        , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
-        , {field: 'update', title: '更新时间', align: 'center'}
-        , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
-    ]]
-    , page: true
-    , done: function (res, curr, count) {
-        getArticleManagementSuccess(res);
+
+function ArticleManagement(){
+
+}
+
+ArticleManagement.prototype = {
+    constructor:ArticleManagement,
+    init:function () {
+        this.table();
+    },
+    table:function () {
+        table.render({
+            elem: '#article-management-content-table'
+            , even: true //开启隔行背景
+            , method: 'GET'
+            , limits: [10, 20, 30, 50, 100, 200]
+            , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
+            , url: globalAjaxUrl + '/admin/article/getArticle'
+            , cols: [[
+                {field: 'title', width: '20%', title: '标题', align: 'center'}
+                , {field: 'id', title: 'ID', align: 'center', hide: true}
+                , {field: 'author', width: '10%', title: '作者', align: 'center'}
+                , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
+                , {field: 'content', title: '内容', align: 'center'}
+                , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
+                , {field: 'update', title: '更新时间', align: 'center'}
+                , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
+            ]]
+            , page: true
+            , done: function (res, curr, count) {
+                getArticleManagementSuccess(res);
+            }
+        });
     }
-});
+};
+
+let articleManagement = new ArticleManagement();
+articleManagement.init();
+
 
 
 
