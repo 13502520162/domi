@@ -47,6 +47,7 @@ $(function () {
                 $('.platform-photo').attr('data-src', data.logo);
                 $('.background-account').val(data.accountName);
                 $('.background-password').val(data.password);
+                $('.background-link').val(data.backstageUrl);
 
                 if (query.field == 'view') {
                     $('input,select,textarea').attr('disabled', 'disabled');
