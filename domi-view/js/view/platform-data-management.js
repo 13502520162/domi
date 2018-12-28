@@ -156,7 +156,6 @@ function dataInit(res) {
     userArray.push(res.userArray);
     channelArray.push(res.channelArray);
     dataArray.push(res.dataArray);
-
 }
 
 
@@ -231,16 +230,22 @@ $('.management-option-date>p').click(function () {
     let time = $(this).attr('data-time');
     let dateVal;
     $('.content-main-sel').val('全部来源');
+    currTime();
     if (time != 'all') {
         if (time == '1') {
             dateVal = pageCommon.getTimeForMat();
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+            $('.time').parent().html('<p>截止今日<span  class="time"></span></p>');
+            currTime();
         } else if (time == '-1') {
             dateVal = pageCommon.getTimeForMat(1);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
+            $('.time').parent().html('<p>截止昨日<span  class="time">24:00</span></p>')
         } else {
             dateVal = pageCommon.getTimeForMat(time);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+            $('.time').parent().html('<p>截止今日<span  class="time"></span></p>');
+            currTime();
         }
 
         table.reload('content-table-statistics', {
@@ -261,3 +266,11 @@ $('.management-option-date>p').click(function () {
         $('.date-start').val('');
     }
 });
+currTime();
+function currTime(){
+    let date = new Date();
+    let HH = date.getHours();
+    let MM = date.getMinutes();
+    $('.time').text(HH+':'+MM);
+}
+
