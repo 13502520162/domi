@@ -2,7 +2,7 @@ $(function () {
 
 
     let loginInfo = localStorage.getItem('loginInfo');
-    if (loginInfo == null){
+    if (loginInfo == null) {
         pageCommon.returnLogin();
     }
     loginInfo = JSON.parse(loginInfo);
@@ -11,10 +11,10 @@ $(function () {
     // 左边树 初始化
     let ssideuLen = $('.s-side-u>li').length;
     if (!ssideuLen) {
-        let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId;
+        let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId; // 拿到登录人ID查询用于权限
         pageCommon.getAjax(infoUrl, {}, function (res) {
             let domiLen = res.data.length;
-            if (domiLen){
+            if (domiLen) {
                 for (let i = 0; i < domiLen; i++) {
                     let html = '';
                     html += '<li class="first" data-parentId="' + res.data[i].id + '" >';
@@ -27,7 +27,7 @@ $(function () {
                     for (let j = 0; j < res.data[i].child.length; j++) {
                         html += '<li class="s-secondItem" data-id="' + res.data[i].child[j].id + '"  data-child="' + res.data[i].child[j].childId + '">';
                         html += '<a href="#' + res.data[i].child[j].id + '">' + res.data[i].child[j].name + '</a>';
-                        html += ' </li>';
+                        html += '</li>';
 
                     }
                     html += '</ul>';
@@ -38,10 +38,9 @@ $(function () {
                 var hash = window.location.hash,
                     hash_len = hash.length,
                     hash_r = hash.substring(1, hash_len);
-
-                // 如果空 就等于 rotation-chart
+                // 如果空 就等于 数据的第一个
                 if (hash_r == '') {
-                    hash_r = 'rotation-chart';
+                    hash_r = res.data[0].child[0].id;
                 }
                 tab(hash_r);
             } else {
@@ -49,122 +48,122 @@ $(function () {
             }
 
         }, function (res) {
-          /*  let domi = [
-                {
-                    title: '图片管理',
-                    icon: 'fa-photo',
-                    child: [
-                        {
-                            name: '轮播图',
-                            id: 'rotation-chart'
-                        },
-                        {
-                            name: '分类',
-                            id: 'classification-map'
-                        },
-                        {
-                            name: '列表背景图',
-                            id: 'list-background-map'
-                        },
-                    ]
-                },
-                {
-                    title: '贷款平台',
-                    icon: 'fa-cloud',
-                    child: [
-                        {
-                            name: '平台管理',
-                            id: 'platform-management'
-                        },
-                        {
-                            name: '标签管理',
-                            id: 'label-management'
-                        },
-                        {
-                            name: '数据管理',
-                            id: 'data-management'
-                        },
-                        {
-                            name: '热门管理',
-                            id: 'popular-management'
-                        }
-                    ]
-                },
-                {
-                    title: '新闻资讯',
-                    icon: 'fa-newspaper-o',
-                    child: [
-                        {
-                            name: '文章管理',
-                            id: 'article-management'
-                        }
-                    ]
-                },
-                {
-                    title: '渠道推广',
-                    icon: 'fa-share-alt-square',
-                    child: [
-                        {
-                            name: '渠道管理',
-                            id: 'channel-management'
-                        },
-                        {
-                            name: '渠道数据',
-                            id: 'channel-data'
-                        }
-                    ]
-                },
-                {
-                    title: '平台管理',
-                    icon: 'fa-home',
-                    child: [
-                        {
-                            name: '数据管理',
-                            id: 'platform-data-management'
-                        },
-                        {
-                            name: '渠道设置',
-                            id: 'channel-setup'
-                        }
-                    ]
-                }/!*,
-                {
-                    title: '系统管理',
-                    icon: 'fa-cog',
-                    child: [
-                        {
-                            name: '权限管理',
-                            id: 'privilege-management'
-                        },
-                        {
-                            name: '用户列表',
-                            id: 'user-list'
-                        }
-                    ]
-                }*!/
-            ];
+            /*  let domi = [
+                  {
+                      title: '图片管理',
+                      icon: 'fa-photo',
+                      child: [
+                          {
+                              name: '轮播图',
+                              id: 'rotation-chart'
+                          },
+                          {
+                              name: '分类',
+                              id: 'classification-map'
+                          },
+                          {
+                              name: '列表背景图',
+                              id: 'list-background-map'
+                          },
+                      ]
+                  },
+                  {
+                      title: '贷款平台',
+                      icon: 'fa-cloud',
+                      child: [
+                          {
+                              name: '平台管理',
+                              id: 'platform-management'
+                          },
+                          {
+                              name: '标签管理',
+                              id: 'label-management'
+                          },
+                          {
+                              name: '数据管理',
+                              id: 'data-management'
+                          },
+                          {
+                              name: '热门管理',
+                              id: 'popular-management'
+                          }
+                      ]
+                  },
+                  {
+                      title: '新闻资讯',
+                      icon: 'fa-newspaper-o',
+                      child: [
+                          {
+                              name: '文章管理',
+                              id: 'article-management'
+                          }
+                      ]
+                  },
+                  {
+                      title: '渠道推广',
+                      icon: 'fa-share-alt-square',
+                      child: [
+                          {
+                              name: '渠道管理',
+                              id: 'channel-management'
+                          },
+                          {
+                              name: '渠道数据',
+                              id: 'channel-data'
+                          }
+                      ]
+                  },
+                  {
+                      title: '平台管理',
+                      icon: 'fa-home',
+                      child: [
+                          {
+                              name: '数据管理',
+                              id: 'platform-data-management'
+                          },
+                          {
+                              name: '渠道设置',
+                              id: 'channel-setup'
+                          }
+                      ]
+                  }/!*,
+                  {
+                      title: '系统管理',
+                      icon: 'fa-cog',
+                      child: [
+                          {
+                              name: '权限管理',
+                              id: 'privilege-management'
+                          },
+                          {
+                              name: '用户列表',
+                              id: 'user-list'
+                          }
+                      ]
+                  }*!/
+              ];
 
-            let domiLen = domi.length;
+              let domiLen = domi.length;
 
-            for (let i = 0; i < domiLen; i++) {
-                let html = '';
-                html += '<li class="first">';
-                html += '<div class="d-firstNav s-firstNav clearfix">';
-                html += '<i class="fa ' + domi[i].icon + '"></i>';
-                html += '<span>' + domi[i].title + '</span>';
-                html += '<i class="fa fa-caret-right fr "></i>';
-                html += '</div>';
-                html += '<ul class="d-firstDrop s-firstDrop">';
-                for (let j = 0; j < domi[i].child.length; j++) {
-                    html += '<li class="s-secondItem" data-id="' + domi[i].child[j].id + '">';
-                    html += '<a href="#' + domi[i].child[j].id + '">' + domi[i].child[j].name + '</a>';
-                    html += ' </li>';
+              for (let i = 0; i < domiLen; i++) {
+                  let html = '';
+                  html += '<li class="first">';
+                  html += '<div class="d-firstNav s-firstNav clearfix">';
+                  html += '<i class="fa ' + domi[i].icon + '"></i>';
+                  html += '<span>' + domi[i].title + '</span>';
+                  html += '<i class="fa fa-caret-right fr "></i>';
+                  html += '</div>';
+                  html += '<ul class="d-firstDrop s-firstDrop">';
+                  for (let j = 0; j < domi[i].child.length; j++) {
+                      html += '<li class="s-secondItem" data-id="' + domi[i].child[j].id + '">';
+                      html += '<a href="#' + domi[i].child[j].id + '">' + domi[i].child[j].name + '</a>';
+                      html += ' </li>';
 
-                }
-                html += '</ul>';
-                html += '</li>';
-                $('.s-side-u').append(html);
-            }*/
+                  }
+                  html += '</ul>';
+                  html += '</li>';
+                  $('.s-side-u').append(html);
+              }*/
         });
     }
 
@@ -238,36 +237,45 @@ $(function () {
         $('.active').parent().show();
         sessionStorage.setItem('modelId', $('.active').parents('li').attr('data-parentId'));
 
-        if (id == 'rotation-chart') {  // 轮播图
-            $('.rotation-chart').find('iframe').attr('src', 'content/rotation-chart.html')
-        } else if (id == 'data-management') { // 贷款数据管理
-            $('.data-management').find('iframe').attr('src', 'content/data-management.html')
-        } else if (id == 'channel-data') { // 渠道数据
-            $('.channel-data').find('iframe').attr('src', 'content/channel-data.html')
-        } else if (id == 'channel-management') { // 渠道数据
-            $('.channel-management').find('iframe').attr('src', 'content/channel-management.html')
-        } else if (id == 'privilege-management') { // 权限管理
-            $('.privilege-management').find('iframe').attr('src', 'content/privilege-management.html')
-        } else if (id == 'platform-data-management') { // 平台数据管理
-            $('.platform-data-management').find('iframe').attr('src', 'content/platform-data-management.html')
-        } else if (id == 'channel-setup') { // 平台渠道设置
-            $('.channel-setup').find('iframe').attr('src', 'content/channel-setup.html')
-        } else if (id == 'classification-map') { // 分类
-            $('.classification-map').find('iframe').attr('src', 'content/classification-map.html')
-        } else if (id == 'list-background-map') { // 列表背景图
-            $('.list-background-map').find('iframe').attr('src', 'content/list-background-map.html')
-        } else if (id == 'user-list') { // 用户列表
-            $('.user-list').find('iframe').attr('src', 'content/user-list.html')
-        } else if (id == 'platform-management') { // 贷款平台管理
-            $('.platform-management').find('iframe').attr('src', 'content/platform-management.html')
-        } else if (id == 'label-management') { // 贷款标签管理
-            $('.label-management').find('iframe').attr('src', 'content/label-management.html')
+        let contentArr = ['rotation-chart', 'classification-map', 'list-background-map', 'platform-management', 'data-management', 'popular-management', 'article-management', 'channel-management', 'channel-data', 'platform-data-management', 'channel-setup', 'privilege-management', 'user-list'];
 
-        } else if (id == 'article-management') { // 新闻文章管理
-            $('.article-management').find('iframe').attr('src', 'content/article-management.html')
-        } else if (id == 'popular-management') { // 贷款平台热门管理
-            $('.popular-management').find('iframe').attr('src', 'content/popular-management.html')
+        let nameArr = ['轮播', '分类', '列表背景图', '平台管理', '数据管理', '热门管理', '文章管理', '渠道管理', '渠道数据', '数据管理', '渠道设置', '权限管理', '用户列表'];  //  分布对应相应模块
+
+        for (let j = 0; j < contentArr.length; j++) {
+            if (id == contentArr[j]) {
+                $('.' + contentArr[j]).find('iframe').attr('src', 'content/' + contentArr[j] + '.html');
+            }
         }
+
+        /* if (id == 'rotation-chart') {  // 轮播图
+             $('.rotation-chart').find('iframe').attr('src', 'content/rotation-chart.html')
+         } else if (id == 'data-management') { // 贷款数据管理
+             $('.data-management').find('iframe').attr('src', 'content/data-management.html')
+         } else if (id == 'channel-data') { // 渠道数据
+             $('.channel-data').find('iframe').attr('src', 'content/channel-data.html')
+         } else if (id == 'channel-management') { // 渠道数据
+             $('.channel-management').find('iframe').attr('src', 'content/channel-management.html')
+         } else if (id == 'privilege-management') { // 权限管理
+             $('.privilege-management').find('iframe').attr('src', 'content/privilege-management.html')
+         } else if (id == 'platform-data-management') { // 平台数据管理
+             $('.platform-data-management').find('iframe').attr('src', 'content/platform-data-management.html')
+         } else if (id == 'channel-setup') { // 平台渠道设置
+             $('.channel-setup').find('iframe').attr('src', 'content/channel-setup.html')
+         } else if (id == 'classification-map') { // 分类
+             $('.classification-map').find('iframe').attr('src', 'content/classification-map.html')
+         } else if (id == 'list-background-map') { // 列表背景图
+             $('.list-background-map').find('iframe').attr('src', 'content/list-background-map.html')
+         } else if (id == 'user-list') { // 用户列表
+             $('.user-list').find('iframe').attr('src', 'content/user-list.html')
+         } else if (id == 'platform-management') { // 贷款平台管理
+             $('.platform-management').find('iframe').attr('src', 'content/platform-management.html')
+         } else if (id == 'label-management') { // 贷款标签管理
+             $('.label-management').find('iframe').attr('src', 'content/label-management.html')
+         } else if (id == 'article-management') { // 新闻文章管理
+             $('.article-management').find('iframe').attr('src', 'content/article-management.html')
+         } else if (id == 'popular-management') { // 贷款平台热门管理
+             $('.popular-management').find('iframe').attr('src', 'content/popular-management.html')
+         }*/
     }
 
 
@@ -321,21 +329,21 @@ $(function () {
                 return false;
             }
 
-            if ($.trim(newPassword) != $.trim(confirmNewPassword)){
+            if ($.trim(newPassword) != $.trim(confirmNewPassword)) {
                 pageCommon.layerMsg('两次密码不一致，请重新输入', 2);
                 return false;
             }
 
-            let url = globalAjaxUrl +'/admin/employee/updatePassword?id=' +loginInfo.employeeId + '&newPassword='+ newPassword +'&oldPassword='+originalPassword;
-            pageCommon.getAjax(url,{},function (res) {
-               if (res.state){
-                   pageCommon.layerMsg(res.msg);
-                   setTimeout( () =>{
-                       window.location.href = globalUrl + '/admin/index.html';
-                   },1500);
-               } else {
-                   pageCommon.layerMsg('密码修改失败，请检原密码是否正确!',2)
-               }
+            let url = globalAjaxUrl + '/admin/employee/updatePassword?id=' + loginInfo.employeeId + '&newPassword=' + newPassword + '&oldPassword=' + originalPassword;
+            pageCommon.getAjax(url, {}, function (res) {
+                if (res.state) {
+                    pageCommon.layerMsg(res.msg);
+                    setTimeout(() => {
+                        window.location.href = globalUrl + '/admin/index.html';
+                    }, 1500);
+                } else {
+                    pageCommon.layerMsg('密码修改失败，请检原密码是否正确!', 2)
+                }
             })
 
 

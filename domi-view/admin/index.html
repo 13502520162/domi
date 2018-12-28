@@ -145,6 +145,14 @@
     $('#login-admin').click(function () {
         let account =$("#account-number").val();
         let password =$("#password").val();
+        if ($.trim(account) ==''){
+            pageCommon.layerMsg('账号不能为空',2);
+            return false;
+        }
+        if ($.trim(password) ==''){
+            pageCommon.layerMsg('密码不能为空',2);
+            return false;
+        }
         let obj = {
             accountNumber:account,
             password:password

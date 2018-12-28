@@ -146,6 +146,14 @@
     $('#login-channel').click(function () {
         let account =$("#channel-number").val();
         let password =$("#channel-password").val();
+        if ($.trim(account) ==''){
+            pageCommon.layerMsg('账号不能为空',2);
+            return false;
+        }
+        if ($.trim(password) ==''){
+            pageCommon.layerMsg('密码不能为空',2);
+            return false;
+        }
         let obj = {
             accountName:account,
             password:password
