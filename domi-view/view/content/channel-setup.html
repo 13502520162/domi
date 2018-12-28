@@ -79,15 +79,15 @@
                     <li>
                         <div class="content-text-statistics-d">
                             <div class="content-text-statistics-top">
-                                <span class="fl">活跃人数</span>
+                                <span class="fl">活跃</span>
                             </div>
                             <div class="content-text-statistics-bottom">
                                 <div class="real-data">
-                                    <p>真实数据</p>
+                                    <p>活跃人数</p>
                                     <p class="num">0</p>
                                 </div>
                                 <div class="display-data">
-                                    <p>展示数据</p>
+                                    <p>点击数</p>
                                     <p class="num">0</p>
                                 </div>
                             </div>
@@ -101,25 +101,22 @@
                         <thead>
                         <tr>
                             <th lay-data="{field:'channelName', width:150 ,align:'center'}" rowspan="2">渠道名</th>
-                            <th lay-data="{field:'id', width:150 ,align:'center',hide:true}" rowspan="2">id</th>
+                            <th lay-data="{field:'registerCount',align:'center'}" rowspan="2">展示UV</th>
                             <th lay-data="{align:'center'}" colspan="2">注册人数</th>
                             <th lay-data="{align:'center'}" colspan="2">激活人数</th>
-                            <th lay-data="{align:'center'}" colspan="2">活跃人数</th>
-                            <th lay-data="{field:'cooperationMode',align:'center', width:120}" rowspan="2">合作模式</th>
-                            <th lay-data="{field:'price',align:'center', width:120}" rowspan="2" >价格</th>
-                            <th lay-data="{field:'type',align:'center', width:120}" rowspan="2">类型</th>
-                            <th lay-data="{field:'statistics',align:'center', width:120}" rowspan="2">扣量状态</th>
-                            <th lay-data="{field:'census',align:'center', width:120}" rowspan="2">统计状态</th>
+                            <th lay-data="{field:'cooperationMode',align:'center', width:90}" rowspan="2">活跃人数</th>
+                            <th lay-data="{field:'cooperationMode',align:'center', width:90}" rowspan="2">点击数</th>
+                            <th lay-data="{field:'statistics',align:'center'}" rowspan="2">扣量状态</th>
+                            <th lay-data="{field:'census',align:'center'}" rowspan="2">统计状态</th>
+                            <th lay-data="{field:'right',align:'center',toolbar: '#retain', width:120}" rowspan="2" >留存</th>
                             <th lay-data="{fixed: 'right',width:'20%', align: 'center', toolbar: '#barDemo'}" rowspan="2">操作
                             </th>
                         </tr>
                         <tr>
-                            <th lay-data="{field:'registerCount',align:'center', width:120}">真实数据</th>
-                            <th lay-data="{field:'registerOut',align:'center', width:120}">展示数据</th>
-                            <th lay-data="{field:'activationCount',align:'center', width:120}">真实数据</th>
-                            <th lay-data="{field:'activationOut',align:'center', width:120}">展示数据</th>
-                            <th lay-data="{field:'loginCount',align:'center', width:120}">真实数据</th>
-                            <th lay-data="{field:'loginOut',align:'center', width:120}">展示数据</th>
+                            <th lay-data="{field:'registerCount',align:'center', width:90}">真实数据</th>
+                            <th lay-data="{field:'registerOut',align:'center', width:90}">展示数据</th>
+                            <th lay-data="{field:'activationCount',align:'center', width:90}">真实数据</th>
+                            <th lay-data="{field:'activationOut',align:'center', width:90}">展示数据</th>
                         </tr>
                         </thead>
                     </table>
@@ -145,6 +142,10 @@
     {{# } }}
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
+</script>
+
+<script type="text/html" id="retain">
+    <a class="layui-btn  layui-btn-xs" lay-event="view">查看</a>
 </script>
 </body>
 </html>

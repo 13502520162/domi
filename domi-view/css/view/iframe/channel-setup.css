@@ -224,7 +224,7 @@ html, body, .platform-data-management {
     margin: 20px;
 }
 
-#layui-table-page1 {
+.layui-table-page>div {
     text-align: center;
 }
 
