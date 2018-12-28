@@ -153,7 +153,10 @@ html, body, .platform-data-management {
     padding-left: 10px;
     border-bottom: 1px solid #DDDBDB;
 }
-
+.content-text-statistics-top .all{
+    margin-right: 10px;
+    float: right;
+}
 .content-text-statistics-bottom {
     display: flex;
 }
