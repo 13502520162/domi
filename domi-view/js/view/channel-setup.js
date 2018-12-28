@@ -281,6 +281,21 @@ table.on('tool(channel-setup-table)', function (obj) {
             layer.close(index);
         });
     }
+    else if (obj.event === 'view'){
+        let index = pageCommon.layerParentOpenIframe({
+            url: globalUrl + '/view/popup/save-view.html?filed=view&id='+data.id,
+            title: '留存查看',
+            btn:['关闭'],
+            shadeClose: true,
+            area:['1250px', '700px'],
+            confirm: function (index, layero) {
+                layer.close(index);
+            },
+            success:function (layero, index) {
+                $(layero[0]).find('.layui-layer-btn').remove();
+            }
+        });
+    }
 });
 
 
