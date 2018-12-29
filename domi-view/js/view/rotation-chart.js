@@ -58,17 +58,15 @@ table.on('tool(rotation-chart-table)', function (obj) {
                     return false;
                 }
 
-                let arr = [];
+
                 let obj = {
                     id: data.id,
                     imgUrl: banner,
                     background: bannerBg,
                     url: bannerUrl
                 };
-                arr.push(obj);
-                let post = {newData: JSON.stringify(arr)};
                 let url = globalAjaxUrl + '/admin/banner/addBanner';
-                pageCommon.postAjax(url, post, function (res) {
+                pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     if (!res.state) {
                         pageCommon.layerMsg('编辑失败', 2);
                         return false;
@@ -142,16 +140,15 @@ $('.new-photos').click(function () {
                 return false;
             }
 
-            let arr = [];
+
             let obj = {
                 imgUrl: banner,
                 background: bannerBg,
                 url: bannerUrl
             };
-            arr.push(obj);
-            let data = {newData: JSON.stringify(arr)};
+
             let url = globalAjaxUrl + '/admin/banner/addBanner';
-            pageCommon.postAjax(url, data, function (res) {
+            pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                 console.log(res);
                 if (!res.state) {
                     pageCommon.layerMsg('添加失败', 2);

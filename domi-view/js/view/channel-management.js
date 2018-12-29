@@ -96,7 +96,7 @@ table.on('tool(channel-management-table)', function(obj){
                     pageCommon.layerMsg('收款人不能为空', 2);
                     return false;
                 }
-                let arr = [];
+
                 let obj = {
                     id:id,
                     name: name,
@@ -110,16 +110,24 @@ table.on('tool(channel-management-table)', function(obj){
                 };
                 let url = globalAjaxUrl + '/admin/channel/updateChannel';
 
-                arr.push(obj);
-                let data = {newData: JSON.stringify(arr)};
-                pageCommon.postAjax(url, data, function (res) {
+       /*         pageCommon.postAjax(url, data, function (res) {
                     pageCommon.layerMsg(res.msg, 1);
                     layer.close(index);
                     table.reload('channel-management-table', {
                         url: globalAjaxUrl + '/admin/channel/getChannel'
                     });
+                },function () {
+
+                },'','application/x-www-form-urlencoded; charset=UTF-8');*/
+
+                pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
+                    pageCommon.layerMsg(res.msg, 1);
+                    layer.close(index);
+                    table.reload('channel-management-table', {
+                        url: globalAjaxUrl + '/admin/channel/getChannel'
+                    });
+                    parent.layer.close(index);
                 });
-                parent.layer.close(index);
             },
             cancel: function (index, layero) {
                 console.log(index);
@@ -191,7 +199,7 @@ $('.add-channel-management').click(function () {
                 pageCommon.layerMsg('收款人不能为空', 2);
                 return false;
             }
-            let arr = [];
+
             let obj = {
                 name: name,
                 accountName:account,
@@ -204,9 +212,7 @@ $('.add-channel-management').click(function () {
             };
             let url = globalAjaxUrl + '/admin/channel/addChannel';
 
-            arr.push(obj);
-            let data = {newData: JSON.stringify(arr)};
-            pageCommon.postAjax(url, data, function (res) {
+            pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
 
                if (!res.state){
                    pageCommon.layerMsg(res.msg, 2);

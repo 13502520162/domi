@@ -124,11 +124,16 @@ html, body, .platform-data-management {
     color: #fff;
 }
 .content-text-statistics .content-text-statistics-u>li:nth-child(2){
-    margin:0 40px;
+    margin:0 20px;
     background: #EA6705;
     color: #fff;
 }
 .content-text-statistics .content-text-statistics-u>li:nth-child(3){
+    margin-right: 20px;
+    background: orange;
+    color: #fff;
+}
+.content-text-statistics .content-text-statistics-u>li:nth-child(4){
     margin-right: 20px;
     background: #1A827A;
     color: #fff;

@@ -117,6 +117,7 @@ table.on('tool(article-management-content-table)', function (obj) {
                     return false;
                 }
                 let obj = {
+                    id:id,
                     title: tit,
                     author: author,
                     typeId: classification,
@@ -124,9 +125,8 @@ table.on('tool(article-management-content-table)', function (obj) {
                     content: content,
                     imgUrl: photo
                 };
-                let url = globalAjaxUrl + '/admin/article/addArticle';
-                let data = {article: JSON.stringify(obj)};
-                pageCommon.postAjax(url, data, function (res) {
+                let url = globalAjaxUrl + '/admin/article/updateArticle';
+                pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     pageCommon.layerMsg(res.msg, 1);
                     parent.layer.close(index);
                     labelSelection('.article-active');
@@ -246,7 +246,6 @@ $('.article-management-label').on('click', '.article-title-remove', function (e)
         $this.parents('li').remove();
         pageCommon.getAjax(url, {}, function (res) {
             pageCommon.layerMsg(res.msg, 1);
-            getArticleManagement();
         })
     });
 });
@@ -339,8 +338,7 @@ $('.article-management-top').on('click', '.article-management', function () {
                 imgUrl: photo
             };
             let url = globalAjaxUrl + '/admin/article/addArticle';
-            let data = {article: JSON.stringify(obj)};
-            pageCommon.postAjax(url, data, function (res) {
+            pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                 pageCommon.layerMsg(res.msg, 1);
                 parent.layer.close(index);
                 table.reload('article-management-content-table');

@@ -39,15 +39,17 @@ let pageCommon = {
      * @param err_fn
      * @param datatype
      */
-    postAjax: function (url, data, succ_fn, err_fn, datatype) {
+    postAjax: function (url, data, succ_fn, err_fn, datatype,contentType) {
         let uri = $.trim(url);	      //去除空格
         datatype = datatype || 'json';
+        contentType = contentType || 'application/json;charset=UTF-8';
         $.ajax({
                 type: "POST",
                 url: uri,
                 async: true,
                 data: data,
                 dataType: datatype,
+                contentType: contentType,
                 beforeSend(request) {
                     request.setRequestHeader('Authorization', loginToken);
                 },
@@ -107,7 +109,7 @@ let pageCommon = {
             btn2: function (index, layero) {
                 cancel(index, layero)
             },
-            success:function (index, layero) {
+            success: function (index, layero) {
                 success(index, layero)
             }
         });
@@ -295,7 +297,7 @@ let pageCommon = {
         let loginInfo = localStorage.getItem('loginInfo');
         loginInfo = JSON.parse(loginInfo);
         let modelId = sessionStorage.getItem('modelId');
-        if (loginInfo == null){
+        if (loginInfo == null) {
             _this.returnLogin();
             return false;
         }
@@ -310,19 +312,19 @@ let pageCommon = {
                 success: function (res) {
                     res = JSON.parse(res);
                     data = res.data[0];
-                   if (!res.msg){
-                       _this.returnLogin();
-                   }
+                    if (!res.msg) {
+                        _this.returnLogin();
+                    }
                 }
             }
         );
         return data;
     },
-    returnLogin:function () {
-        this.layerMsg('请先登录账号',2);
-        setTimeout( () =>{
+    returnLogin: function () {
+        this.layerMsg('请先登录账号', 2);
+        setTimeout(() => {
             top.window.location.href = globalUrl + '/admin/index.html';
-        },1500);
+        }, 1500);
     }
 };
 

@@ -33,15 +33,14 @@ table.on('tool(list-background-map-table)', function (obj) {
                     pageCommon.layerMsg('图片不能为空', 2);
                     return false;
                 }
-                let arr = [];
+
                 let obj = {
                     id: data.id,
                     background: photo
                 };
-                arr.push(obj);
-                let post = {newData: JSON.stringify(arr)};
+
                 let url = globalAjaxUrl + '/admin/icon/addBackground';
-                pageCommon.postAjax(url, post, function (res) {
+                pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     if (!res.state) {
                         pageCommon.layerMsg('编辑失败', 2);
                         return false;
