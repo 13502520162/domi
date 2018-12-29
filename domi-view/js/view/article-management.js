@@ -116,9 +116,7 @@ table.on('tool(article-management-content-table)', function (obj) {
                     pageCommon.layerMsg('内容不能为空', 2);
                     return false;
                 }
-                let arr = [];
                 let obj = {
-                    id:id,
                     title: tit,
                     author: author,
                     typeId: classification,
@@ -126,9 +124,8 @@ table.on('tool(article-management-content-table)', function (obj) {
                     content: content,
                     imgUrl: photo
                 };
-                arr.push(obj);
-                let url = globalAjaxUrl + '/admin/article/updateArticle';
-                let data = {newData: JSON.stringify(arr)};
+                let url = globalAjaxUrl + '/admin/article/addArticle';
+                let data = {article: JSON.stringify(obj)};
                 pageCommon.postAjax(url, data, function (res) {
                     pageCommon.layerMsg(res.msg, 1);
                     parent.layer.close(index);
@@ -332,7 +329,7 @@ $('.article-management-top').on('click', '.article-management', function () {
                 pageCommon.layerMsg('内容不能为空', 2);
                 return false;
             }
-            let arr = [];
+
             let obj = {
                 title: tit,
                 author: author,
@@ -341,9 +338,8 @@ $('.article-management-top').on('click', '.article-management', function () {
                 content: content,
                 imgUrl: photo
             };
-            arr.push(obj);
             let url = globalAjaxUrl + '/admin/article/addArticle';
-            let data = {newData: JSON.stringify(arr)};
+            let data = {article: JSON.stringify(obj)};
             pageCommon.postAjax(url, data, function (res) {
                 pageCommon.layerMsg(res.msg, 1);
                 parent.layer.close(index);
