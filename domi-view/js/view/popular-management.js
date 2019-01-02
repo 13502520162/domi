@@ -11,7 +11,7 @@ table.render({
     , cols: [[
         {field: 'name', title: '名称', align: 'center'}
         , {field: 'id', title: 'ID', align: 'center', hide: true}
-        , {field: 'hotTime', title: '操作时间', align: 'center'}
+        , {field: 'dateTime', title: '操作时间', align: 'center'}
         , {field: 'hotState', width: '20%', title: '状态', templet: '#state', align: 'center'}
         , {field: 'oneState', width: '20%', title: '置顶', templet: '#roofPlacement', align: 'center'}
     ]]
@@ -24,70 +24,79 @@ table.render({
                 form.render();
             }
         }
+    },
+    parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+        return {
+            "code": res.data.code, //解析接口状态
+            "msg": res.info, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.loanPlatformCopies //解析数据列表
+        };
     }
 });
 
 //监听状态的操作
 form.on('switch(hotState)', function (obj) {
    /* layer.tips(this.name + '：' + obj.elem.checked, obj.othis);*/
-    let arr = [];
     let id = obj.elem.attributes[3].value;
+    let obj1 = {};
     if (obj.elem.checked) {
         $(obj.elem).parents('tr').find('[data-field="roofPlacement"]').find('input').removeAttr('disabled');
-        let obj1 = {
+        obj1 = {
             id: parseInt(id),
             hotState: true,
             oneState: false
         };
-        arr.push(obj1);
-
     } else {
         $(obj.elem).parents('tr').find('[data-field="roofPlacement"]').find('input').attr('disabled', 'disabled');
         $(obj.elem).parents('tr').find('[data-field="roofPlacement"]').find('input').prop('checked', false);
-        let obj1 = {
+        obj1 = {
             id: parseInt(id),
             hotState: false,
             oneState: false
         };
-        arr.push(obj1);
+
     }
 
     let url = globalAjaxUrl + '/admin/loanPlatform/Roof';
-    let data = {newData: JSON.stringify(arr)};
-    pageCommon.postAjax(url, data, function (res) {
-        pageCommon.layerMsg(res.msg, 1);
-        table.reload('popular-management-table');
-        form.render();
+    pageCommon.postAjax(url, JSON.stringify(obj1), function (res) {
+        if (res.errcode){
+            pageCommon.layerMsg(res.info ,1);
+            table.reload('popular-management-table');
+            form.render();
+        } else {
+            pageCommon.layerMsg(res.info ,2);
+        }
     });
 });
 
 //监听置顶的操作
 form.on('switch(oneState)', function (obj) {
-    let arr = [];
     let id = obj.elem.attributes[3].value;
+    let obj1 = {};
     if (obj.elem.checked) {
-        let obj1 = {
+        obj1 = {
             id: parseInt(id),
             hotState: true,
             oneState: true
         };
-        arr.push(obj1);
-
     } else {
-        let obj1 = {
+        obj1 = {
             id: parseInt(id),
             hotState: true,
             oneState: false
         };
-        arr.push(obj1);
     }
 
     let url = globalAjaxUrl + '/admin/loanPlatform/Roof';
-    let data = {newData: JSON.stringify(arr)};
-    pageCommon.postAjax(url, data, function (res) {
-        pageCommon.layerMsg(res.msg, 1);
-        table.reload('popular-management-table');
-        form.render();
+    pageCommon.postAjax(url, JSON.stringify(obj1), function (res) {
+        if (res.errcode){
+            pageCommon.layerMsg(res.info ,1);
+            table.reload('popular-management-table');
+            form.render();
+        } else {
+            pageCommon.layerMsg(res.info ,2);
+        }
     });
 
   /*  layer.tips(this.name + '：' + obj.elem.checked, obj.othis);*/

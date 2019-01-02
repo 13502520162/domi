@@ -4,8 +4,9 @@ $(function () {
 
     let url = globalAjaxUrl + '/admin/articleType/getAllArticleType';
     pageCommon.getAjax(url, {}, function (res) {
-        for (let i = 0; i < res.data.length; i++) {
-            $('.article-classification').append('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>');
+        res = res.data
+        for (let i = 0; i < res.articleTypes.length; i++) {
+            $('.article-classification').append('<option value="' + res.articleTypes[i].id + '">' + res.articleTypes[i].name + '</option>');
         }
         // 数据填充
         let query = pageCommon.getUrlParams();
@@ -33,6 +34,7 @@ $(function () {
 
 
 
+    // 图片上传
     $('#fileImg').change(function () {
         var $this = $(this);
         var fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
@@ -48,6 +50,7 @@ $(function () {
     });
 
 
+    // 重新上传
     $('.re-upload').click(function () {
         $('#fileImg').val('');
         $('.article-img img').attr('src','');

@@ -27,12 +27,22 @@ ArticleManagement.prototype = {
                 , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
                 , {field: 'content', title: '内容', align: 'center'}
                 , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
-                , {field: 'update', title: '更新时间', align: 'center'}
+                , {field: 'dateTime',width: '12%', title: '更新时间', align: 'center'}
                 , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
             ]]
             , page: true
             , done: function (res, curr, count) {
+                $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+            }
+            ,
+            parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                 getArticleManagementSuccess(res);
+                return {
+                    "code": res.data.code, //解析接口状态
+                    "msg": res.info, //解析提示文本
+                    "count": res.data.count, //解析数据长度
+                    "data": res.data.articles //解析数据列表
+                };
             }
         });
     }
@@ -46,12 +56,13 @@ articleManagement.init();
 
 function getArticleManagementSuccess(res) {
     let liLen = $('.article-management-label>ul').find('.add-li').length;
-    if (res.msg) {
-        if (liLen != res.type.length) {
-            for (let j = 0; j < res.type.length; j++) {
-                let html = `<li class="add-li" data-id="${res.type[j].id}">
+    res = res.data;
+
+        if (liLen != res.articleTypes.length) {
+            for (let j = 0; j < res.articleTypes.length; j++) {
+                let html = `<li class="add-li" data-id="${res.articleTypes[j].id}">
                             <div class="article-management-label-tit">
-                                <span class="article-management-label-tit-span">${res.type[j].name}</span>
+                                <span class="article-management-label-tit-span">${res.articleTypes[j].name}</span>
                                 <input type="text" class="article-management-label-tit-ipt">
                             </div>
                             <span class="article-management-label-down"><i class="fa fa-chevron-down"></i></span>
@@ -62,7 +73,6 @@ function getArticleManagementSuccess(res) {
                         </li>`;
                 $('.add-article-li').before(html);
             }
-        }
     }
 }
 
@@ -127,13 +137,22 @@ table.on('tool(article-management-content-table)', function (obj) {
                 };
                 let url = globalAjaxUrl + '/admin/article/updateArticle';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    pageCommon.layerMsg(res.msg, 1);
+                    console.log(res);
+                    if (res.errcode == 3){
+                        pageCommon.layerMsg(res.info, 1);
+
+                    } else {
+                        pageCommon.layerMsg(res.info, 2);
+                    }
                     parent.layer.close(index);
                     labelSelection('.article-active');
                 });
             },
             cancel: function (index, layero) {
                 parent.layer.close(index);
+            },
+            success:function () {
+
             }
         });
     }else if (obj.event == 'view'){
@@ -161,6 +180,15 @@ function labelSelection(e){
             , where: {
                 articleTypeId: id
             }
+            , parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                getArticleManagementSuccess(res);
+                return {
+                    "code": res.data.code, //解析接口状态
+                    "msg": res.info, //解析提示文本
+                    "count": res.data.count, //解析数据长度
+                    "data": res.data.articles //解析数据列表
+                };
+            }
         });
     }
 
@@ -179,12 +207,22 @@ function labelSelection(e){
                 , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
                 , {field: 'content', title: '内容', align: 'center'}
                 , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
-                , {field: 'update',width: '10%', title: '更新时间', align: 'center'}
+                , {field: 'dateTime',width: '12%', title: '更新时间', align: 'center'}
                 , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
             ]]
             , page: true
             , done: function (res, curr, count) {
+                $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+            }
+            ,
+            parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                 getArticleManagementSuccess(res);
+                return {
+                    "code": res.data.code, //解析接口状态
+                    "msg": res.info, //解析提示文本
+                    "count": res.data.count, //解析数据长度
+                    "data": res.data.articles //解析数据列表
+                };
             }
         });
     }
@@ -199,11 +237,10 @@ $('.article-management-label>ul').on('click', 'li', function () {
 
 // 编辑标题 ok
 $('.article-management-label').on('click', '.article-title-edit', function (e) {
-/*    if (!permissionValue.edit){
+    if (!permissionValue.edit){
         pageCommon.layerMsg('你没有权限编辑',2);
         return false;
-    }*/
-    pageCommon.authorityControl(!permissionValue.editData);
+    }
     var span = $(this).parents('li').find('.article-management-label-tit-span');
     var input = $(this).parents('li').find('.article-management-label-tit-ipt');
     var id = $(this).parents('li').attr('data-id');
@@ -219,16 +256,17 @@ $('.article-management-label').on('click', '.article-title-edit', function (e) {
             span.show();
             input.hide();
 
-            let arr = [];
             let obj = {
                 name: input.val(),
                 id:id
             };
-            arr.push(obj);
             let url = globalAjaxUrl + '/admin/articleType/updateArticleType';
-            let data = {newData: JSON.stringify(arr)};
-            pageCommon.postAjax(url, data, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
+            pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
+                if (res.errcode==3){
+                    pageCommon.layerMsg(res.info, 1);
+                } else {
+                    pageCommon.layerMsg(res.info, 2);
+                }
             });
         }
     }
@@ -246,7 +284,12 @@ $('.article-management-label').on('click', '.article-title-remove', function (e)
     pageCommon.layerConfirm(function () {
         $this.parents('li').remove();
         pageCommon.getAjax(url, {}, function (res) {
-            pageCommon.layerMsg(res.msg, 1);
+            if (res.errcode==3){
+                pageCommon.layerMsg(res.info, 1);
+            } else {
+                pageCommon.layerMsg(res.info, 2);
+            }
+            window.location.reload();
         })
     });
 });
@@ -277,16 +320,19 @@ $('.add-article-title').click(function () {
                         </li>`;
                 $('.add-article-li').before(html);
                 let url = globalAjaxUrl + '/admin/articleType/addArticleType';
-                let arr = [];
                 let obj = {
                     name: val
                 };
-                arr.push(obj);
-                let data = {newData: JSON.stringify(arr)};
-                pageCommon.postAjax(url, data, function (res) {
-                    pageCommon.layerMsg(res.msg, 1);
-                    $('.article-title-ipt').val('').hide();
-                    window.location.reload();
+                pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
+                    console.log(res);
+                    if (res.errcode==3){
+                        pageCommon.layerMsg(res.info, 1);
+                        $('.article-title-ipt').val('').hide();
+                    } else {
+                        pageCommon.layerMsg(res.info, 2);
+                    }
+
+                   window.location.reload();
                 });
 
             } else {
@@ -340,27 +386,24 @@ $('.article-management-top').on('click', '.article-management', function () {
             };
             let url = globalAjaxUrl + '/admin/article/addArticle';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                pageCommon.layerMsg(res.msg, 1);
+                if (res.errcode == 3){
+                    pageCommon.layerMsg(res.info, 1);
+
+                } else {
+                    pageCommon.layerMsg(res.info, 2);
+                }
                 parent.layer.close(index);
                 table.reload('article-management-content-table');
             });
         },
         cancel: function (index, layero) {
             parent.layer.close(index);
+        },
+        success:function () {
+
         }
     });
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 $('.article-management-label>ul').on('mouseenter', 'li', function () {

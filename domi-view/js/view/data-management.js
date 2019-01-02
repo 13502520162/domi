@@ -42,7 +42,7 @@ document.onkeydown = function (e) {
                 beginDate: '',
                 endDate: '',
                 page:1,
-                limit:100,
+                limit:10,
                 name: val
             }
         });
@@ -146,25 +146,34 @@ $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let time = $(this).attr('data-time');
     let dateVal;
+    let beginDate,endDate;
     if (time != 'all') {
         if (time == '1') {
             dateVal = pageCommon.getTimeForMat();
             $('.data-management-start').val(dateVal.start + ' - ' + dateVal.end);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
         } else if (time == '-1') {
             dateVal = pageCommon.getTimeForMat(1);
             $('.data-management-start').val(dateVal.start + ' - ' + dateVal.start);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
         } else {
             dateVal = pageCommon.getTimeForMat(time);
             $('.data-management-start').val(dateVal.start + ' - ' + dateVal.end);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
         }
+
         table.reload('data-management-content-table', {
-            url: globalAjaxUrl + '/admin/loanPlatform/getTimeCount'
+            url: globalAjaxUrl + '/admin/loanPlatform/getLoanPlatformData'
             , where: {
-                beginDate: '',
-                endDate: '',
+                beginDate: beginDate,
+                endDate:endDate,
                 name: '',
-                time: $('.data-management-start').val()
-            },parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                limit:10
+            },
+            parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                 return {
                     "code": res.data.code, //解析接口状态
                     "msg": res.info, //解析提示文本
