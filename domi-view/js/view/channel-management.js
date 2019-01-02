@@ -7,13 +7,13 @@ table.render({
     , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
     , url: globalAjaxUrl + '/admin/channel/getChannel'
     , cols: [[
-        {field: 'channelName',  title: '渠道名', align: 'center'}
+        {field: 'name',  title: '渠道名', align: 'center'}
         , {field: 'id', title: 'ID', align: 'center',hide:true}
         , {field: 'accountName', title: '渠道账号', align: 'center'}
         , {field: 'password', title: '渠道密码', align: 'center'}
         , {field: 'url',width: '25%', title: '链接', align: 'center'}
-        , {field: 'cooperationMode', title: '合作模式', align: 'center'}
-        , {field: 'price', title: '价格', align: 'center'}
+        , {field: 'model', title: '合作模式', align: 'center'}
+        , {field: 'money', title: '价格', align: 'center'}
         , {field: 'type', title: '类型', align: 'center'}
         , {field: 'collectionAccount', title: '收款账号', align: 'center',hide:true}
         , {field: 'payee', title: '收款人', align: 'center',hide:true}
@@ -43,12 +43,17 @@ table.on('tool(channel-management-table)', function(obj){
             return false;
         }
         layer.confirm('确定删除嘛？', function(index){
-
             let url = globalAjaxUrl + '/admin/channel/deleteChannel?channelId='+data.id;
             pageCommon.getAjax(url, {}, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
-                obj.del();
-                layer.close(index);
+                console.log(res);
+                if (res.errcode==3){
+                    pageCommon.layerMsg(res.info, 1);
+                    obj.del();
+                    layer.close(index);
+                } else {
+                    pageCommon.layerMsg(res.info, 1);
+                }
+
             });
         });
     } else if(obj.event === 'edit'){
@@ -118,28 +123,23 @@ table.on('tool(channel-management-table)', function(obj){
                 };
                 let url = globalAjaxUrl + '/admin/channel/updateChannel';
 
-       /*         pageCommon.postAjax(url, data, function (res) {
-                    pageCommon.layerMsg(res.msg, 1);
-                    layer.close(index);
-                    table.reload('channel-management-table', {
-                        url: globalAjaxUrl + '/admin/channel/getChannel'
-                    });
-                },function () {
-
-                },'','application/x-www-form-urlencoded; charset=UTF-8');*/
-
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    pageCommon.layerMsg(res.msg, 1);
-                    layer.close(index);
-                    table.reload('channel-management-table', {
-                        url: globalAjaxUrl + '/admin/channel/getChannel'
-                    });
+                    if (res.errcode==3){
+                        pageCommon.layerMsg(res.info ,1);
+                        layer.close(index);
+                    } else {
+                        pageCommon.layerMsg(res.info ,1);
+                        layer.close(index);
+                    }
+                    table.reload('channel-management-table');
                     parent.layer.close(index);
                 });
             },
             cancel: function (index, layero) {
-                console.log(index);
                 layer.close(index);
+            },
+            success:function () {
+
             }
         });
     } else if(obj.event === 'view'){
@@ -150,6 +150,9 @@ table.on('tool(channel-management-table)', function(obj){
             btn:['关闭'],
             confirm: function (index, layero) {
                 parent.layer.close(index);
+            }
+            ,success:function () {
+
             }
         });
     }

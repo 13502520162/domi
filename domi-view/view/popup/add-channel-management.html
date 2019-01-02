@@ -60,13 +60,13 @@
     let data = $(".channel-management .channel-management-iframe", parent.document).contents().find('#channel-management-data').text();
     if (data){
         data = JSON.parse(data);
-        $('.channel-name').val(data.channelName);
+        $('.channel-name').val(data.name);
         $('.channel-account').val(data.accountName);
         $('.channel-password').val(data.password);
         $('.add-article').attr('data-id', data.id);
         $('.channel-url').val(data.url);
-        $('.cooperation-mode').val(data.cooperationMode);
-        $('.channel-price').val(data.price);
+        $('.cooperation-mode').val(data.model);
+        $('.channel-price').val(data.money);
         $('.channel-type').val(data.type);
         $('.collection-account').val(data.receivables);
         $('.payee').val(data.receivablesPeople);
