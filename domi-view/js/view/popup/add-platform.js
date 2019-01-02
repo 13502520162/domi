@@ -13,14 +13,12 @@ $(function () {
         },
     });
 
-    // 分类和标签初始化
+    // 分类初始化
     let url = globalAjaxUrl + '/admin/loanPlatform/getLabelAndType';
     pageCommon.getAjax(url, {}, function (res) {
+        res = res.data;
         for (let i = 0; i < res.typeList.length; i++) {
             $('.platform-classification').append('<option value="' + res.typeList[i].id + '">' + res.typeList[i].name + '</option>');
-        }
-        for (let j = 0; j < res.labelList.length; j++) {
-            $('.platform-label').append('<option value="' + res.labelList[j].id + '">' + res.labelList[j].name + '</option>');
         }
 
         // 数据填充
@@ -68,7 +66,7 @@ $(function () {
                 };
                 let period = $('.borrowing-cycle>span');
                 for (let i = 0; i < period.length; i++) {
-                    if (data.period.contains($(period[i]).attr('data-num'))) {
+                    if (data.periodArr.contains($(period[i]).attr('data-num'))) {
                         $(period[i]).addClass('spanActive')
                     }
                 }

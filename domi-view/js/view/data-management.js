@@ -163,7 +163,7 @@ $('.management-option-date>p').click(function () {
                 beginDate: '',
                 endDate: '',
                 name: '',
-                time: time
+                time: $('.data-management-start').val()
             },parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                 return {
                     "code": res.data.code, //解析接口状态
