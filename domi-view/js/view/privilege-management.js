@@ -11,25 +11,31 @@ table.render({
         , {field: 'id', title: 'ID', align: 'center', hide: true}
         , {field: 'accountNumber', width: '10%', title: '账号', align: 'center'}
         , {field: 'password', title: '密码', width: '10%', align: 'center'}
-        , {field: 'permission', title: '基本权限', align: 'center'}
-        , {field: 'updateTime', width: '13%', title: '操作时间', align: 'center'}
+        , {field: 'permissionName', title: '基本权限', align: 'center'}
+        , {field: 'dateTime', width: '13%', title: '操作时间', align: 'center'}
         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: '15%', align: 'center'}
     ]]
     , page: true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+    } ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+        return {
+            "code": res.data.code, //解析接口状态
+            "msg": res.info, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.employees //解析数据列表
+        };
     }
 });
 
 //监听行工具事件
 table.on('tool(privilege-management-table)', function (obj) {
     var data = obj.data;
-    //console.log(obj)
     if (obj.event === 'del') {
         layer.confirm('确定删除嘛？', function (index) {
             let url = globalAjaxUrl + '/admin/employee/deleteEmployee?empId=' + data.id;
             pageCommon.getAjax(url, {}, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
+                pageCommon.layerMsg(res.info, 1);
                 obj.del();
                 layer.close(index);
             });
@@ -62,11 +68,11 @@ table.on('tool(privilege-management-table)', function (obj) {
                 let newArr = [];
                 for (let j = 0; j < arr.length; j++) {
                     let objFor = {
-                        id: body.find('.' + arr[j]).attr('data-id'),
-                        use: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
-                        edit: body.find('.' + arr[j] + ' .edit').prop('checked'),
-                        add: body.find('.' + arr[j] + ' .add').prop('checked'),
-                        remove: body.find('.' + arr[j] + ' .remove').prop('checked')
+                        tId: body.find('.' + arr[j]).attr('data-id'),
+                        useData: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
+                        editData: body.find('.' + arr[j] + ' .edit').prop('checked'),
+                        addData: body.find('.' + arr[j] + ' .add').prop('checked'),
+                        deleteData: body.find('.' + arr[j] + ' .remove').prop('checked')
                     };
                     newArr.push(objFor);
                 }
@@ -77,10 +83,14 @@ table.on('tool(privilege-management-table)', function (obj) {
                     password: password,
                     arr: newArr
                 };
-                let data = {newData: JSON.stringify(obj)};
                 let url = globalAjaxUrl + '/admin/employee/updateEmployee';
-                pageCommon.postAjax(url, data, function (res) {
-                    pageCommon.layerMsg(res.msg, 1);
+                pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
+                    console.log(res);
+                    if (res.errcode == 10){
+                        pageCommon.layerMsg(res.info, 2);
+                    } else {
+                        pageCommon.layerMsg(res.info, 1);
+                    }
                     parent.layer.close(index);
                     table.reload('privilege-management-table');
                 });
@@ -88,6 +98,9 @@ table.on('tool(privilege-management-table)', function (obj) {
             },
             cancel: function (index, layero) {
                 parent.layer.close(index);
+            },
+            success:function () {
+
             }
         });
     }
@@ -113,7 +126,6 @@ $('.add-privilege-management').click(function () {
                 pageCommon.layerMsg('账号不能为空', 2);
                 return false;
             }
-            console.log($.trim(password).length);
             if ($.trim(password) == '' || $.trim(password).length < 6) {
                 pageCommon.layerMsg('密码不能为空并且长度应小于6位', 2);
                 return false;
@@ -122,11 +134,11 @@ $('.add-privilege-management').click(function () {
             let newArr = [];
             for (let j = 0; j < arr.length; j++) {
                 let objFor = {
-                    id: body.find('.' + arr[j]).attr('data-id'),
-                    use: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
-                    edit: body.find('.' + arr[j] + ' .edit').prop('checked'),
-                    add: body.find('.' + arr[j] + ' .add').prop('checked'),
-                    remove: body.find('.' + arr[j] + ' .remove').prop('checked')
+                    tId: body.find('.' + arr[j]).attr('data-id'),
+                    useData: body.find('.' + arr[j] + ' .checkedAll').prop('checked'),
+                    editData: body.find('.' + arr[j] + ' .edit').prop('checked'),
+                    addData: body.find('.' + arr[j] + ' .add').prop('checked'),
+                    deleteData: body.find('.' + arr[j] + ' .remove').prop('checked')
                 };
                 newArr.push(objFor);
             }
@@ -136,16 +148,14 @@ $('.add-privilege-management').click(function () {
                 password: password,
                 arr: newArr
             };
-            let data = {newData: JSON.stringify(obj)};
             let url = globalAjaxUrl + '/admin/employee/addEmployee';
-            pageCommon.postAjax(url, data, function (res) {
-                console.log(res);
-                if (!res.state) {
-                    pageCommon.layerMsg(res.msg, 2);
+            pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
+                if (res.errcode!=3) {
+                    pageCommon.layerMsg(res.info, 2);
                     return false;
                 } else {
                     parent.layer.close(index);
-                    pageCommon.layerMsg(res.msg, 1);
+                    pageCommon.layerMsg(res.info, 1);
                     table.reload('privilege-management-table');
                 }
 
@@ -154,6 +164,9 @@ $('.add-privilege-management').click(function () {
         },
         cancel: function (index, layero) {
             parent.layer.close(index);
+        },
+        success:function () {
+
         }
     });
 });

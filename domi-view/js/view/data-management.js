@@ -65,15 +65,23 @@ table.render({
     }
     , cols: [[
         {type: 'checkbox'}
-        , {field: 'productName',  title: '产品名称', align: 'center'}
+        , {field: 'platformDataName',  title: '产品名称', align: 'center'}
         , {field: 'id', title: 'ID', align: 'center', hide: true}
-        , {field: 'creationTime', title: '创建时间', align: 'center'}
+        , {field: 'date', title: '创建时间', align: 'center'}
        /* , {field: 'displayData', title: '展示数据', align: 'center'}*/
-        , {field: 'clickData',width: '20%',  title: '点击数据', align: 'center'}
+        , {field: 'clickPeople',width: '20%',  title: '点击数据', align: 'center'}
         , { title: '点击分布',width:'15%', templet:'#clickDistribution', align: 'center'}
 /*        , {field: 'conversionRate', width: '20%', title: '转化率', align: 'center'}*/
     ]]
     , page: true
+    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+        return {
+            "code": res.data.code, //解析接口状态
+            "msg": res.info, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.data //解析数据列表
+        };
+    }
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
     }
@@ -156,6 +164,13 @@ $('.management-option-date>p').click(function () {
                 endDate: '',
                 name: '',
                 time: time
+            },parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.data.code, //解析接口状态
+                    "msg": res.info, //解析提示文本
+                    "count": res.data.count, //解析数据长度
+                    "data": res.data.data //解析数据列表
+                };
             }
         });
     } else {
@@ -165,6 +180,14 @@ $('.management-option-date>p').click(function () {
                 beginDate: '',
                 endDate: '',
                 name: ''
+            }
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.data.code, //解析接口状态
+                    "msg": res.info, //解析提示文本
+                    "count": res.data.count, //解析数据长度
+                    "data": res.data.data //解析数据列表
+                };
             }
 
         });

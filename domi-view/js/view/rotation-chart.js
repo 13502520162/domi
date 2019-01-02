@@ -1,5 +1,5 @@
 let table = layui.table;
-
+let permissionValue = pageCommon.getPermissionValue();
 table.render({
     elem: '#rotation-chart-table'
     , method: 'GET'
@@ -12,12 +12,19 @@ table.render({
         , {field: 'background', title: 'banner背景图', width: '15%', templet: '#background', align: 'center'}
         , {field: 'url', title: 'banner链接', align: 'center'}
         , {field: 'sort', title: '排序', edit: 'text', width: '10%', align: 'center'}
-        , {field: 'updateTime', width: '13%', title: '操作时间', align: 'center'}
+        , {field: 'dateTime', width: '13%', title: '操作时间', align: 'center'}
         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: '15%', align: 'center'}
     ]]
     , page: true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+    },parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+        return {
+            "code": res.errcode, //解析接口状态
+            "msg": res.message, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.list //解析数据列表
+        };
     }
 });
 
@@ -25,6 +32,10 @@ table.render({
 table.on('tool(rotation-chart-table)', function (obj) {
     var data = obj.data;
     if (obj.event === 'del') {
+        if (!permissionValue.remove){
+            pageCommon.layerMsg('你没有权限删除',2);
+            return false;
+        }
         layer.confirm('确定删除嘛？', function (index) {
             let url = globalAjaxUrl + '/admin/banner/delBanner?bannerId=' + data.id;
             pageCommon.getAjax(url, {}, function (res) {
@@ -34,6 +45,10 @@ table.on('tool(rotation-chart-table)', function (obj) {
             });
         });
     } else if (obj.event === 'edit') {
+        if (!permissionValue.edit){
+            pageCommon.layerMsg('你没有权限编辑',2);
+            return false;
+        }
         $('.content-data').text(JSON.stringify(data));
         let index = pageCommon.layerParentOpenIframe({
             url: globalUrl + '/view/popup/add-photos.html?field=edit',
@@ -67,12 +82,12 @@ table.on('tool(rotation-chart-table)', function (obj) {
                 };
                 let url = globalAjaxUrl + '/admin/banner/addBanner';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    if (!res.state) {
-                        pageCommon.layerMsg('编辑失败', 2);
+                    if (!res.errcode) {
+                        pageCommon.layerMsg(res.info, 2);
                         return false;
                     } else {
                         parent.layer.close(index);
-                        pageCommon.layerMsg('编辑成功', 1);
+                        pageCommon.layerMsg(res.info, 1);
                         table.reload('rotation-chart-table');
                     }
 
@@ -149,13 +164,12 @@ $('.new-photos').click(function () {
 
             let url = globalAjaxUrl + '/admin/banner/addBanner';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                console.log(res);
-                if (!res.state) {
-                    pageCommon.layerMsg('添加失败', 2);
+                if (!res.errcode) {
+                    pageCommon.layerMsg(res.info, 2);
                     return false;
                 } else {
                     parent.layer.close(index);
-                    pageCommon.layerMsg('添加成功', 1);
+                    pageCommon.layerMsg(res.info, 1);
                     table.reload('rotation-chart-table');
                 }
 

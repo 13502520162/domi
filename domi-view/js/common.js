@@ -310,9 +310,13 @@ let pageCommon = {
                     request.setRequestHeader('Authorization', loginToken);
                 },
                 success: function (res) {
-                    res = JSON.parse(res);
-                    data = res.data[0];
-                    if (!res.msg) {
+                    let obj = {
+                        add:res.data.permission.addData,
+                        remove:res.data.permission.deleteData,
+                        edit:res.data.permission.editData
+                    };
+                    data = obj;
+                    if (!res.errcode) {
                         _this.returnLogin();
                     }
                 }

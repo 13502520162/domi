@@ -10,10 +10,18 @@ table.render({
         {field: 'id', title: 'ID', align: 'center'}
         , {field: 'name', title: '名称', align: 'center'}
         , {field: 'background', title: '背景图', templet: '#background', align: 'center'}
-        , {field: 'updateTime', title: '操作时间', align: 'center'}
+        , {field: 'dateTime', title: '操作时间', align: 'center'}
         , {fixed: 'right', title: '操作', toolbar: '#barDemo', align: 'center'}
     ]]
     , done: function (res, curr, count) {
+    }
+    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+        return {
+            "code": res.data.code, //解析接口状态
+            "msg": res.info, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.data //解析数据列表
+        };
     }
 });
 
@@ -41,12 +49,12 @@ table.on('tool(list-background-map-table)', function (obj) {
 
                 let url = globalAjaxUrl + '/admin/icon/addBackground';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    if (!res.state) {
-                        pageCommon.layerMsg('编辑失败', 2);
+                    if (!res.errcode) {
+                        pageCommon.layerMsg(res.info, 2);
                         return false;
                     } else {
                         parent.layer.close(index);
-                        pageCommon.layerMsg('编辑成功', 1);
+                        pageCommon.layerMsg(res.info, 1);
                         table.reload('list-background-map-table');
                     }
 

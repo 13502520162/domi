@@ -11,7 +11,7 @@ $(function () {
     // 左边树 初始化
     let ssideuLen = $('.s-side-u>li').length;
     if (!ssideuLen) {
-        let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId; // 拿到登录人ID查询用于权限
+        let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId; // 拿到登录人ID查询用户权限
         pageCommon.getAjax(infoUrl, {}, function (res) {
             let domiLen = res.data.length;
             if (domiLen) {
@@ -174,8 +174,8 @@ $(function () {
      */
     let url = globalAjaxUrl + '/admin/banner/getToken';
     pageCommon.getAjax(url, {}, function (res) {
-        localStorage.setItem('domain', res.result.domain);
-        localStorage.setItem('token', res.result.token);
+        localStorage.setItem('domain', res.data.domain);
+        localStorage.setItem('token', res.data.token);
     });
 
     $('.s-side-u').on('click', '.d-firstNav', function (e) {

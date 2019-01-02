@@ -199,10 +199,11 @@ $('.article-management-label>ul').on('click', 'li', function () {
 
 // 编辑标题 ok
 $('.article-management-label').on('click', '.article-title-edit', function (e) {
-    if (!permissionValue.edit){
+/*    if (!permissionValue.edit){
         pageCommon.layerMsg('你没有权限编辑',2);
         return false;
-    }
+    }*/
+    pageCommon.authorityControl(!permissionValue.editData);
     var span = $(this).parents('li').find('.article-management-label-tit-span');
     var input = $(this).parents('li').find('.article-management-label-tit-ipt');
     var id = $(this).parents('li').attr('data-id');
