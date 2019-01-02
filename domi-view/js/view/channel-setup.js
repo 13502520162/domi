@@ -304,25 +304,32 @@ $('.management-option-date>p').click(function () {
     $('.liActive').text($(this).text() +'用户统计');
     let time = $(this).attr('data-time');
     let dateVal;
+    let beginDate,endDate;
     if (time != 'all') {
         if (time == '1') {
             dateVal = pageCommon.getTimeForMat();
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
         } else if (time == '-1') {
             dateVal = pageCommon.getTimeForMat(1);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
         } else {
             dateVal = pageCommon.getTimeForMat(time);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
         }
 
         table.reload('channel-setup-table', {
-            url: globalAjaxUrl + '/admin/channel/channelSetUp'
+            url: globalAjaxUrl + '/admin/channel/getData'
             , where: {
-                beginDate: '',
-                endDate: '',
+                beginDate: beginDate,
+                endDate:endDate,
                 name: '',
-                time: time
+                time: ''
             }
         });
     } else {

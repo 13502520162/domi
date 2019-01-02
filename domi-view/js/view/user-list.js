@@ -23,7 +23,8 @@ laydate.render({
                 url: globalAjaxUrl + '/admin/userData/getUserList'
                 , where: {
                     beginDate: '',
-                    endDate: ''
+                    endDate: '',
+                    page:1
                 }
             });
         }
@@ -53,30 +54,47 @@ table.render({
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
     }
+    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+        return {
+            "code": res.data.code, //解析接口状态
+            "msg": res.info, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.userDatas //解析数据列表
+        };
+    }
 });
 
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     let time = $(this).attr('data-time');
+    let dateVal;
+    let beginDate,endDate;
     if (time != 'all') {
+        if (time == '1') {
+            dateVal = pageCommon.getTimeForMat();
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
+        } else if (time == '-1') {
+            dateVal = pageCommon.getTimeForMat(1);
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
+        } else {
+            dateVal = pageCommon.getTimeForMat(time);
+            $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
+        }
         table.reload('user-list', {
-            url: globalAjaxUrl + '/admin/userData/getTimeCount'
+            url:  globalAjaxUrl + '/admin/userData/getUserList'
             , where: {
-                beginDate: '',
-                endDate: '',
-                time: time
+                beginDate: beginDate,
+                endDate:endDate
             }
         });
     } else {
-        table.reload('user-list', {
-            url: globalAjaxUrl + '/admin/userData/getUserList'
-            , where: {
-                beginDate: '',
-                endDate: '',
-                phone:''
-            }
-
-        });
+        table.reload('user-list');
     }
 
 });

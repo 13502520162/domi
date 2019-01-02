@@ -65,6 +65,7 @@ table.on('tool(channel-management-table)', function(obj){
         let index = pageCommon.layerParentOpenIframe({
             url: globalUrl + '/view/popup/add-channel-management.html?filed=edit',
             title: '编辑渠道',
+            area:['800px','680px'],
             confirm: function (index, layero) {
                 let body = parent.layer.getChildFrame('body', index);
                 let name = body.find('.channel-name').val(); // 渠道名
@@ -148,6 +149,7 @@ table.on('tool(channel-management-table)', function(obj){
             url: globalUrl + '/view/popup/add-channel-management.html?filed=view',
             title: '预览渠道',
             btn:['关闭'],
+            area:['800px','680px'],
             confirm: function (index, layero) {
                 parent.layer.close(index);
             }
