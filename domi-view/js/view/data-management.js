@@ -91,7 +91,7 @@ table.on('tool(data-management-content-table)',function (obj) {
     let data = obj.data;
     if (obj.event == 'view'){
         let index = pageCommon.layerParentOpenIframe({
-            url: globalUrl + '/view/popup/click-distribution.html?id='+data.id+'&name='+ data.productName,
+            url: globalUrl + '/view/popup/click-distribution.html?id='+data.id+'&name='+ data.platformDataName,
             title: '查看点击分布',
             btn:['关闭'],
             shadeClose:true,
@@ -128,7 +128,6 @@ $('.data-management-batch-export').click(function () {
     }
     let idArr = [];
     for (let i = 0; i < len; i++) {
-        console.log(check.data[i].id);
         idArr.push(check.data[i].id);
     }
     let obj = {

@@ -15,19 +15,11 @@ laydate.render({
                 url: globalAjaxUrl + '/admin/channel/getDateData'
                 , where: {
                     beginDate: start,
-                    endDate: end,
-                    time: ''
+                    endDate: end
                 }
             });
         } else {
-            table.reload('content-table-statistics', {
-                url: globalAjaxUrl + '/admin/channel/getMyData'
-                , where: {
-                    beginDate: '',
-                    endDate: '',
-                    time: 1
-                }
-            });
+            table.reload('content-table-statistics');
         }
     }
 });
@@ -104,13 +96,14 @@ table.render({
     , method: 'GET'
     , limits: [10, 20, 30, 50, 100, 200]
     , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
-    , url: globalAjaxUrl + '/admin/channel/getMyData'
+    , url: globalAjaxUrl + '/admin/channel/getDateData'
     , where: {
-        time: 1
+        beginDate: '',
+        endDate: ''
     }
     , cols: [[
         {type: 'checkbox'}
-        , {field: 'nowDate', width: '20%', title: '统计时间', align: 'center'}
+        , {field: 'dateTime', width: '20%', title: '统计时间', align: 'center'}
         , {field: 'id', title: 'ID', align: 'center', hide: true}
         , {field: 'registrationCount', width: '20%', title: '注册人数', align: 'center'}
         , {field: 'activationCount', title: '新增/激活人数', align: 'center'}
@@ -119,12 +112,21 @@ table.render({
     , page: true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
+    }
+    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
         dataInit(res);
+        return {
+            "code": res.data.code, //解析接口状态
+            "msg": res.info, //解析提示文本
+            "count": res.data.count, //解析数据长度
+            "data": res.data.data //解析数据列表
+        };
     }
 });
 
 
 function dataInit(res) {
+    res = res.data;
     let register = [];
     let newActivation = [];
     let active = [];
@@ -136,7 +138,7 @@ function dataInit(res) {
         register.push(res.data[i].registrationCount);  // 注册
         newActivation.push(res.data[i].activationCount); // 新增/激活人数
         active.push(res.data[i].loginCount); // 活跃人数
-        xData.push(res.data[i].nowDate); // 操作时间
+        xData.push(res.data[i].dateTime); // 操作时间
     }
 
     let data = {
@@ -149,13 +151,13 @@ function dataInit(res) {
     };
     eChartsInit(data); //  初始化图表
 
-
-    $('.content-text-statistics-bottom .num').eq(0).text(res.dataArray[0].registrationCount);
-    $('.content-text-statistics-bottom .num').eq(1).text(res.dataArray[0].activationCount);
-    $('.content-text-statistics-bottom .num').eq(2).text(res.dataArray[0].loginCount);
-    userArray.push(res.userArray);
-    channelArray.push(res.channelArray);
-    dataArray.push(res.dataArray);
+    $('.content-text-statistics-bottom .num').eq(0).text(res.HistoryData.registrationCount);
+    $('.content-text-statistics-bottom .num').eq(1).text(res.HistoryData.activationCount);
+    $('.content-text-statistics-bottom .num').eq(2).text(res.HistoryData.loginCount);
+    console.log(res);
+    userArray.push(res.userData);
+    channelArray.push(res.channel);
+    dataArray.push(res.data);
 }
 
 
@@ -164,22 +166,21 @@ $('.content-main-sel').change(function () {
     let val = $(this).val();
     switch (val) {
         case '自然量':
-            console.log(userArray[0][0]);
-            $('.content-text-statistics-bottom .num').eq(0).text(userArray[0][0].registrationCount);
-            $('.content-text-statistics-bottom .num').eq(1).text(userArray[0][0].activationCount);
-            $('.content-text-statistics-bottom .num').eq(2).text(userArray[0][0].loginCount);
+            $('.content-text-statistics-bottom .num').eq(0).text(userArray[0].registrationCount);
+            $('.content-text-statistics-bottom .num').eq(1).text(userArray[0].activationCount);
+            $('.content-text-statistics-bottom .num').eq(2).text(userArray[0].loginCount);
             $('.content-text-statistics-top .fr').text('自然量');
             break;
         case  '推广量':
-            $('.content-text-statistics-bottom .num').eq(0).text(channelArray[0][0].registrationCount);
-            $('.content-text-statistics-bottom .num').eq(1).text(channelArray[0][0].activationCount);
-            $('.content-text-statistics-bottom .num').eq(2).text(channelArray[0][0].loginCount);
+            $('.content-text-statistics-bottom .num').eq(0).text(channelArray[0].registrationCount);
+            $('.content-text-statistics-bottom .num').eq(1).text(channelArray[0].activationCount);
+            $('.content-text-statistics-bottom .num').eq(2).text(channelArray[0].loginCount);
             $('.content-text-statistics-top .fr').text('推广量');
             break;
         default:
-            $('.content-text-statistics-bottom .num').eq(0).text(dataArray[0][0].registrationCount);
-            $('.content-text-statistics-bottom .num').eq(1).text(dataArray[0][0].activationCount);
-            $('.content-text-statistics-bottom .num').eq(2).text(dataArray[0][0].loginCount);
+            $('.content-text-statistics-bottom .num').eq(0).text(dataArray[0].registrationCount);
+            $('.content-text-statistics-bottom .num').eq(1).text(dataArray[0].activationCount);
+            $('.content-text-statistics-bottom .num').eq(2).text(dataArray[0].loginCount);
             $('.content-text-statistics-top .fr').text('全部来源');
     }
 });
@@ -209,7 +210,7 @@ $('.content-table-statistics-export').click(function () {
     let Arr = [];
 
     for (let i = 0; i < len; i++) {
-        Arr.push(check.data[i].nowDate);
+        Arr.push(check.data[i].dateTime);
     }
 
     let obj = {
@@ -229,6 +230,7 @@ $('.management-option-date>p').click(function () {
     $('.liActive').text($(this).text() + '用户统计');
     let time = $(this).attr('data-time');
     let dateVal;
+    let beginDate,endDate;
     $('.content-main-sel').val('全部来源');
     currTime();
     if (time != 'all') {
@@ -236,36 +238,37 @@ $('.management-option-date>p').click(function () {
             dateVal = pageCommon.getTimeForMat();
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
             $('.time').parent().html('<p>截止今日<span  class="time"></span></p>');
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
             currTime();
         } else if (time == '-1') {
             dateVal = pageCommon.getTimeForMat(1);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
             $('.time').parent().html('<p>截止昨日<span  class="time">24:00</span></p>')
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
         } else {
             dateVal = pageCommon.getTimeForMat(time);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
             $('.time').parent().html('<p>截止今日<span  class="time"></span></p>');
+            beginDate = dateVal.start;
+            endDate = dateVal.end;
             currTime();
         }
 
         table.reload('content-table-statistics', {
-            url: globalAjaxUrl + '/admin/channel/getMyData'
+            url: globalAjaxUrl + '/admin/channel/getDateData'
             , where: {
-                beginDate: '',
-                endDate: '',
-                time: time
+                beginDate:beginDate,
+                endDate: endDate
             }
         });
     } else {
-        table.reload('content-table-statistics', {
-            url: globalAjaxUrl + '/admin/channel/getAllData'
-            , where: {
-                time: ''
-            }
-        });
+        table.reload('content-table-statistics');
         $('.date-start').val('');
     }
 });
+
 currTime();
 function currTime(){
     let date = new Date();
