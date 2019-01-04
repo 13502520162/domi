@@ -13,20 +13,22 @@ $(function () {
     if (!ssideuLen) {
         let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId; // 拿到登录人ID查询用户权限
         pageCommon.getAjax(infoUrl, {}, function (res) {
-            let domiLen = res.data.length;
+            res = res.data.trees;
+            console.log(res);
+            let domiLen = res.length;
             if (domiLen) {
                 for (let i = 0; i < domiLen; i++) {
                     let html = '';
-                    html += '<li class="first" data-parentId="' + res.data[i].id + '" >';
+                    html += '<li class="first" data-parentId="' + res[i].id + '" >';
                     html += '<div class="d-firstNav s-firstNav clearfix">';
-                    html += '<i class="fa ' + res.data[i].icon + '"></i>';
-                    html += '<span>' + res.data[i].title + '</span>';
+                    html += '<i class="fa ' + res[i].icon + '"></i>';
+                    html += '<span>' + res[i].name + '</span>';
                     html += '<i class="fa fa-caret-right fr "></i>';
                     html += '</div>';
                     html += '<ul class="d-firstDrop s-firstDrop">';
-                    for (let j = 0; j < res.data[i].child.length; j++) {
-                        html += '<li class="s-secondItem" data-id="' + res.data[i].child[j].id + '"  data-child="' + res.data[i].child[j].childId + '">';
-                        html += '<a href="#' + res.data[i].child[j].id + '">' + res.data[i].child[j].name + '</a>';
+                    for (let j = 0; j < res[i].children.length; j++) {
+                        html += '<li class="s-secondItem" data-id="' + res[i].children[j].tId + '"  data-child="' + res[i].children[j].id + '">';
+                        html += '<a href="#' + res[i].children[j].id  + '">' + res[i].children[j].name + '</a>';
                         html += '</li>';
 
                     }
@@ -40,7 +42,7 @@ $(function () {
                     hash_r = hash.substring(1, hash_len);
                 // 如果空 就等于 数据的第一个
                 if (hash_r == '') {
-                    hash_r = res.data[0].child[0].id;
+                    hash_r = res[0].children[0].icon;
                 }
                 tab(hash_r);
             } else {
