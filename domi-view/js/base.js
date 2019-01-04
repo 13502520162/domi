@@ -42,9 +42,7 @@ $(function () {
                 // 如果空 就等于 数据的第一个
                 if (hash_r == '') {
                     hash_r = res[0].children[0].tId;
-                    console.log(hash_r);
                 }
-                console.log(res[0].children[0].tId);
                 tab(hash_r);
             } else {
                 $('body').append('<span class="no-authority">很抱歉，你没有任何权限，请联系管理员！</span>')
