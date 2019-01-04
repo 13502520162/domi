@@ -14,7 +14,6 @@ $(function () {
         let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId; // 拿到登录人ID查询用户权限
         pageCommon.getAjax(infoUrl, {}, function (res) {
             res = res.data.trees;
-            console.log(res);
             let domiLen = res.length;
             if (domiLen) {
                 for (let i = 0; i < domiLen; i++) {
@@ -27,8 +26,8 @@ $(function () {
                     html += '</div>';
                     html += '<ul class="d-firstDrop s-firstDrop">';
                     for (let j = 0; j < res[i].children.length; j++) {
-                        html += '<li class="s-secondItem" data-id="' + res[i].children[j].tId + '"  data-child="' + res[i].children[j].id + '">';
-                        html += '<a href="#' + res[i].children[j].id  + '">' + res[i].children[j].name + '</a>';
+                        html += '<li class="s-secondItem" data-id="' + res[i].children[j].id + '"  data-child="' + res[i].children[j].tId + '">';
+                        html += '<a href="#' + res[i].children[j].tId  + '">' + res[i].children[j].name + '</a>';
                         html += '</li>';
 
                     }
@@ -42,8 +41,10 @@ $(function () {
                     hash_r = hash.substring(1, hash_len);
                 // 如果空 就等于 数据的第一个
                 if (hash_r == '') {
-                    hash_r = res[0].children[0].icon;
+                    hash_r = res[0].children[0].tId;
+                    console.log(hash_r);
                 }
+                console.log(res[0].children[0].tId);
                 tab(hash_r);
             } else {
                 $('body').append('<span class="no-authority">很抱歉，你没有任何权限，请联系管理员！</span>')
@@ -217,7 +218,7 @@ $(function () {
 
     //点击菜单栏切换
     $('.s-side-u').on('click', '.s-secondItem', function () {
-        let id = $(this).attr('data-id');
+        let id = $(this).attr('data-child');
         $('.info-title').text($(this).parents('li').find('.d-firstNav span').text());
         $('.info-title-child').text($(this).find('a').text());
         tab(id);
@@ -228,7 +229,7 @@ $(function () {
         let $item = $('.s-secondItem a');
         for (let i = 0, len = $item.length; i < len; i++) {
             $item.eq(i).parent().removeClass('active');
-            let data_id_i = $item.eq(i).parent().attr('data-id');
+            let data_id_i = $item.eq(i).parent().attr('data-child');
             if (id == data_id_i) {
                 $('.menu-item').addClass('fn-hide');
                 $item.eq(i).parent().addClass('active');
