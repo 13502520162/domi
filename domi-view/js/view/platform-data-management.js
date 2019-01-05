@@ -264,7 +264,13 @@ $('.management-option-date>p').click(function () {
             }
         });
     } else {
-        table.reload('content-table-statistics');
+        table.reload('content-table-statistics', {
+            url: globalAjaxUrl + '/admin/channel/getDateData'
+            , where: {
+                beginDate:'',
+                endDate: ''
+            }
+        });
         $('.date-start').val('');
     }
 });
