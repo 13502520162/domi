@@ -246,7 +246,7 @@ $('.management-option-date>p').click(function () {
             $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
             $('.time').parent().html('<p>截止昨日<span  class="time">24:00</span></p>')
             beginDate = dateVal.start;
-            endDate = dateVal.end;
+            endDate = dateVal.start;
         } else {
             dateVal = pageCommon.getTimeForMat(time);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);

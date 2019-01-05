@@ -327,7 +327,7 @@ $('.management-option-date>p').click(function () {
             dateVal = pageCommon.getTimeForMat(1);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
             beginDate = dateVal.start;
-            endDate = dateVal.end;
+            endDate = dateVal.start;
         } else {
             dateVal = pageCommon.getTimeForMat(time);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
