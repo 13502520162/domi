@@ -340,8 +340,7 @@ $('.management-option-date>p').click(function () {
             , where: {
                 beginDate: beginDate,
                 endDate:endDate,
-                name: '',
-                time: ''
+                name: ''
             },
             parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                 $('.content-text-statistics-bottom').eq(0).find('.real-data .num').text(res.data.activationAndRegister.allRegisterCount);
@@ -361,7 +360,14 @@ $('.management-option-date>p').click(function () {
             }
         });
     } else {
-        table.reload('channel-setup-table');
+        table.reload('channel-setup-table', {
+            url: globalAjaxUrl + '/admin/channel/getData'
+            , where: {
+                beginDate: '',
+                endDate:'',
+                name: ''
+            }
+        });
         $('.date-start').val('');
     }
 
