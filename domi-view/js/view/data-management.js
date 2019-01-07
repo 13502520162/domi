@@ -74,6 +74,7 @@ table.render({
 /*        , {field: 'conversionRate', width: '20%', title: '转化率', align: 'center'}*/
     ]]
     , page: true
+    ,loading:true
     ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
         return {
             "code": res.data.code, //解析接口状态

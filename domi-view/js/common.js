@@ -1,5 +1,5 @@
 let globalHttp = 'http://';
-let globalAjaxUrl = globalHttp + "192.168.0.105";
+let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";
 let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
 let loginToken = sessionStorage.getItem('loginToken');
 let pageCommon = {

@@ -16,6 +16,7 @@ table.render({
         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: '15%', align: 'center'}
     ]]
     , page: true
+    ,loading:true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
     },parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
@@ -95,6 +96,8 @@ table.on('tool(rotation-chart-table)', function (obj) {
             },
             cancel: function (index, layero) {
                 parent.layer.close(index);
+            },
+            success:function (layero, index) {
             }
         });
     } else if (obj.event === 'view') {
@@ -178,6 +181,8 @@ $('.new-photos').click(function () {
         },
         cancel: function (index, layero) {
             parent.layer.close(index);
+        },
+        success:function (layero, index) {
         }
     });
 });

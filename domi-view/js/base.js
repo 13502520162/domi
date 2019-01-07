@@ -27,7 +27,7 @@ $(function () {
                     html += '<ul class="d-firstDrop s-firstDrop">';
                     for (let j = 0; j < res[i].children.length; j++) {
                         html += '<li class="s-secondItem" data-id="' + res[i].children[j].id + '"  data-child="' + res[i].children[j].tId + '">';
-                        html += '<a href="#' + res[i].children[j].tId  + '">' + res[i].children[j].name + '</a>';
+                        html += '<a href="#' + res[i].children[j].tId + '">' + res[i].children[j].name + '</a>';
                         html += '</li>';
 
                     }
@@ -224,6 +224,7 @@ $(function () {
 
     // 侧边栏切换
     function tab(id) {
+/*        let index = layer.load();*/
         let $item = $('.s-secondItem a');
         for (let i = 0, len = $item.length; i < len; i++) {
             $item.eq(i).parent().removeClass('active');
@@ -245,8 +246,12 @@ $(function () {
         for (let j = 0; j < contentArr.length; j++) {
             if (id == contentArr[j]) {
                 $('.' + contentArr[j]).find('iframe').attr('src', 'content/' + contentArr[j] + '.html');
+       /*         $('.' + contentArr[j]).find('iframe')[0].onload = function () {
+                    layer.close(index)
+                }*/
             }
         }
+
 
         /* if (id == 'rotation-chart') {  // 轮播图
              $('.rotation-chart').find('iframe').attr('src', 'content/rotation-chart.html')

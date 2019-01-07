@@ -241,6 +241,8 @@ $('.add-channel-management').click(function () {
         },
         cancel: function (index, layero) {
             parent.layer.close(index);
+        },
+        success:function (layero, index) {
         }
     });
 });

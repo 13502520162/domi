@@ -62,6 +62,8 @@ table.on('tool(list-background-map-table)', function (obj) {
             },
             cancel: function (index, layero) {
                 parent.layer.close(index);
+            },
+            success:function (layero, index) {
             }
         });
     }

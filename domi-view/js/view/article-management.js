@@ -163,6 +163,8 @@ table.on('tool(article-management-content-table)', function (obj) {
             btn:['关闭'],
             confirm: function (index, layero) {
                 parent.layer.close(index);
+            },
+            success:function (layero, index) {
             }
         });
     }

@@ -64,6 +64,8 @@ table.on('tool(classification-map-table)', function (obj) {
             },
             cancel: function (index, layero) {
                 parent.layer.close(index);
+            },
+            success:function (layero, index) {
             }
         });
     }
