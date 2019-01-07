@@ -88,7 +88,7 @@ table.on('tool(article-management-content-table)', function (obj) {
         layer.confirm('确定删除嘛？', function (index) {
             let url = globalAjaxUrl + '/admin/article/deleteArticle?articleId='+ data.id;
             pageCommon.getAjax(url, {}, function (res) {
-                pageCommon.layerMsg(res.msg, 1);
+                pageCommon.layerMsg(res.info, 1);
                 obj.del();
                 layer.close(index);
             });

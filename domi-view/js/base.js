@@ -245,10 +245,12 @@ $(function () {
 
         for (let j = 0; j < contentArr.length; j++) {
             if (id == contentArr[j]) {
-                $('.' + contentArr[j]).find('iframe').attr('src', 'content/' + contentArr[j] + '.html');
-       /*         $('.' + contentArr[j]).find('iframe')[0].onload = function () {
-                    layer.close(index)
-                }*/
+                if (!$('.' + contentArr[j]).find('iframe').attr('src')){
+                    $('.' + contentArr[j]).find('iframe').attr('src', 'content/' + contentArr[j] + '.html');
+                    /*         $('.' + contentArr[j]).find('iframe')[0].onload = function () {
+                                 layer.close(index)
+                             }*/
+                }
             }
         }
 
