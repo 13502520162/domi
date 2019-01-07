@@ -1,9 +1,21 @@
 $(function () {
 
+    let contentArr = ['rotation-chart', 'classification-map', 'list-background-map', 'platform-management', 'data-management', 'popular-management', 'article-management', 'channel-management', 'channel-data', 'platform-data-management', 'channel-setup', 'privilege-management', 'user-list'];  // iframe 对应页面元素
 
+    for (let p = 0; p < contentArr.length; p++) {
+        let html  = `
+    <div id="${contentArr[p]}" class="menu-item fn-hide">
+    <div class="content-center">
+        <div class="content-center-main ${contentArr[p]}">
+            <iframe src=""  frameborder="0" class="${contentArr[p]}-iframe"></iframe>
+        </div>
+    </div>
+</div>`;
+       $('body').append(html)  // 插入body
+    }
     let loginInfo = localStorage.getItem('loginInfo');
     if (loginInfo == null) {
-        pageCommon.returnLogin();
+        pageCommon.returnLogin(); // 等于空 跳回登录页面
     }
     loginInfo = JSON.parse(loginInfo);
     $('.account').text(loginInfo.account);
@@ -168,17 +180,6 @@ $(function () {
         });
     }
 
-
-    /**
-     * 七牛云的 domain 和 token 值
-     * @type {string}
-     */
-    let url = globalAjaxUrl + '/admin/banner/getToken';
-    pageCommon.getAjax(url, {}, function (res) {
-        localStorage.setItem('domain', res.data.domain);
-        localStorage.setItem('token', res.data.token);
-    });
-
     $('.s-side-u').on('click', '.d-firstNav', function (e) {
         dropSwift($(this), '.d-firstDrop');
         e.stopPropagation();
@@ -241,7 +242,7 @@ $(function () {
 
         let contentArr = ['rotation-chart', 'classification-map', 'list-background-map', 'platform-management', 'data-management', 'popular-management', 'article-management', 'channel-management', 'channel-data', 'platform-data-management', 'channel-setup', 'privilege-management', 'user-list'];
 
-        let nameArr = ['轮播', '分类', '列表背景图', '平台管理', '数据管理', '热门管理', '文章管理', '渠道管理', '渠道数据', '数据管理', '渠道设置', '权限管理', '用户列表'];  //  分布对应相应模块
+        let nameArr = ['轮播', '分类', '列表背景图', '平台管理', '数据管理', '热门管理', '文章管理', '渠道管理', '渠道数据', '数据管理', '渠道设置', '权限管理', '用户列表'];  //  分别对应相应模块
 
         for (let j = 0; j < contentArr.length; j++) {
             if (id == contentArr[j]) {

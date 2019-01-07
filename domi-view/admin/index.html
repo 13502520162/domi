@@ -185,6 +185,17 @@
         }
     });
 
+
+    /**
+     * 七牛云的 domain 和 token 值
+     * @type {string}
+     */
+    let url = globalAjaxUrl + '/admin/banner/getToken';
+    pageCommon.getAjax(url, {}, function (res) {  //
+        localStorage.setItem('domain', res.data.domain);
+        localStorage.setItem('token', res.data.token);
+    });
+
 </script>
 </body>
 </html>
