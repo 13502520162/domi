@@ -226,16 +226,15 @@ $('.add-channel-management').click(function () {
             let url = globalAjaxUrl + '/admin/channel/addChannel';
 
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-
-               if (!res.state){
-                   pageCommon.layerMsg(res.msg, 2);
+                if (!res.errcode){
+                   pageCommon.layerMsg(res.info, 2);
                    return false;
                } else {
                    table.reload('channel-management-table', {
                        url: globalAjaxUrl + '/admin/channel/getChannel'
                    });
                    parent.layer.close(index);
-                   pageCommon.layerMsg(res.msg, 1);
+                   pageCommon.layerMsg(res.info, 1);
                }
             });
         },

@@ -45,8 +45,10 @@ table.init('channel-setup-table', {
         $('.content-text-statistics-bottom').eq(1).find('.display-data .num').text(res.data.activationAndRegister.allActivationOut);
         $('.content-text-statistics-bottom').eq(2).find('.real-data .num').text(res.data.newAndOldUser.newUser);
         $('.content-text-statistics-bottom').eq(2).find('.display-data .num').text(res.data.newAndOldUser.oldUser);
+        $('.content-text-statistics-top').eq(2).find('.num').text(res.data.newAndOldUser.newUser+res.data.newAndOldUser.oldUser);
         $('.content-text-statistics-bottom').eq(3).find('.real-data .num').text(res.data.clickPeople.newClick);
         $('.content-text-statistics-bottom').eq(3).find('.display-data .num').text(res.data.clickPeople.oldClick);
+        $('.content-text-statistics-top').eq(3).find('.num').text(res.data.clickPeople.newClick+res.data.clickPeople.oldClick);
         return {
             "code": res.data.code, //解析接口状态
             "msg": res.info, //解析提示文本

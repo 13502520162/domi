@@ -94,7 +94,14 @@ $('.management-option-date>p').click(function () {
             }
         });
     } else {
-        table.reload('user-list');
+        table.reload('user-list', {
+            url: globalAjaxUrl + '/admin/userData/getUserList'
+            , where: {
+                beginDate: '',
+                endDate: '',
+                page:1
+            }
+        });
     }
 
 });

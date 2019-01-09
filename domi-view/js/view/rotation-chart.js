@@ -123,10 +123,10 @@ table.on('edit(rotation-chart-table)', function (obj) {
     let url = globalAjaxUrl + '/admin/banner/bannerSort?id=' + id + '&sort=' + parseInt(value);
     pageCommon.getAjax(url, {}, function (res) {
         if (res.state) {
-            pageCommon.layerMsg(res.msg, 1);
+            pageCommon.layerMsg(res.info, 1);
             table.reload('rotation-chart-table');
         } else {
-            pageCommon.layerMsg(res.msg, 2);
+            pageCommon.layerMsg(res.info, 2);
             table.reload('rotation-chart-table');
         }
     });

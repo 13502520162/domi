@@ -154,7 +154,7 @@ function dataInit(res) {
     $('.content-text-statistics-bottom .num').eq(0).text(res.HistoryData.registrationCount);
     $('.content-text-statistics-bottom .num').eq(1).text(res.HistoryData.activationCount);
     $('.content-text-statistics-bottom .num').eq(2).text(res.HistoryData.loginCount);
-    console.log(res);
+    console.log(data);
     userArray.push(res.userData);
     channelArray.push(res.channel);
     dataArray.push(res.data);
@@ -275,7 +275,7 @@ $('.management-option-date>p').click(function () {
     }
 });
 
-currTime();
+
 function currTime(){
     let date = new Date();
     let HH = date.getHours();
