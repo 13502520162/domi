@@ -57,19 +57,20 @@
             display: none;
         }
 
-       .nth-p1 {
+        .nth-p1 {
             height: 1rem;
             line-height: 1rem;
-            background: #1E88C7;
             list-style: none;
+            text-align: center;
         }
 
-       .nth-p1 span {
+        .nth-p1 span {
             display: inline-block;
             border-radius: 50%;
             font-size: .4rem;
-            color: #fff;
-
+        }
+        .nth-p1 span:nth-child(1){
+            float: left;
         }
 
         .nth-p1 i {
@@ -91,7 +92,7 @@
     <title>多米-贷款之家</title>
 </head>
 <body>
-<p class="nth-p1"><span class="return"><i class="iconfont icon-fanhui"></i>返回</span></p>
+<p class="nth-p1"><span class="return"><i class="iconfont icon-fanhui"></i></span><span>联系方式</span></p>
 <div id="allmap"></div>
 <p style="margin-top: 10px;padding-left: 10px">联系人：熊先生</p>
 <p style="margin-top: 10px;padding-left: 10px">联系邮箱：xiongshaoxia@yixiatech.com</p>
@@ -106,7 +107,7 @@
 
     var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
         '广州市天河区棠东毓南路5号冠达商务中心' +
-            ' <span class="navigationTo" onclick="navigationTo()">导航到此</span>'+
+        ' <span class="navigationTo" onclick="navigationTo()">导航到此</span>'+
         '</div>';
 
     //创建检索信息窗口对象
@@ -134,7 +135,7 @@
     });
 
     function navigationTo() {
-        location.href="http://api.map.baidu.com/geocoder?address=冠达商务中心&output=html";
+        location.href="http://api.map.baidu.com/geocoder?address=广州冠达商务中心&output=html&src=webapp.baidu.openAPIdemo";
     }
 </script>
 </body>

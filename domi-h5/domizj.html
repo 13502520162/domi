@@ -82,15 +82,21 @@
         .duo-mi-content .nth-p1 {
             height: 1rem;
             line-height: 1rem;
-            background: #1E88C7;
             list-style: none;
+            text-align: center;
         }
 
-        .duo-mi-content .nth-p1 span {
+        .duo-mi-content .nth-p1 .return {
             display: inline-block;
             border-radius: 50%;
             font-size: .4rem;
-            color: #fff;
+            position: relative;
+            top: 0;
+            left: 4px;
+            float: left;
+        }
+        .duo-mi-content .nth-p1 .title{
+            font-size: .4rem;
             position: relative;
             top: -6px;
         }
@@ -216,6 +222,9 @@
             width: 100%;
             height: 100%;
         }
+        .title{
+
+        }
     </style>
 </head>
 <body>
@@ -248,11 +257,11 @@
     </div>
 </div>
 <div class="duo-mi-content">
-    <p class="nth-p1"><span class="return"><i class="iconfont icon-fanhui"></i>返回</span></p>
+    <p class="nth-p1"><span class="return"><i class="iconfont icon-fanhui"></i></span><span class="title"></span></p>
     <ul class="duo-mi-content-ul">
         <li>
-            <h4 style="display: block;text-align: center;">多米-贷款之家简介</h4>
-            <p class="title">多米-贷款之家是专注于金融领域的智能搜索平台,为企业和个人提供专业的专业的贷款服务。</p>
+         <!--   <h4 style="display: block;text-align: center;">多米-贷款之家简介</h4>-->
+            <p class="title1">多米-贷款之家是专注于金融领域的智能搜索平台,为企业和个人提供专业的专业的贷款服务。</p>
             <p>特点：</p>
             <ul>
                 <li>- 全面解决：个人消费贷、企业经营贷、车房装修贷、出行旅游贷、学习进修贷。</li>
@@ -288,6 +297,11 @@
 
         if (index==1){
             location.href='map.html'
+
+        }else if (index==0){
+            $('.title').text('多米-贷款之家简介')
+        }else {
+            $('.title').text('合作联系')
         }
     });
     $('.return').click(function () {
