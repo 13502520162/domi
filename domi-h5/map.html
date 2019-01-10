@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_978228_boqzdnuqm5e.css">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: "微软雅黑";
+        }
+
+        #allmap {
+            height: 400px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #result {
+            width: 100%;
+            font-size: 12px;
+        }
+
+        dl, dt, dd, ul, li {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        dt {
+            font-size: 14px;
+            font-family: "微软雅黑";
+            font-weight: bold;
+            border-bottom: 1px dotted #000;
+            padding: 5px 0 5px 5px;
+            margin: 5px 0;
+        }
+
+        dd {
+            padding: 5px 0 0 5px;
+        }
+
+        li {
+            line-height: 28px;
+        }
+
+        .BMapLib_sendToPhone {
+            display: none;
+        }
+
+       .nth-p1 {
+            height: 1rem;
+            line-height: 1rem;
+            background: #1E88C7;
+            list-style: none;
+        }
+
+       .nth-p1 span {
+            display: inline-block;
+            border-radius: 50%;
+            font-size: .4rem;
+            color: #fff;
+
+        }
+
+        .nth-p1 i {
+            font-size: .5rem;
+        }
+        p{
+            font-size: .4rem;
+        }
+        .navigationTo{
+            color: #188ae2;
+            margin-left: 5px;
+        }
+    </style>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=MhG0uShifdog3EWQVnyCTC8oGiLyFkUx"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+    <link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css"/>
+    <title>多米-贷款之家</title>
+</head>
+<body>
+<p class="nth-p1"><span class="return"><i class="iconfont icon-fanhui"></i>返回</span></p>
+<div id="allmap"></div>
+<p style="margin-top: 10px;padding-left: 10px">联系人：熊先生</p>
+<p style="margin-top: 10px;padding-left: 10px">联系邮箱：xiongshaoxia@yixiatech.com</p>
+<script src="js/flexible.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map('allmap');
+    var poi = new BMap.Point(113.394007, 23.132376);
+    map.centerAndZoom(poi, 18);
+    map.enableScrollWheelZoom();
+
+    var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+        '广州市天河区棠东毓南路5号冠达商务中心' +
+            ' <span class="navigationTo" onclick="navigationTo()">导航到此</span>'+
+        '</div>';
+
+    //创建检索信息窗口对象
+    var searchInfoWindow = null;
+    searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+        title: "冠达商务中心",      //标题
+        width: 290,             //宽度
+        height: 35,              //高度
+        panel: "panel",         //检索结果面板
+        enableAutoPan: true,     //自动平移
+        searchTypes: [
+
+        ]
+    });
+    var marker = new BMap.Marker(poi); //创建marker对象
+    marker.enableDragging(); //marker可拖拽
+    marker.addEventListener("click", function (e) {
+        searchInfoWindow.open(marker);
+    });
+    map.addOverlay(marker); //在地图中添加marker
+
+
+    $('.return').click(function () {
+        location.href = 'domizj.html'
+    });
+
+    function navigationTo() {
+        location.href="http://api.map.baidu.com/geocoder?address=冠达商务中心&output=html";
+    }
+</script>
+</body>
+</html>
