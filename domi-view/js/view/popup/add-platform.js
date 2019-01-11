@@ -19,60 +19,72 @@ $(function () {
         res = res.data;
         for (let i = 0; i < res.typeList.length; i++) {
             $('.platform-classification').append('<option value="' + res.typeList[i].id + '">' + res.typeList[i].name + '</option>');
-        }
-
-        // 数据填充
-        let query = pageCommon.getUrlParams();
-        let data = $('.platform-management-iframe', parent.document).contents().find('.content-data').text();
-        if (data) {
-            if (query.field == 'edit' || query.field == 'view') {
-                data = JSON.parse(data);
-                $('.add-platform').attr('data-id', data.id);
-                $('.platform-title').val(data.name);
-                $('.maximum-borrowable').val(data.maxMoney);
-                $('.daily-interest-rate').val(data.dayRatio);
-                $('.platform-synopsis').importTags(data.platformDesc);
-                $('.platform-url').val(data.url);
-                $('.platform-classification').val(data.typeId);
-                $('.platform-label').val(data.labelId);
-                $('.cooperation-mode').val(data.model);
-                $('.platform-price').val(data.money);
-                $('.platform-pick-up-people').val(data.dockPeople);
-                $('.contact-information').val(data.phone);
-                $('.fileImg').hide();
-                $('.platform-img').show();
-                $('.platform-img img').attr('src', data.logo);
-                $('.platform-photo').attr('data-src', data.logo);
-                $('.background-account').val(data.accountName);
-                $('.background-password').val(data.password);
-                $('.background-link').val(data.backstageUrl);
-
-                if (query.field == 'view') {
-                    $('input,select,textarea').attr('disabled', 'disabled');
-                    $('.re-upload').remove();
-                    $('.tagsinput').find('a').remove();
-
-                    $('.borrowing-cycle>span').css('pointer-events','none')
-                }
-
-                Array.prototype.contains = function (obj) {
-                    let i = this.length;
-                    while (i--) {
-                        if (this[i] === obj) {
-                            return true;
-                        }
-                    }
-                    return false;
-                };
-                let period = $('.borrowing-cycle>span');
-                for (let i = 0; i < period.length; i++) {
-                    if (data.periodArr.contains($(period[i]).attr('data-num'))) {
-                        $(period[i]).addClass('spanActive')
-                    }
+            let query = pageCommon.getUrlParams();
+            let data = $('.platform-management-iframe', parent.document).contents().find('.content-data').text();
+            if (data) {
+                if (query.field == 'edit' || query.field == 'view') {
+                    data = JSON.parse(data);
+                    $('.platform-classification').val(data.typeId);
                 }
             }
         }
     });
+
+
+
+    // 数据填充
+    let query = pageCommon.getUrlParams();
+    let data = $('.platform-management-iframe', parent.document).contents().find('.content-data').text();
+    if (data) {
+        if (query.field == 'edit' || query.field == 'view') {
+            data = JSON.parse(data);
+            $('.add-platform').attr('data-id', data.id);
+            $('.platform-title').val(data.name);
+            $('.maximum-borrowable').val(data.maxMoney);
+            $('.daily-interest-rate').val(data.dayRatio);
+            $('.platform-synopsis').importTags(data.platformDesc);
+            $('.platform-url').val(data.url);
+            $('.platform-classification').val(data.typeId);
+            $('.platform-label').val(data.labelId);
+            $('.cooperation-mode').val(data.model);
+            $('.platform-price').val(data.money);
+            $('.platform-pick-up-people').val(data.dockPeople);
+            $('.contact-information').val(data.cellphone);
+            $('.fileImg').hide();
+            $('.platform-img').show();
+            $('.platform-img img').attr('src', data.logo);
+            $('.platform-photo').attr('data-src', data.logo);
+            $('.background-account').val(data.accountName);
+            $('.background-password').val(data.password);
+            $('.background-link').val(data.backstageUrl);
+
+            if (query.field == 'view') {
+                $('input,select,textarea').attr('disabled', 'disabled');
+                $('.re-upload').remove();
+                $('.tagsinput').find('a').remove();
+
+                $('.borrowing-cycle>span').css('pointer-events', 'none')
+            }
+
+            Array.prototype.contains = function (obj) {
+                let i = this.length;
+                while (i--) {
+                    if (this[i] === obj) {
+                        return true;
+                    }
+                }
+                return false;
+            };
+            let period = $('.borrowing-cycle>span');
+            let newPeriod = data.period.substring(1, data.period.length - 1);
+            newPeriod = newPeriod.split(',');
+            for (let i = 0; i < period.length; i++) {
+                if (newPeriod.contains($(period[i]).attr('data-num'))) {
+                    $(period[i]).addClass('spanActive')
+                }
+            }
+        }
+    }
 
     // 上传图片的事件
     $('#fileImg').change(function () {

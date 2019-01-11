@@ -60,7 +60,7 @@ form.on('switch(hotState)', function (obj) {
 
     let url = globalAjaxUrl + '/admin/loanPlatform/Roof';
     pageCommon.postAjax(url, JSON.stringify(obj1), function (res) {
-        if (res.errcode){
+        if (res.errcode===0){
             pageCommon.layerMsg(res.info ,1);
             table.reload('popular-management-table');
             form.render();
@@ -90,7 +90,7 @@ form.on('switch(oneState)', function (obj) {
 
     let url = globalAjaxUrl + '/admin/loanPlatform/Roof';
     pageCommon.postAjax(url, JSON.stringify(obj1), function (res) {
-        if (res.errcode){
+        if (res.errcode===0){
             pageCommon.layerMsg(res.info ,1);
             table.reload('popular-management-table');
             form.render();

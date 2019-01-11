@@ -40,7 +40,7 @@ let pageCommon = {
      * @param err_fn
      * @param datatype
      */
-    postAjax: function (url, data, succ_fn, err_fn, datatype,contentType) {
+    postAjax: function (url, data, succ_fn, err_fn, datatype, contentType) {
         let uri = $.trim(url);	      //去除空格
         datatype = datatype || 'json';
         contentType = contentType || 'application/json;charset=UTF-8';
@@ -311,14 +311,17 @@ let pageCommon = {
                     request.setRequestHeader('Authorization', loginToken);
                 },
                 success: function (res) {
-                    let obj = {
-                        add:res.data.permission.addData,
-                        remove:res.data.permission.deleteData,
-                        edit:res.data.permission.editData
-                    };
-                    data = obj;
-                    if (!res.errcode) {
-                        _this.returnLogin();
+                    if ( res.errcode === 3){
+                       _this.returnLogin();
+                       return false
+                   }
+                   if (res.data.permission != null) {
+                        let obj = {
+                            add: res.data.permission.addData,
+                            remove: res.data.permission.deleteData,
+                            edit: res.data.permission.editData
+                        };
+                        data = obj;
                     }
                 }
             }

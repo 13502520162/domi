@@ -46,7 +46,7 @@ table.on('tool(channel-management-table)', function(obj){
             let url = globalAjaxUrl + '/admin/channel/deleteChannel?channelId='+data.id;
             pageCommon.getAjax(url, {}, function (res) {
                 console.log(res);
-                if (res.errcode==3){
+                if (res.errcode===0){
                     pageCommon.layerMsg(res.info, 1);
                     obj.del();
                     layer.close(index);

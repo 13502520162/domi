@@ -83,13 +83,13 @@ table.on('tool(rotation-chart-table)', function (obj) {
                 };
                 let url = globalAjaxUrl + '/admin/banner/addBanner';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    if (!res.errcode) {
-                        pageCommon.layerMsg(res.info, 2);
-                        return false;
-                    } else {
+                    if (res.errcode===0) {
                         parent.layer.close(index);
                         pageCommon.layerMsg(res.info, 1);
                         table.reload('rotation-chart-table');
+                    } else {
+                        pageCommon.layerMsg(res.info, 2);
+                        return false;
                     }
 
                 });
@@ -167,13 +167,13 @@ $('.new-photos').click(function () {
 
             let url = globalAjaxUrl + '/admin/banner/addBanner';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (!res.errcode) {
-                    pageCommon.layerMsg(res.info, 2);
-                    return false;
-                } else {
+                if (res.errcode===0) {
                     parent.layer.close(index);
                     pageCommon.layerMsg(res.info, 1);
                     table.reload('rotation-chart-table');
+                } else {
+                    pageCommon.layerMsg(res.info, 2);
+                    return false;
                 }
 
             });

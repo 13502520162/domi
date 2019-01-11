@@ -30,37 +30,39 @@ pageCommon.getAjax(url, {}, function (res) {
         $('.operationTime').before(html);
         form.render();
     }
+
+    if (query.empId) {
+        let getParams = globalAjaxUrl + '/admin/employee/getEmpPermission?empId=' + empId;
+        pageCommon.getAjax(getParams, {}, function (res) {
+
+            res = res.data;
+            $('.name').val(res.Employee.name);
+            $('.account-number').val(res.Employee.accountNumber);
+            $('.password').val(res.Employee.password);
+            $('.add-article').attr('data-id',res.Employee.empId);
+            $('.channel-type').val(res.Employee.updateTime);
+            let arr = ['pictureManagement', 'loanPlatform', 'newsAndInformation', 'channelPromotion', 'platformManagement'];
+
+            for (let i = 0; i < res.array.length; i++) {
+                res.array[i].field = arr[i];
+            }
+            for (let j = 0; j < res.array.length; j++) {
+                $('.'+res.array[j].field).find('.checkedAll').prop('checked',res.array[j].useData);
+                $('.'+res.array[j].field).find('.edit').prop('checked',res.array[j].editData);
+                $('.'+res.array[j].field).find('.add').prop('checked',res.array[j].addData);
+                $('.'+res.array[j].field).find('.remove').prop('checked',res.array[j].deleteData);
+                let checked =  $('.'+res.array[j].field).find('.checkedAll').prop('checked');
+                if (checked){
+                    $('.'+res.array[j].field).find('.edit,.add,.remove').removeAttr('disabled');
+                }
+                form.render();
+            }
+        });
+    }
+
 });
 
-if (query.empId) {
 
-    let getParams = globalAjaxUrl + '/admin/employee/getEmpPermission?empId=' + empId;
-    pageCommon.getAjax(getParams, {}, function (res) {
-
-        res = res.data;
-        $('.name').val(res.Employee.name);
-        $('.account-number').val(res.Employee.accountNumber);
-        $('.password').val(res.Employee.password);
-        $('.add-article').attr('data-id',res.Employee.empId);
-        $('.channel-type').val(res.Employee.updateTime);
-        let arr = ['pictureManagement', 'loanPlatform', 'newsAndInformation', 'channelPromotion', 'platformManagement'];
-
-        for (let i = 0; i < res.array.length; i++) {
-            res.array[i].field = arr[i];
-        }
-        for (let j = 0; j < res.array.length; j++) {
-            $('.'+res.array[j].field).find('.checkedAll').prop('checked',res.array[j].useData);
-            $('.'+res.array[j].field).find('.edit').prop('checked',res.array[j].editData);
-            $('.'+res.array[j].field).find('.add').prop('checked',res.array[j].addData);
-            $('.'+res.array[j].field).find('.remove').prop('checked',res.array[j].deleteData);
-            let checked =  $('.'+res.array[j].field).find('.checkedAll').prop('checked');
-            if (checked){
-                $('.'+res.array[j].field).find('.edit,.add,.remove').removeAttr('disabled');
-            }
-            form.render();
-        }
-    });
-}
 
 $('.add-article').perfectScrollbar();
 

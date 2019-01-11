@@ -246,9 +246,9 @@ $(function () {
 
         for (let j = 0; j < contentArr.length; j++) {
             if (id == contentArr[j]) {
-                if (!$('.' + contentArr[j]).find('iframe').attr('src')) {
+         /*       if (!$('.' + contentArr[j]).find('iframe').attr('src')) {*/
                     $('.' + contentArr[j]).find('iframe').attr('src', 'content/' + contentArr[j] + '.html');
-                }
+             /*   }*/
             }
         }
 

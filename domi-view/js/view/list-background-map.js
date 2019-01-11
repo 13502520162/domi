@@ -49,13 +49,13 @@ table.on('tool(list-background-map-table)', function (obj) {
 
                 let url = globalAjaxUrl + '/admin/icon/addBackground';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    if (!res.errcode) {
-                        pageCommon.layerMsg(res.info, 2);
-                        return false;
-                    } else {
+                    if (res.errcode===0) {
                         parent.layer.close(index);
                         pageCommon.layerMsg(res.info, 1);
                         table.reload('list-background-map-table');
+                    } else {
+                        pageCommon.layerMsg(res.info, 2);
+                        return false;
                     }
 
                 });

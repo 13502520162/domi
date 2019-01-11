@@ -51,7 +51,7 @@ table.on('tool(classification-map-table)', function (obj) {
                 };
                 let url = globalAjaxUrl + '/admin/icon/addLoanPlatform';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    if (!res.state) {
+                    if (!res.errcode) {
                         pageCommon.layerMsg('编辑失败', 2);
                         return false;
                     } else {

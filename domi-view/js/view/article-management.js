@@ -138,7 +138,7 @@ table.on('tool(article-management-content-table)', function (obj) {
                 let url = globalAjaxUrl + '/admin/article/updateArticle';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     console.log(res);
-                    if (res.errcode == 3){
+                    if (res.errcode === 0){
                         pageCommon.layerMsg(res.info, 1);
 
                     } else {
@@ -264,7 +264,7 @@ $('.article-management-label').on('click', '.article-title-edit', function (e) {
             };
             let url = globalAjaxUrl + '/admin/articleType/updateArticleType';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (res.errcode==3){
+                if (res.errcode===0){
                     pageCommon.layerMsg(res.info, 1);
                 } else {
                     pageCommon.layerMsg(res.info, 2);
@@ -286,7 +286,7 @@ $('.article-management-label').on('click', '.article-title-remove', function (e)
     pageCommon.layerConfirm(function () {
         $this.parents('li').remove();
         pageCommon.getAjax(url, {}, function (res) {
-            if (res.errcode==3){
+            if (res.errcode===0){
                 pageCommon.layerMsg(res.info, 1);
             } else {
                 pageCommon.layerMsg(res.info, 2);
@@ -327,7 +327,7 @@ $('.add-article-title').click(function () {
                 };
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     console.log(res);
-                    if (res.errcode==3){
+                    if (res.errcode===0){
                         pageCommon.layerMsg(res.info, 1);
                         $('.article-title-ipt').val('').hide();
                     } else {
@@ -388,7 +388,7 @@ $('.article-management-top').on('click', '.article-management', function () {
             };
             let url = globalAjaxUrl + '/admin/article/addArticle';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (res.errcode == 3){
+                if (res.errcode === 0){
                     pageCommon.layerMsg(res.info, 1);
 
                 } else {

@@ -159,7 +159,7 @@
         };
         let url = globalAjaxUrl + '/admin/employee/employeeLogin';
         pageCommon.postAjax(url,JSON.stringify(obj),function (data) {
-            if (data.errcode){
+            if (data.errcode===0||data.errcode===3){
                 pageCommon.layerMsg(data.info,1);
                 let loginInfo = {
                     employeeId:data.data.employeeId,
@@ -167,7 +167,6 @@
                 };
                 localStorage.setItem('loginInfo',JSON.stringify(loginInfo));
                 sessionStorage.setItem('loginToken',data.data.token);
-
                 setTimeout( () =>{
                     window.location.href= globalUrl + '/view/administration.html';
                 },1000);
