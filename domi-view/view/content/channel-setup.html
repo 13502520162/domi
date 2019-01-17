@@ -126,16 +126,17 @@
                     <table class="layui-table" id="channel-setup-table" lay-filter="channel-setup-table">
                         <thead>
                         <tr>
-                            <th lay-data="{field:'name', width:140 ,align:'center'}" rowspan="2">渠道名</th>
+                            <th lay-data="{field:'name', width:160 ,align:'center'}" rowspan="2">渠道名</th>
+                            <th lay-data="{field:'name', width:160 ,align:'center'}" rowspan="2">最近登录时间</th>
                             <th lay-data="{field:'showUv',align:'center',width:90}" rowspan="2">展示UV</th>
                             <th lay-data="{align:'center'}" colspan="2">注册人数</th>
                             <th lay-data="{align:'center'}" colspan="2">激活人数</th>
                             <th lay-data="{field:'loginCount',align:'center', width:90}" rowspan="2">活跃人数</th>
                             <th lay-data="{field:'clickCount',align:'center', width:90}" rowspan="2">点击数</th>
-                            <th lay-data="{field:'statistics',align:'center',width:90}" rowspan="2">扣量状态</th>
-                            <th lay-data="{field:'census',align:'center',width:90}" rowspan="2">统计状态</th>
+                            <th lay-data="{field:'statistics',align:'center'}" rowspan="2">扣量状态</th>
+                   <!--         <th lay-data="{field:'census',align:'center',width:90}" rowspan="2">统计状态</th>-->
                             <th lay-data="{field:'right',align:'center',toolbar: '#retain', width:90}" rowspan="2" >留存</th>
-                            <th lay-data="{fixed: 'right',width:'20%', align: 'center', toolbar: '#barDemo'}" rowspan="2">操作
+                            <th lay-data="{fixed: 'right', align: 'center', toolbar: '#barDemo'}" rowspan="2">操作
                             </th>
 
                         </tr>
@@ -157,16 +158,16 @@
 <script src="../../js/public/divScroll/divScroll.js"></script>
 <script src="../../js/common.js"></script>
 <script src="../../js/public/layui/layui.all.js"></script>
-<script src="../../js/view/channel-setup.js"></script>
+<script src="../../js/view/content/channel-setup.js"></script>
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="setUp">设置</a>
-    {{# if(d.census == '统计'){ }}
+   <!-- {{# if(d.census == '统计'){ }}
         <a class="layui-btn layui-btn-xs" style="width: 70px;" lay-event="dataStatistics">统计数据</a>
     {{# } }}
     {{# if(d.census == '未统计'){ }}
         <a class="layui-btn layui-btn-xs" style="width: 70px;" lay-event="notDataStatistics">不统计数据</a>
-    {{# } }}
+    {{# } }}-->
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 
 </script>

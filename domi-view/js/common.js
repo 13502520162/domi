@@ -1,7 +1,8 @@
 let globalHttp = 'http://';
-let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";
+/*let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";*/
+let globalAjaxUrl = globalHttp + "app.duomimarkt.com";
 /*let globalAjaxUrl = globalHttp + "192.168.0.105";*/
-let globalUrl = globalHttp + window.location.host + '/domi-front/domi-view';
+let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
 let loginToken = sessionStorage.getItem('loginToken');
 let pageCommon = {
     /**
@@ -105,6 +106,7 @@ let pageCommon = {
             content: url,
             scrollbar: false,
             yes: function (index, layero) {
+                pageCommon.layerLoad(true);
                 confirm(index, layero);
             },
             btn2: function (index, layero) {
@@ -112,6 +114,8 @@ let pageCommon = {
             },
             success: function (index, layero) {
                 success(index, layero)
+            }, end: function () {
+                parent.layer.close(layIndex+1); //再执行关闭
             }
         });
         return layIndex;
@@ -311,11 +315,11 @@ let pageCommon = {
                     request.setRequestHeader('Authorization', loginToken);
                 },
                 success: function (res) {
-                    if ( res.errcode === 3){
-                       _this.returnLogin();
-                       return false
-                   }
-                   if (res.data.permission != null) {
+                    if (res.errcode === 3) {
+                        _this.returnLogin();
+                        return false
+                    }
+                    if (res.data.permission != null) {
                         let obj = {
                             add: res.data.permission.addData,
                             remove: res.data.permission.deleteData,

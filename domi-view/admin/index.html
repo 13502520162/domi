@@ -159,7 +159,7 @@
         };
         let url = globalAjaxUrl + '/admin/employee/employeeLogin';
         pageCommon.postAjax(url,JSON.stringify(obj),function (data) {
-            if (data.errcode===0||data.errcode===3){
+            if (data.errcode===0){
                 pageCommon.layerMsg(data.info,1);
                 let loginInfo = {
                     employeeId:data.data.employeeId,

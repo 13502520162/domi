@@ -29,11 +29,11 @@
 
     let query = pageCommon.getUrlParams();
 
-    let url = globalAjaxUrl + '/admin/loanPlatform/getSource?loanPlatformId=' + query.id;
+    let url = globalAjaxUrl + '/admin/loanPlatform/getChannelVisitCount?loanPlatformId=' + query.id;
     pageCommon.getAjax(url, {}, function (res) {
-        if (res.msg){
-            if (res.data.length){
-                eChartsInit(res.data);
+        if (res.errcode===0){
+            if (res.data.data.length){
+                eChartsInit(res.data.data);
             } else {
                 $('#main').html('<p style="line-height: 300px;font-weight: 500;text-align: center;font-size: 50px;">暂无数据</p>');
             }
@@ -44,10 +44,16 @@
     //  图表初始化
     function eChartsInit(data) {
         let newArr = [];
+        let newArrName = [];
         let num = 0;
         for (let i = 0; i < data.length; i++) {
-            newArr.push(data[i].name);
-            num += data[i].value
+            newArrName.push(data[i].name);
+            let obj = {
+                name:data[i].name,
+                value:data[i].visitCount
+            };
+            newArr.push(obj);
+            num += data[i].visitCount
         }
         let myChart = echarts.init(document.getElementById('main'));
         let option = {
@@ -62,7 +68,7 @@
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                data: newArr
+                data: newArrName
             },
             series: [
                 {
@@ -70,7 +76,7 @@
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
-                    data: data,
+                    data: newArr,
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,

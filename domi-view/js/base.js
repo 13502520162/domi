@@ -22,7 +22,8 @@ $(function () {
     $('.account').text(loginInfo.account);
 
     // 左边树 初始化
-    let ssideuLen = $('.s-side-u>li').length;
+    let ssideuLen = $('.s-side-u>li' +
+        '').length;
     if (!ssideuLen) {
         let infoUrl = globalAjaxUrl + '/admin/employee/getEmployeePermission?employeeId=' + loginInfo.employeeId; // 拿到登录人ID查询用户权限
         pageCommon.getAjax(infoUrl, {}, function (res) {
@@ -219,8 +220,6 @@ $(function () {
     //点击菜单栏切换
     $('.s-side-u').on('click', '.s-secondItem', function () {
         let id = $(this).attr('data-child');
-        $('.info-title').text($(this).parents('li').find('.d-firstNav span').text());
-        $('.info-title-child').text($(this).find('a').text());
         tab(id);
     });
 
@@ -240,6 +239,11 @@ $(function () {
         $('.active').parents('.s-firstDrop').show();
         $('.active').parent().show();
         sessionStorage.setItem('modelId', $('.active').parents('li').attr('data-parentId'));
+
+        let title = $('body').find('.active').parent().prev().find('span').text();  //模块索引
+        let titleChild = $('body').find('.active').find('a').text();
+        $('.info-title').text(title);
+        $('.info-title-child').text(titleChild);
 
 
         let nameArr = ['轮播', '分类', '列表背景图', '平台管理', '数据管理', '热门管理', '文章管理', '渠道管理', '渠道数据', '数据管理', '渠道设置', '权限管理', '用户列表', '用户反馈'];  //  分别对应相应模块

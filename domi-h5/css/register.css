@@ -3,81 +3,96 @@
     padding: 0;
     box-sizing: border-box;
 }
-a{
+
+a {
     text-decoration: none;
 }
-body,html ,.register{
+
+body, html, .register {
     background: #fff;
     width: 100%;
     height: 100%;
     font-family: Avenir;
 }
 
-.register-top{
+.register-top {
     height: 9.8rem;
     width: 100%;
     background: url('../images/bg-2x.png') no-repeat;
     background-size: 100% 100%;
 }
-.register-top>img{
+
+.register-top > img {
     width: 1.5rem;
     height: 1.5rem;
     padding: .15rem 0 0 .15rem;
 }
-.maximum-borrowable{
+
+.maximum-borrowable {
     padding: 0 0 0 .15rem;
     color: #fff;
 }
-.maximum-borrowable>.may-borrow{
+
+.maximum-borrowable > .may-borrow {
     font-size: .5rem;
     font-weight: bold;
 }
-.maximum-borrowable .may-borrow-num{
+
+.maximum-borrowable .may-borrow-num {
     position: relative;
     text-align: center;
 }
-.maximum-borrowable #may-borrow-money{
+
+.maximum-borrowable #may-borrow-money {
     font-size: 2rem;
     font-weight: 700;
 }
-.may-borrow--symbol{
+
+.may-borrow--symbol {
     position: absolute;
     top: .3rem;
     font-size: .7rem;
     left: .1rem;
 }
-.register-info{
+
+.register-info {
     text-align: right;
     color: #fff;
     padding: 0 1.8rem;
     position: relative;
     top: -.1rem;
 }
-.register-info i{
+
+.register-info i {
     font-size: .3rem;
     padding-left: 0.1rem;
     color: #ccc;
 }
-.register-info>span{
+
+.register-info > span {
     font-size: .3rem;
 }
-.register-info>span i{
+
+.register-info > span i {
     padding-right: 0.1rem;
 }
-.register-bottom{
+
+.register-bottom {
     width: 100%;
     height: 45%;
     box-sizing: border-box;
     padding: .5rem 1rem 1rem 1rem;
 }
-.register-bottom-ipt{
+
+.register-bottom-ipt {
     width: 100%;
     margin-bottom: .3rem;
     position: relative;
     height: 1.2rem;
 
 }
-.register-bottom-ipt>span{
+
+.register-bottom-ipt > span {
     padding: .1rem;
     position: absolute;
     top: 0;
@@ -89,21 +104,24 @@ body,html ,.register{
     box-sizing: border-box;
     border-right: 1px solid #ccc;
 }
-.register-bottom-ipt>span>i{
+
+.register-bottom-ipt > span > i {
     font-size: .5rem;
     color: #ccc;
 }
-.register-bottom-ipt input{
+
+.register-bottom-ipt input {
     width: 100%;
     height: 1.2rem;
-    font-size: .8rem;
+    font-size: .4rem;
     color: #ccc;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding-left:1.1rem;
+    padding-left: 1.2rem;
     box-sizing: border-box;
 }
-.register-bottom-ipt>span.verification-code{
+
+.register-bottom-ipt > span.verification-code {
     position: absolute;
     top: 0;
     left: auto;
@@ -115,21 +133,25 @@ body,html ,.register{
     font-size: .3rem;
     cursor: pointer;
 }
-.login-immediately{
+
+.login-immediately {
     text-align: right;
     margin-top: .1rem;
     font-size: .3rem;
     color: #ccc;
 }
-.login-immediately>span:nth-child(2){
+
+.login-immediately > span:nth-child(2) {
     color: #188ae2;
     cursor: pointer;
 }
-.register-now{
+
+.register-now {
     padding: 0 .3rem;
     margin-top: .8rem;
 }
-.register-now-btn{
+
+.register-now-btn {
     width: 100%;
     height: 1rem;
     background: #188ae2;
@@ -141,18 +163,37 @@ body,html ,.register{
     border-radius: 10px;
     font-size: .4rem;
 }
-.registration-agreement{
+
+.registration-agreement {
     margin-top: .7rem;
     text-align: center;
     font-size: .35rem;
     color: #ccc;
 }
-.registration-agreement>span{
+
+.registration-agreement > span {
     color: #188ae2;
     cursor: pointer;
 }
+
 input {
+    color: #333 !important;
     outline: none;
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.cellphone {
+    color: #333 !important;
+}
+
+.prompt4m {
+    position: fixed;
+    z-index: 99;
+    text-align: center;
+    display: none;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    color: #fff;
+    border-radius: 10px;
 }
