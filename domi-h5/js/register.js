@@ -1,5 +1,3 @@
-let globalHttp = 'http://';
-let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";
 var options = {
     useEasing: true,
     useGrouping: true,
@@ -98,7 +96,7 @@ $('.register-now-btn').click(function () {
     let password1 = hex_md5(password);
     $.ajax({
             type: "GET",
-            url: globalAjaxUrl + '/web/register.do?cellphone='+cellphone+'&password='+password1+'&inviteCode='+2+'&code='+checkCode,
+            url:globalAjaxUrl + '/web/register.do?cellphone='+cellphone+'&password='+password1+'&inviteCode='+2+'&code='+checkCode,
             success: function (res) {
                 if (res.errcode===0){
                     prompt4m(res.info,'middle',2000);

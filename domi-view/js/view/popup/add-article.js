@@ -1,4 +1,6 @@
 $(function () {
+    var E = window.wangEditor;
+    var editor = new E('#editor');
     $('.add-article').perfectScrollbar();
 
 
@@ -10,28 +12,30 @@ $(function () {
         }
         // 数据填充
         let query = pageCommon.getUrlParams();
-        let data = $('.article-management-iframe',parent.document).contents().find('.content-data').text();
+        let data = $('.article-management-iframe', parent.document).contents().find('.content-data').text();
         if (data) {
             if (query.field == 'edit' || query.field == 'view') {
                 data = JSON.parse(data);
+                console.log(data);
                 $('.add-article').attr('data-id', data.id);
                 $('.article-title').val(data.title);
                 $('.article-author').val(data.author);
                 $('.article-classification').val(data.typeId);
-                $('.add-article-content').val(data.content);
+                editor.txt.html(data.content);
+                $('.content-editor').text(data.content);
                 $('.platform-url').val(data.url);
-                $('.article-img img').attr('src',data.imgUrl);
-                $('.article-photo').attr('data-src',data.imgUrl);
+                $('.article-img img').attr('src', data.imgUrl);
+                $('.article-photo').attr('data-src', data.imgUrl);
                 $('.fileImg').hide();
                 $('.article-img').show();
-                if (query.field == 'view'){
-                    $('input,select,textarea').attr('disabled','disabled');
+                if (query.field == 'view') {
+                    $('input,select,textarea').attr('disabled', 'disabled');
                     $('.re-upload').remove();
+                    editor.$textElem.attr('contenteditable', false)
                 }
             }
         }
     });
-
 
 
     // 图片上传
@@ -42,10 +46,10 @@ $(function () {
         fr.readAsDataURL(files); // 读取的内容是加密以后的本地文件路径
         fr.onload = function (e) { // 数据读取完成时触发onload对应的响应函数
             var src = pageCommon.getTokenUrl(e.target.result);
-           $('.article-img img').attr('src',src);
-           $('.article-photo').attr('data-src',src);
-           $('.fileImg').hide();
-           $('.article-img').show();
+            $('.article-img img').attr('src', src);
+            $('.article-photo').attr('data-src', src);
+            $('.fileImg').hide();
+            $('.article-img').show();
         };
     });
 
@@ -53,13 +57,12 @@ $(function () {
     // 重新上传
     $('.re-upload').click(function () {
         $('#fileImg').val('');
-        $('.article-img img').attr('src','');
+        $('.article-img img').attr('src', '');
         $('.fileImg').show();
         $('.article-img').hide();
     });
 
-    var E = window.wangEditor;
-    var editor = new E('#editor');
+
 // 自定义菜单配置
     editor.customConfig.menus = [
         'head',  // 标题
@@ -75,7 +78,7 @@ $(function () {
         'list',  // 列表
         'justify',  // 对齐方式
         'quote',  // 引用
-/*        'emoticon',  // 表情*/
+        /*        'emoticon',  // 表情*/
         'image',  // 插入图片
         'table',  // 表格
         'video',  // 插入视频
@@ -83,7 +86,16 @@ $(function () {
         'undo',  // 撤销
         'redo'  // 重复
     ];
-    editor.customConfig.uploadImgShowBase64 = true ;  // 使用 base64 保存图片
+    editor.customConfig.uploadImgShowBase64 = true;  // 使用 base64 保存图片
+    editor.customConfig.customUploadImg = function (files, insert) {
+        let fr = new FileReader(); // 这个FileReader应该对应于每一个读取的文件都需要重新new一个
+        let file = files[0]; // files可以获取当前文件输入框中选择的所有文件，返回列表
+        fr.readAsDataURL(file); // 读取的内容是加密以后的本地文件路径
+        fr.onload = function (e) { // 数据读取完成时触发onload对应的响应函数
+            let src = pageCommon.getTokenUrl(e.target.result);
+            insert(src) // 插入到 编辑器中  insert 是编辑器对象
+        };
+    };
     editor.customConfig.onchange = function (html) {
         // html 即变化之后的内容
         $('.content-editor').text();
@@ -92,6 +104,7 @@ $(function () {
     editor.create()
 
 
-});
+})
+;
 
 
