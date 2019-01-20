@@ -49,6 +49,7 @@ table.on('tool(classification-map-table)', function (obj) {
                     id: data.id,
                     imgUrl: photo
                 };
+                pageCommon.layerLoad(true);
                 let url = globalAjaxUrl + '/admin/icon/addLoanPlatform';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     if (!res.errcode) {

@@ -12,7 +12,7 @@ laydate.render({
             start = arr[0];
             end = arr[1];
             table.reload('content-table-statistics', {
-                url: globalAjaxUrl + '/admin/channel/getDateData'
+                url: globalAjaxUrl + '/admin/channel/getBusinessData'
                 , where: {
                     beginDate: start,
                     endDate: end
@@ -52,7 +52,7 @@ function eChartsInit(data) {
             }
         },
         legend: {
-            data: ['注册人数', '新增/激活人数', '活跃人数']
+            data: ['注册人数', '新增/激活人数', '活跃人数', '点击人数']
         },
         xAxis: [
             {
@@ -83,6 +83,11 @@ function eChartsInit(data) {
                 name: '活跃人数',
                 type: 'line',
                 data: data.seriesData.active
+            },
+            {
+                name: '点击人数',
+                type: 'line',
+                data: data.seriesData.click
             }
         ]
     };
@@ -96,67 +101,77 @@ table.render({
     , method: 'GET'
     , limits: [10, 20, 30, 50, 100, 200]
     , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
-    , url: globalAjaxUrl + '/admin/channel/getDateData'
+    , url: globalAjaxUrl + '/admin/channel/getBusinessData'
     , where: {
         beginDate: '',
         endDate: ''
     }
     , cols: [[
         {type: 'checkbox'}
-        , {field: 'dateTime', width: '20%', title: '统计时间', align: 'center'}
+        , {field: 'date', title: '统计时间', align: 'center'}
         , {field: 'id', title: 'ID', align: 'center', hide: true}
-        , {field: 'registrationCount', width: '20%', title: '注册人数', align: 'center'}
+        , {field: 'registrationCount', title: '注册人数', align: 'center'}
         , {field: 'activationCount', title: '新增/激活人数', align: 'center'}
-        , {field: 'loginCount', title: '活跃人数', align: 'center'}
+        , {field: 'onlineCount', title: '活跃人数', align: 'center'}
+        , {field: 'clickCount', title: '点击次数', align: 'center'}
     ]]
     , page: true
     , done: function (res, curr, count) {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
     }
-    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
-        dataInit(res);
+    , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        dataInit(res.data.allData, res.data.allSum);
         return {
             "code": res.errcode, //解析接口状态
             "msg": res.info, //解析提示文本
             "count": res.data.count, //解析数据长度
-            "data": res.data.data //解析数据列表
+            "data": res.data.allData //解析数据列表
         };
     }
 });
 
 
-function dataInit(res) {
-    res = res.data;
+function dataInit(data, sum) {
+
     let register = [];
     let newActivation = [];
     let active = [];
     let xData = [];
-    userArray = [];
-    channelArray = [];
-    dataArray = [];
-    for (let i = 0; i < res.data.length; i++) {
-        register.push(res.data[i].registrationCount);  // 注册
-        newActivation.push(res.data[i].activationCount); // 新增/激活人数
-        active.push(res.data[i].loginCount); // 活跃人数
-        xData.push(res.data[i].dateTime); // 操作时间
-    }
+    let click = [];
+    for (let i = 0; i < data.length; i++) {
+        register.push(data[i].registrationCount);  // 注册
+        newActivation.push(data[i].activationCount); // 新增/激活人数
+        active.push(data[i].onlineCount); // 活跃人数
+        click.push(data[i].clickCount); // 点击人数
 
-    let data = {
+        if (data[i].date) {
+
+            xData.push(data[i].date); // 操作时间
+        }else {
+            xData.push(data[i].hour); // 操作时间
+        }
+    }
+    $('.current-date').attr('data-start',data[0].date);
+    $('.current-date').attr('data-end',data[data.length-1].date);
+
+    //顶部数据
+    $('.content-text-statistics-bottom .num').eq(0).text(sum.registrationCount);
+    $('.content-text-statistics-bottom .num').eq(1).text(sum.activationCount);
+    $('.content-text-statistics-bottom .num').eq(2).text(sum.onlineCount);
+    $('.content-text-statistics-bottom .num').eq(3).text(sum.clickCount);
+
+
+    // 图表数据
+    let ChartData = {
         xData: xData,
         seriesData: {
             register: register,
             newActivation: newActivation,
-            active: active
+            active: active,
+            click: click,
         }
     };
-    eChartsInit(data); //  初始化图表
-
-    $('.content-text-statistics-bottom .num').eq(0).text(res.HistoryData.registrationCount);
-    $('.content-text-statistics-bottom .num').eq(1).text(res.HistoryData.activationCount);
-    $('.content-text-statistics-bottom .num').eq(2).text(res.HistoryData.loginCount);
-    userArray.push(res.userData);
-    channelArray.push(res.channel);
-    dataArray.push(res.data);
+    eChartsInit(ChartData); //  初始化图表
 }
 
 
@@ -164,22 +179,49 @@ function dataInit(res) {
 $('.content-main-sel').change(function () {
     let val = $(this).val();
     switch (val) {
-        case '自然量':
-            $('.content-text-statistics-bottom .num').eq(0).text(userArray[0].registrationCount);
-            $('.content-text-statistics-bottom .num').eq(1).text(userArray[0].activationCount);
-            $('.content-text-statistics-bottom .num').eq(2).text(userArray[0].loginCount);
+        case '0':
+            table.reload('content-table-statistics', {
+                url: globalAjaxUrl + '/admin/channel/getBusinessData'
+                , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                    dataInit(res.data.natureData, res.data.natureSum);
+                    return {
+                        "code": res.errcode, //解析接口状态
+                        "msg": res.info, //解析提示文本
+                        "count": res.data.count, //解析数据长度
+                        "data": res.data.natureData //解析数据列表
+                    };
+                }
+            });
             $('.content-text-statistics-top .fr').text('自然量');
             break;
-        case  '推广量':
-            $('.content-text-statistics-bottom .num').eq(0).text(channelArray[0].registrationCount);
-            $('.content-text-statistics-bottom .num').eq(1).text(channelArray[0].activationCount);
-            $('.content-text-statistics-bottom .num').eq(2).text(channelArray[0].loginCount);
+        case  '1':
+            table.reload('content-table-statistics', {
+                url: globalAjaxUrl + '/admin/channel/getBusinessData'
+                , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                    dataInit(res.data.publishData, res.data.publishSum);
+                    return {
+                        "code": res.errcode, //解析接口状态
+                        "msg": res.info, //解析提示文本
+                        "count": res.data.count, //解析数据长度
+                        "data": res.data.publishData //解析数据列表
+                    };
+                }
+            });
             $('.content-text-statistics-top .fr').text('推广量');
             break;
         default:
-            $('.content-text-statistics-bottom .num').eq(0).text(dataArray[0].registrationCount);
-            $('.content-text-statistics-bottom .num').eq(1).text(dataArray[0].activationCount);
-            $('.content-text-statistics-bottom .num').eq(2).text(dataArray[0].loginCount);
+            table.reload('content-table-statistics', {
+                url: globalAjaxUrl + '/admin/channel/getBusinessData'
+                , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                    dataInit(res.data.allData, res.data.allSum);
+                    return {
+                        "code": res.errcode, //解析接口状态
+                        "msg": res.info, //解析提示文本
+                        "count": res.data.count, //解析数据长度
+                        "data": res.data.allData //解析数据列表
+                    };
+                }
+            });
             $('.content-text-statistics-top .fr').text('全部来源');
     }
 });
@@ -187,86 +229,127 @@ $('.content-main-sel').change(function () {
 
 // 全部导出
 $('.content-table-statistics-all').click(function () {
+    let selVal = $('.content-main-sel').val();
     let value = $('.date-start').val();
-    let arr = value.split(' - ');
-    start = arr[0];
-    end = arr[1];
-    let url = window.location.href = globalAjaxUrl + '/admin/channel/getExpt?beginDate=' + start + '&endDate=' + end;
+    if (value) {
+        let arr = value.split(' - ');
+        start = arr[0];
+        end = arr[1];
+    } else {
+        start = '';
+        end = '';
+    }
+    let url = window.location.href = globalAjaxUrl + '/admin/channel/excelBusinessData?beginDate=' + start + '&endDate=' + end + '&sourceType=' + selVal;
     pageCommon.getAjax(url, {}, function (res) {
         console.log(res);
     });
 });
 
-// 批量导出
+// 导出当前页
 $('.content-table-statistics-export').click(function () {
-    let check = table.checkStatus('content-table-statistics'); //idTest 即为基础参数 id 对应的值
-    let len = check.data.length;
-
-    if (!len) {
-        pageCommon.layerMsg('请选择要导出的内容', 2);
-        return false;
-    }
-    let Arr = [];
-
-    for (let i = 0; i < len; i++) {
-        Arr.push(check.data[i].dateTime);
-    }
-
-    let obj = {
-        arr: Arr
-    };
-
-    let url = globalAjaxUrl + '/admin/channel/getBatchExpt';
-    pageCommon.postExcelFile(obj, url)
+    let selVal = $('.content-main-sel').val();
+    start = $('.current-date').attr('data-start');
+    end = $('.current-date').attr('data-end');
+    console.log(start);
+    console.log(end);
+    let url = window.location.href = globalAjaxUrl + '/admin/channel/excelBusinessData?beginDate=' + start + '&endDate=' + end + '&sourceType=' + selVal;
+    pageCommon.getAjax(url, {}, function (res) {
+        console.log(res);
+    });
 });
 
 
 //  天数筛选
-let curDare = pageCommon.getTimeForMat();
-/*$('.date-start').val(curDare.start + ' - ' + curDare.end);*/
 $('.management-option-date>p').click(function () {
     $(this).addClass('active').siblings().removeClass('active');
     $('.liActive').text($(this).text() + '用户统计');
     let time = $(this).attr('data-time');
     let dateVal;
-    let beginDate,endDate;
-    $('.content-main-sel').val('全部来源');
+    let beginDate, endDate;
+    $('.content-main-sel').val('-1');
     currTime();
     if (time != 'all') {
         if (time == '1') {
+            $('.content-table-statistics-export').hide();
             dateVal = pageCommon.getTimeForMat();
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
             $('.time').parent().html('<p>截止今日<span  class="time"></span></p>');
             beginDate = dateVal.start;
             endDate = dateVal.end;
             currTime();
+            table.reload('content-table-statistics', {
+                url: globalAjaxUrl + '/admin/channel/getBusinessData'
+                , where: {
+                    beginDate:beginDate,
+                    endDate: endDate
+                }
+                , cols: [[
+                    {type: 'checkbox'}
+                    , {field: 'hour', title: '统计时间', align: 'center'}
+                    , {field: 'id', title: 'ID', align: 'center', hide: true}
+                    , {field: 'registrationCount', title: '注册人数', align: 'center'}
+                    , {field: 'activationCount', title: '新增/激活人数', align: 'center'}
+                    , {field: 'onlineCount', title: '活跃人数', align: 'center'}
+                    , {field: 'clickCount', title: '点击次数', align: 'center'}
+                ]],
+                page:false
+            });
         } else if (time == '-1') {
+            $('.content-table-statistics-export').hide();
             dateVal = pageCommon.getTimeForMat(1);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.start);
             $('.time').parent().html('<p>截止昨日<span  class="time">24:00</span></p>')
             beginDate = dateVal.start;
             endDate = dateVal.start;
+            table.reload('content-table-statistics', {
+                url: globalAjaxUrl + '/admin/channel/getBusinessData'
+                , where: {
+                    beginDate:beginDate,
+                    endDate: endDate
+                }
+                , cols: [[
+                    {type: 'checkbox'}
+                    , {field: 'hour', title: '统计时间', align: 'center'}
+                    , {field: 'id', title: 'ID', align: 'center', hide: true}
+                    , {field: 'registrationCount', title: '注册人数', align: 'center'}
+                    , {field: 'activationCount', title: '新增/激活人数', align: 'center'}
+                    , {field: 'onlineCount', title: '活跃人数', align: 'center'}
+                    , {field: 'clickCount', title: '点击次数', align: 'center'}
+                ]],
+                page:false
+            });
         } else {
+            $('.content-table-statistics-export').show();
             dateVal = pageCommon.getTimeForMat(time);
             $('.date-start').val(dateVal.start + ' - ' + dateVal.end);
             $('.time').parent().html('<p>截止今日<span  class="time"></span></p>');
             beginDate = dateVal.start;
             endDate = dateVal.end;
             currTime();
+            table.reload('content-table-statistics', {
+                url: globalAjaxUrl + '/admin/channel/getBusinessData'
+                , where: {
+                    beginDate:beginDate,
+                    endDate: endDate
+                }
+                , cols: [[
+                    {type: 'checkbox'}
+                    , {field: 'date', title: '统计时间', align: 'center'}
+                    , {field: 'id', title: 'ID', align: 'center', hide: true}
+                    , {field: 'registrationCount', title: '注册人数', align: 'center'}
+                    , {field: 'activationCount', title: '新增/激活人数', align: 'center'}
+                    , {field: 'onlineCount', title: '活跃人数', align: 'center'}
+                    , {field: 'clickCount', title: '点击次数', align: 'center'}
+                ]],
+                page:true
+            });
         }
-
-        table.reload('content-table-statistics', {
-            url: globalAjaxUrl + '/admin/channel/getDateData'
-            , where: {
-                beginDate:beginDate,
-                endDate: endDate
-            }
-        });
     } else {
+        $('.content-table-statistics-export').show();
         table.reload('content-table-statistics', {
-            url: globalAjaxUrl + '/admin/channel/getDateData'
+            url: globalAjaxUrl + '/admin/channel/getBusinessData'
             , where: {
-                beginDate:'',
+                beginDate: '',
                 endDate: ''
             }
         });
@@ -275,10 +358,10 @@ $('.management-option-date>p').click(function () {
 });
 
 
-function currTime(){
+function currTime() {
     let date = new Date();
     let HH = date.getHours();
     let MM = date.getMinutes();
-    $('.time').text(HH+':'+MM);
+    $('.time').text(HH + ':' + MM);
 }
 

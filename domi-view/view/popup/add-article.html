@@ -7,9 +7,6 @@
     <link rel="stylesheet" href="../../css/public/style.css">
     <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="../../css/view/popup/add-article.css">
-
-
-
 </head>
 <body>
 <div class="add-article">
@@ -30,7 +27,13 @@
             <option value="栏目标题3">栏目标题3</option>-->
         </select>
     </div>
-    <div class="add-article-filed add-article-filed-photo">
+    <div class="add-article-filed">
+        <span class="add-article-tit"><span class="required">*</span>文章内容:</span>
+        <div id="editor">
+        </div>
+    </div>
+    <span style="display: none" class="content-editor"></span>
+<!--    <div class="add-article-filed add-article-filed-photo">
         <span class="add-article-tit"><span class="required">*</span>图片:</span>
         <div class="article-photo">
             <a href="javascript:void (0);" class="file fileImg">
@@ -47,11 +50,12 @@
     <div class="add-article-filed">
         <span class="add-article-tit" style="position: absolute;"><span class="required">*</span>文章内容:</span>
         <textarea name="" class="add-article-content br" placeholder="请输入文章内容"></textarea>
-    </div>
+    </div>-->
 </div>
 <script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
 <script src="../../js/common.js"></script>
 <script src="../../js/public/divScroll/divScroll.js"></script>
+<script src="../../js/public/wangEditor/wangEditor.min.js"></script>
 <script src="../../js/view/popup/add-article.js"></script>
 </body>
 </html>

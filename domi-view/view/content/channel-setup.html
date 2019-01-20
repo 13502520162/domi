@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../css/public/reset.css">
     <link rel="stylesheet" href="../../css/public/style.css">
     <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
-    <link rel="stylesheet" href="../../css/view/iframe/channel-setup.css">
+    <link rel="stylesheet" href="../../css/view/content/channel-setup.css">
 
 </head>
 <body>
@@ -86,12 +86,16 @@
                                 </div>
                             </div>
                             <div class="content-text-statistics-bottom">
-                                <div class="real-data">
+                              <!--  <div class="real-data">
                                     <p>新用户</p>
                                     <p class="num">0</p>
                                 </div>
                                 <div class="display-data">
                                     <p>老用户</p>
+                                    <p class="num">0</p>
+                                </div>-->
+                                <div class="display-data">
+                                    <p>用户活跃</p>
                                     <p class="num">0</p>
                                 </div>
                             </div>
@@ -108,12 +112,16 @@
                                 </div>
                             </div>
                             <div class="content-text-statistics-bottom">
-                                <div class="real-data">
+                          <!--      <div class="real-data">
                                     <p>新用户</p>
                                     <p class="num">0</p>
                                 </div>
                                 <div class="display-data">
                                     <p>老用户</p>
+                                    <p class="num">0</p>
+                                </div>-->
+                                <div class="display-data">
+                                    <p>用户点击</p>
                                     <p class="num">0</p>
                                 </div>
                             </div>
@@ -128,23 +136,23 @@
                         <tr>
                             <th lay-data="{field:'name', width:160 ,align:'center'}" rowspan="2">渠道名</th>
                             <th lay-data="{field:'name', width:160 ,align:'center'}" rowspan="2">最近登录时间</th>
-                            <th lay-data="{field:'showUv',align:'center',width:90}" rowspan="2">展示UV</th>
+                            <th lay-data="{field:'uvCount',align:'center',width:90}" rowspan="2">展示UV</th>
                             <th lay-data="{align:'center'}" colspan="2">注册人数</th>
                             <th lay-data="{align:'center'}" colspan="2">激活人数</th>
-                            <th lay-data="{field:'loginCount',align:'center', width:90}" rowspan="2">活跃人数</th>
+                            <th lay-data="{field:'onlineCount',align:'center', width:90}" rowspan="2">活跃人数</th>
                             <th lay-data="{field:'clickCount',align:'center', width:90}" rowspan="2">点击数</th>
-                            <th lay-data="{field:'statistics',align:'center'}" rowspan="2">扣量状态</th>
+                            <th lay-data="{field:'statistics',align:'center',templet: '#statistics'}" rowspan="2">扣量状态</th>
                    <!--         <th lay-data="{field:'census',align:'center',width:90}" rowspan="2">统计状态</th>-->
-                            <th lay-data="{field:'right',align:'center',toolbar: '#retain', width:90}" rowspan="2" >留存</th>
+                      <!--      <th lay-data="{field:'right',align:'center',toolbar: '#retain', width:90}" rowspan="2" >留存</th>-->
                             <th lay-data="{fixed: 'right', align: 'center', toolbar: '#barDemo'}" rowspan="2">操作
                             </th>
 
                         </tr>
                         <tr>
-                            <th lay-data="{field:'registrationCount',align:'center', width:90}">真实数据</th>
-                            <th lay-data="{field:'registerOut',align:'center', width:90}">展示数据</th>
-                            <th lay-data="{field:'activationCount',align:'center', width:90}">真实数据</th>
-                            <th lay-data="{field:'activationOut',align:'center', width:90}">展示数据</th>
+                            <th lay-data="{field:'allRegistrationCount',align:'center', width:90}">真实数据</th>
+                            <th lay-data="{field:'validRegistrationCount',align:'center', width:90}">展示数据</th>
+                            <th lay-data="{field:'allactivationCount',align:'center', width:90}">真实数据</th>
+                            <th lay-data="{field:'validactivationCount',align:'center', width:90}">展示数据</th>
                         </tr>
                         </thead>
                     </table>
@@ -172,8 +180,13 @@
 
 </script>
 
-<script type="text/html" id="retain">
+<!--<script type="text/html" id="retain">
     <a class="layui-btn  layui-btn-xs" lay-event="view">查看</a>
+</script>-->
+
+
+<script type="text/html" id="statistics">
+    <span class="statistics">进{{d.come}}扣{{d.abandon}}</span>
 </script>
 </body>
 </html>

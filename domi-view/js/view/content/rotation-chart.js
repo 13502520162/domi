@@ -81,6 +81,7 @@ table.on('tool(rotation-chart-table)', function (obj) {
                     background: bannerBg,
                     url: bannerUrl
                 };
+                pageCommon.layerLoad(true);
                 let url = globalAjaxUrl + '/admin/banner/addBanner';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     if (res.errcode===0) {
@@ -164,7 +165,7 @@ $('.new-photos').click(function () {
                 background: bannerBg,
                 url: bannerUrl
             };
-
+            pageCommon.layerLoad(true);
             let url = globalAjaxUrl + '/admin/banner/addBanner';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                 if (res.errcode===0) {

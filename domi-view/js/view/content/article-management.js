@@ -1,18 +1,17 @@
-
 let table = layui.table;
 let permissionValue = pageCommon.getPermissionValue();
 
 
-function ArticleManagement(){
+function ArticleManagement() {
 
 }
 
 ArticleManagement.prototype = {
-    constructor:ArticleManagement,
-    init:function () {
+    constructor: ArticleManagement,
+    init: function () {
         this.table();
     },
-    table:function () {
+    table: function () {
         table.render({
             elem: '#article-management-content-table'
             , even: true //开启隔行背景
@@ -26,8 +25,8 @@ ArticleManagement.prototype = {
                 , {field: 'author', width: '10%', title: '作者', align: 'center'}
                 , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
                 , {field: 'content', title: '内容', align: 'center'}
-                , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
-                , {field: 'dateTime',width: '12%', title: '更新时间', align: 'center'}
+                , {field: 'typeName', width: '10%', title: '推荐分类', align: 'center'}
+                , {field: 'dateTime', width: '12%', title: '更新时间', align: 'center'}
                 , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
             ]]
             , page: true
@@ -35,7 +34,7 @@ ArticleManagement.prototype = {
                 $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
             }
             ,
-            parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+            parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
                 getArticleManagementSuccess(res);
                 return {
                     "code": res.data.code, //解析接口状态
@@ -52,15 +51,13 @@ let articleManagement = new ArticleManagement();
 articleManagement.init();
 
 
-
-
 function getArticleManagementSuccess(res) {
     let liLen = $('.article-management-label>ul').find('.add-li').length;
     res = res.data;
 
-        if (liLen != res.articleTypes.length) {
-            for (let j = 0; j < res.articleTypes.length; j++) {
-                let html = `<li class="add-li" data-id="${res.articleTypes[j].id}">
+    if (liLen != res.articleTypes.length) {
+        for (let j = 0; j < res.articleTypes.length; j++) {
+            let html = `<li class="add-li" data-id="${res.articleTypes[j].id}">
                             <div class="article-management-label-tit">
                                 <span class="article-management-label-tit-span">${res.articleTypes[j].name}</span>
                                 <input type="text" class="article-management-label-tit-ipt">
@@ -71,31 +68,30 @@ function getArticleManagementSuccess(res) {
                                 <p class="article-title-remove">删除标题</p>
                             </div>
                         </li>`;
-                $('.add-article-li').before(html);
-            }
+            $('.add-article-li').before(html);
+        }
     }
 }
-
 
 
 table.on('tool(article-management-content-table)', function (obj) {
     let data = obj.data;
     if (obj.event === 'del') {
-        if (!permissionValue.remove){
-            pageCommon.layerMsg('你没有权限删除',2);
+        if (!permissionValue.remove) {
+            pageCommon.layerMsg('你没有权限删除', 2);
             return false;
         }
         layer.confirm('确定删除嘛？', function (index) {
-            let url = globalAjaxUrl + '/admin/article/deleteArticle?articleId='+ data.id;
+            let url = globalAjaxUrl + '/admin/article/deleteArticle?articleId=' + data.id;
             pageCommon.getAjax(url, {}, function (res) {
                 pageCommon.layerMsg(res.info, 1);
                 obj.del();
                 layer.close(index);
             });
         });
-    }else if (obj.event == 'edit'){
-        if (!permissionValue.edit){
-            pageCommon.layerMsg('你没有权限编辑',2);
+    } else if (obj.event == 'edit') {
+        if (!permissionValue.edit) {
+            pageCommon.layerMsg('你没有权限编辑', 2);
             return false;
         }
         $('.content-data').text(JSON.stringify(data));
@@ -127,51 +123,53 @@ table.on('tool(article-management-content-table)', function (obj) {
                     return false;
                 }
                 let obj = {
-                    id:id,
+                    id: id,
                     title: tit,
                     author: author,
                     typeId: classification,
-                    updateTime:"",
+                    updateTime: "",
                     content: content,
                     imgUrl: photo
                 };
+                let index1 = pageCommon.layerLoad(true);
                 let url = globalAjaxUrl + '/admin/article/updateArticle';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    console.log(res);
-                    if (res.errcode === 0){
+                    if (res.errcode === 0) {
+                        parent.layer.close(index);
                         pageCommon.layerMsg(res.info, 1);
 
                     } else {
                         pageCommon.layerMsg(res.info, 2);
+                        parent.layer.close(index1);
+                        return false
                     }
-                    parent.layer.close(index);
                     labelSelection('.article-active');
                 });
             },
             cancel: function (index, layero) {
                 parent.layer.close(index);
             },
-            success:function () {
+            success: function () {
 
             }
         });
-    }else if (obj.event == 'view'){
+    } else if (obj.event == 'view') {
         $('.content-data').text(JSON.stringify(data));
         let index = pageCommon.layerParentOpenIframe({
             url: globalUrl + '/view/popup/add-article.html?field=view',
             title: '预览文章',
-            btn:['关闭'],
+            btn: ['关闭'],
             confirm: function (index, layero) {
                 parent.layer.close(index);
             },
-            success:function (layero, index) {
+            success: function (layero, index) {
             }
         });
     }
 });
 
 
-function labelSelection(e){
+function labelSelection(e) {
     let len = $(e).parent().find('li').length;
     let index = $(e).index();
     let id = $(e).attr('data-id');
@@ -182,7 +180,7 @@ function labelSelection(e){
             , where: {
                 articleTypeId: id
             }
-            , parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
                 getArticleManagementSuccess(res);
                 return {
                     "code": res.data.code, //解析接口状态
@@ -194,7 +192,7 @@ function labelSelection(e){
         });
     }
 
-    if (index == 0){
+    if (index == 0) {
         table.render({
             elem: '#article-management-content-table'
             , even: true //开启隔行背景
@@ -208,8 +206,8 @@ function labelSelection(e){
                 , {field: 'author', width: '10%', title: '作者', align: 'center'}
                 , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
                 , {field: 'content', title: '内容', align: 'center'}
-                , {field: 'typeName', width: '10%',title: '推荐分类', align: 'center'}
-                , {field: 'dateTime',width: '12%', title: '更新时间', align: 'center'}
+                , {field: 'typeName', width: '10%', title: '推荐分类', align: 'center'}
+                , {field: 'dateTime', width: '12%', title: '更新时间', align: 'center'}
                 , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
             ]]
             , page: true
@@ -217,7 +215,7 @@ function labelSelection(e){
                 $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
             }
             ,
-            parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+            parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
                 getArticleManagementSuccess(res);
                 return {
                     "code": res.data.code, //解析接口状态
@@ -229,6 +227,7 @@ function labelSelection(e){
         });
     }
 }
+
 //标题栏的切换
 $('.article-management-label>ul').on('click', 'li', function () {
     labelSelection(this);
@@ -236,11 +235,10 @@ $('.article-management-label>ul').on('click', 'li', function () {
 });
 
 
-
 // 编辑标题 ok
 $('.article-management-label').on('click', '.article-title-edit', function (e) {
-    if (!permissionValue.edit){
-        pageCommon.layerMsg('你没有权限编辑',2);
+    if (!permissionValue.edit) {
+        pageCommon.layerMsg('你没有权限编辑', 2);
         return false;
     }
     var span = $(this).parents('li').find('.article-management-label-tit-span');
@@ -260,11 +258,11 @@ $('.article-management-label').on('click', '.article-title-edit', function (e) {
 
             let obj = {
                 name: input.val(),
-                id:id
+                id: id
             };
             let url = globalAjaxUrl + '/admin/articleType/updateArticleType';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (res.errcode===0){
+                if (res.errcode === 0) {
                     pageCommon.layerMsg(res.info, 1);
                 } else {
                     pageCommon.layerMsg(res.info, 2);
@@ -276,17 +274,17 @@ $('.article-management-label').on('click', '.article-title-edit', function (e) {
 
 // 删除标题 ok
 $('.article-management-label').on('click', '.article-title-remove', function (e) {
-    if (!permissionValue.remove){
-        pageCommon.layerMsg('你没有权限删除',2);
+    if (!permissionValue.remove) {
+        pageCommon.layerMsg('你没有权限删除', 2);
         return false;
     }
     let $this = $(this);
     let id = $(this).parents('li').attr('data-id');
-    let url = globalAjaxUrl + '/admin/articleType/deleteArticleTypeCount?articleTypeId='+id;
+    let url = globalAjaxUrl + '/admin/articleType/deleteArticleTypeCount?articleTypeId=' + id;
     pageCommon.layerConfirm(function () {
         $this.parents('li').remove();
         pageCommon.getAjax(url, {}, function (res) {
-            if (res.errcode===0){
+            if (res.errcode === 0) {
                 pageCommon.layerMsg(res.info, 1);
             } else {
                 pageCommon.layerMsg(res.info, 2);
@@ -298,8 +296,8 @@ $('.article-management-label').on('click', '.article-title-remove', function (e)
 
 // 添加标题  ok
 $('.add-article-title').click(function () {
-    if (!permissionValue.add){
-        pageCommon.layerMsg('你没有权限添加',2);
+    if (!permissionValue.add) {
+        pageCommon.layerMsg('你没有权限添加', 2);
         return false;
     }
     $('.article-title-ipt').show();
@@ -326,15 +324,14 @@ $('.add-article-title').click(function () {
                     name: val
                 };
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    console.log(res);
-                    if (res.errcode===0){
+                    if (res.errcode === 0) {
                         pageCommon.layerMsg(res.info, 1);
                         $('.article-title-ipt').val('').hide();
                     } else {
                         pageCommon.layerMsg(res.info, 2);
                     }
 
-                   window.location.reload();
+                    window.location.reload();
                 });
 
             } else {
@@ -347,8 +344,8 @@ $('.add-article-title').click(function () {
 
 // 创建文章
 $('.article-management-top').on('click', '.article-management', function () {
-    if (!permissionValue.add){
-        pageCommon.layerMsg('你没有权限创建',2);
+    if (!permissionValue.add) {
+        pageCommon.layerMsg('你没有权限创建', 2);
         return false;
     }
     var index = pageCommon.layerParentOpenIframe({
@@ -382,26 +379,28 @@ $('.article-management-top').on('click', '.article-management', function () {
                 title: tit,
                 author: author,
                 typeId: classification,
-                updateTime:"",
+                updateTime: "",
                 content: content,
                 imgUrl: photo
             };
+            let index1 = pageCommon.layerLoad(true);
             let url = globalAjaxUrl + '/admin/article/addArticle';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (res.errcode === 0){
+                if (res.errcode === 0) {
+                    parent.layer.close(index);
                     pageCommon.layerMsg(res.info, 1);
 
                 } else {
                     pageCommon.layerMsg(res.info, 2);
+                    parent.layer.close(index1); //再执行关闭
                 }
-                parent.layer.close(index);
                 table.reload('article-management-content-table');
             });
         },
         cancel: function (index, layero) {
             parent.layer.close(index);
         },
-        success:function () {
+        success: function () {
 
         }
     });

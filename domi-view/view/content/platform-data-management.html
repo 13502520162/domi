@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../css/public/reset.css">
     <link rel="stylesheet" href="../../css/public/style.css">
     <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
-    <link rel="stylesheet" href="../../css/view/iframe/platform-data-management.css">
+    <link rel="stylesheet" href="../../css/view/content/platform-data-management.css">
 
 </head>
 <body>
@@ -37,9 +37,9 @@
                 </div>
                 <div class="content-main-select">
                     <select name="" class="content-main-sel">
-                        <option value="全部来源">全部来源</option>
-                        <option value="自然量">自然量</option>
-                        <option value="推广量">推广量</option>
+                        <option value="-1">全部来源</option>
+                        <option value="0">自然量</option>
+                        <option value="1">推广量</option>
                     </select>
                 </div>
             </div>
@@ -107,7 +107,8 @@
             <div class="content-table-statistics">
                 <div class="content-table-statistics-option">
                     <span class="content-table-statistics-all">全部导出</span>
-                    <span class="content-table-statistics-export">批量导出</span>
+                    <span class="content-table-statistics-export">导出当前页</span>
+                    <span  class="current-date" style="display: none;">勿删</span>
                 </div>
                 <div class="table">
                     <table class="layui-hide" id="content-table-statistics" lay-filter="content-table-statistics"></table>

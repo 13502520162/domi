@@ -1,7 +1,7 @@
 $(function () {
 
     let contentArr = ['rotation-chart', 'classification-map', 'list-background-map', 'platform-management', 'data-management', 'popular-management', 'article-management', 'channel-management', 'channel-data', 'platform-data-management', 'channel-setup', 'privilege-management', 'user-list',
-        'user-feedback'];  // iframe 对应页面元素
+        'user-feedback','version-management'];  // iframe 对应页面元素
 
     for (let p = 0; p < contentArr.length; p++) {
         let html = `
@@ -238,6 +238,7 @@ $(function () {
         }
         $('.active').parents('.s-firstDrop').show();
         $('.active').parent().show();
+        $('.active').parent().prev().find('.fa-caret-right').addClass('iconRotate');
         sessionStorage.setItem('modelId', $('.active').parents('li').attr('data-parentId'));
 
         let title = $('body').find('.active').parent().prev().find('span').text();  //模块索引
@@ -246,7 +247,7 @@ $(function () {
         $('.info-title-child').text(titleChild);
 
 
-        let nameArr = ['轮播', '分类', '列表背景图', '平台管理', '数据管理', '热门管理', '文章管理', '渠道管理', '渠道数据', '数据管理', '渠道设置', '权限管理', '用户列表', '用户反馈'];  //  分别对应相应模块
+        let nameArr = ['轮播', '分类', '列表背景图', '平台管理', '数据管理', '热门管理', '文章管理', '渠道管理', '渠道数据', '数据管理', '渠道设置', '权限管理', '用户列表', '用户反馈','版本控制'];  //  分别对应相应模块
 
         for (let j = 0; j < contentArr.length; j++) {
             if (id == contentArr[j]) {

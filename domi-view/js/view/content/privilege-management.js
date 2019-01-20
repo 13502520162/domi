@@ -83,16 +83,20 @@ table.on('tool(privilege-management-table)', function (obj) {
                     password: password,
                     arr: newArr
                 };
+
+                let index1 = pageCommon.layerLoad(true);
                 let url = globalAjaxUrl + '/admin/employee/updateEmployee';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    console.log(res);
-                    if (res.errcode == 10){
-                        pageCommon.layerMsg(res.info, 2);
-                    } else {
+                    if (res.errcode===0) {
+                        parent.layer.close(index);
                         pageCommon.layerMsg(res.info, 1);
+                        table.reload('privilege-management-table');
+
+                    } else {
+                        parent.layer.close(index1);
+                        pageCommon.layerMsg(res.info, 2);
+                        return false;
                     }
-                    parent.layer.close(index);
-                    table.reload('privilege-management-table');
                 });
 
             },
@@ -148,15 +152,18 @@ $('.add-privilege-management').click(function () {
                 password: password,
                 arr: newArr
             };
+            let index1 = pageCommon.layerLoad(true);
             let url = globalAjaxUrl + '/admin/employee/addEmployee';
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (res.errcode!=3) {
-                    pageCommon.layerMsg(res.info, 2);
-                    return false;
-                } else {
+                if (res.errcode===0) {
                     parent.layer.close(index);
                     pageCommon.layerMsg(res.info, 1);
                     table.reload('privilege-management-table');
+
+                } else {
+                    parent.layer.close(index1);
+                    pageCommon.layerMsg(res.info, 2);
+                    return false;
                 }
 
             });

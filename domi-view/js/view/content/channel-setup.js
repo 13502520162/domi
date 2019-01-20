@@ -10,7 +10,7 @@ laydate.render({
             let start = date.year + '-' + date.month + '-' + date.date,
                 end = endDate.year + '-' + endDate.month + '-' + endDate.date;
             table.reload('channel-setup-table', {
-                url: globalAjaxUrl + '/admin/channel/getData'
+                url: globalAjaxUrl + '/admin/channel/getChannelDatas'
                 , where: {
                     beginDate: start,
                     endDate: end
@@ -28,7 +28,7 @@ table.init('channel-setup-table', {
     limit: 10
     , method: 'GET'
     , limits: [10, 20, 30, 50, 100, 200]
-    , url: globalAjaxUrl + '/admin/channel/getData'
+    , url: globalAjaxUrl + '/admin/channel/getChannelDatas'
     , page: true
     , where: {
         beginDate: '',
@@ -39,21 +39,17 @@ table.init('channel-setup-table', {
         $('.layui-table-main').perfectScrollbar(); //数据渲染完成后的回调
     },
     parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
-        $('.content-text-statistics-bottom').eq(0).find('.real-data .num').text(res.data.activationAndRegister.allRegisterCount);
-        $('.content-text-statistics-bottom').eq(0).find('.display-data .num').text(res.data.activationAndRegister.allRegisterOut);
-        $('.content-text-statistics-bottom').eq(1).find('.real-data .num').text(res.data.activationAndRegister.allActivationCount);
-        $('.content-text-statistics-bottom').eq(1).find('.display-data .num').text(res.data.activationAndRegister.allActivationOut);
-        $('.content-text-statistics-bottom').eq(2).find('.real-data .num').text(res.data.newAndOldUser.newUser);
-        $('.content-text-statistics-bottom').eq(2).find('.display-data .num').text(res.data.newAndOldUser.oldUser);
-        $('.content-text-statistics-top').eq(2).find('.num').text(res.data.newAndOldUser.newUser+res.data.newAndOldUser.oldUser);
-        $('.content-text-statistics-bottom').eq(3).find('.real-data .num').text(res.data.clickPeople.newClick);
-        $('.content-text-statistics-bottom').eq(3).find('.display-data .num').text(res.data.clickPeople.oldClick);
-        $('.content-text-statistics-top').eq(3).find('.num').text(res.data.clickPeople.newClick+res.data.clickPeople.oldClick);
+        $('.content-text-statistics-bottom').eq(0).find('.real-data .num').text(res.data.channelSum.allRegistrationCount);
+        $('.content-text-statistics-bottom').eq(0).find('.display-data .num').text(res.data.channelSum.validRegistrationCount);
+        $('.content-text-statistics-bottom').eq(1).find('.real-data .num').text(res.data.channelSum.allactivationCount);
+        $('.content-text-statistics-bottom').eq(1).find('.display-data .num').text(res.data.channelSum.validactivationCount);
+        $('.content-text-statistics-bottom').eq(2).find('.display-data .num').text(res.data.channelSum.onlineCount);
+        $('.content-text-statistics-bottom').eq(3).find('.display-data .num').text(res.data.channelSum.clickCount);
         return {
-            "code": res.data.code, //解析接口状态
+            "code": res.errcode, //解析接口状态
             "msg": res.info, //解析提示文本
             "count": res.data.count, //解析数据长度
-            "data": res.data.channels //解析数据列表
+            "data": res.data.channelData //解析数据列表
         };
     }
 });
@@ -64,7 +60,7 @@ document.onkeydown = function (e) {
     if (e.key == 'Enter') {
         let val = $('.data-management-name').val();
         table.reload('channel-setup-table', {
-            url: globalAjaxUrl + '/admin/channel/getData'
+            url: globalAjaxUrl + '/admin/channel/getChannelDatas'
             , where: {
                 beginDate: '',
                 endDate: '',
@@ -216,32 +212,30 @@ $('.management-option-date>p').click(function () {
         }
 
         table.reload('channel-setup-table', {
-            url: globalAjaxUrl + '/admin/channel/getData'
+            url: globalAjaxUrl + '/admin/channel/getChannelDatas'
             , where: {
                 beginDate: beginDate,
                 endDate:endDate,
                 name: ''
             },
             parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
-                $('.content-text-statistics-bottom').eq(0).find('.real-data .num').text(res.data.activationAndRegister.allRegisterCount);
-                $('.content-text-statistics-bottom').eq(0).find('.display-data .num').text(res.data.activationAndRegister.allRegisterOut);
-                $('.content-text-statistics-bottom').eq(1).find('.real-data .num').text(res.data.activationAndRegister.allActivationCount);
-                $('.content-text-statistics-bottom').eq(1).find('.display-data .num').text(res.data.activationAndRegister.allActivationOut);
-                $('.content-text-statistics-bottom').eq(2).find('.real-data .num').text(res.data.newAndOldUser.newUser);
-                $('.content-text-statistics-bottom').eq(2).find('.display-data .num').text(res.data.newAndOldUser.oldUser);
-                $('.content-text-statistics-bottom').eq(3).find('.real-data .num').text(res.data.clickPeople.newClick);
-                $('.content-text-statistics-bottom').eq(3).find('.display-data .num').text(res.data.clickPeople.oldClick);
+                $('.content-text-statistics-bottom').eq(0).find('.real-data .num').text(res.data.channelSum.allRegistrationCount);
+                $('.content-text-statistics-bottom').eq(0).find('.display-data .num').text(res.data.channelSum.validRegistrationCount);
+                $('.content-text-statistics-bottom').eq(1).find('.real-data .num').text(res.data.channelSum.allactivationCount);
+                $('.content-text-statistics-bottom').eq(1).find('.display-data .num').text(res.data.channelSum.validactivationCount);
+                $('.content-text-statistics-bottom').eq(2).find('.display-data .num').text(res.data.channelSum.onlineCount);
+                $('.content-text-statistics-bottom').eq(3).find('.display-data .num').text(res.data.channelSum.clickCount);
                 return {
-                    "code": res.data.code, //解析接口状态
+                    "code": res.errcode, //解析接口状态
                     "msg": res.info, //解析提示文本
                     "count": res.data.count, //解析数据长度
-                    "data": res.data.channels //解析数据列表
+                    "data": res.data.channelData //解析数据列表
                 };
             }
         });
     } else {
         table.reload('channel-setup-table', {
-            url: globalAjaxUrl + '/admin/channel/getData'
+            url: globalAjaxUrl + '/admin/channel/getChannelDatas'
             , where: {
                 beginDate: '',
                 endDate:'',

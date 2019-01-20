@@ -106,3 +106,12 @@ body,html,.add-article{
     color: #fff;
     cursor: pointer;
 }
+
+#editor{
+    width: calc(100% - 76px);
+    margin-left: 76px;
+    margin-top: -18px;
+}
+#editor p>img{
+    width: 300px;
+}

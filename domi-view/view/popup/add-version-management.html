@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加版本控制</title>
+    <link rel="stylesheet" href="../../css/public/reset.css">
+    <link rel="stylesheet" href="../../css/public/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="../../css/view/popup/add-article.css">
+    <style>
+        .update-description{
+            height: 100px;
+            position: relative;
+            width: calc(100% - 96px);
+            resize: none;
+            padding: 10px 0 0 10px;
+        }
+        #app-name{
+            height: 40px;
+            border: 1px solid #E6E6E6;
+            width: 90px;
+            border-radius: 4px;
+        }
+     label {
+            margin-right: 10px;
+        }
+        label input {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="add-article">
+    <div class="add-article-filed">
+        <span class="add-article-tit">APP名称:</span>
+        <select name="" id="app-name">
+            <option value="2">Android</option>
+            <option value="3">iOS</option>
+        </select>
+    </div>
+    <div class="add-article-filed">
+        <span class="add-article-tit"><span class="required">*</span>版本号:</span>
+        <input type="text" class="add-article-ipt version-number" placeholder="请输入版本号">
+    </div>
+    <div class="add-article-filed">
+        <span class="add-article-tit"><span class="required">*</span>下载链接:</span>
+        <input type="text" class="add-article-ipt download-links" placeholder="请输入新版本下载链接">
+    </div>
+    <div class="add-article-filed">
+        <span class="add-article-tit"  style=" position: relative;top: -88px;"><span class="required">*</span>更新描述:</span>
+        <textarea type="text" class="add-article-ipt update-description" placeholder="请输入更新描述"></textarea>
+    </div>
+    <div class="add-article-filed">
+        <span class="add-article-tit">强制更新:</span>
+        <label><input type="radio" name="isForceUpdate" value="0" checked>否</label>
+        <label><input type="radio" name="isForceUpdate" value="1">是</label>
+    </div>
+</div>
+<script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
+<script src="../../js/public/divScroll/divScroll.js"></script>
+<script src="../../js/common.js"></script>
+<script>
+    let data = $(".version-management .version-management-iframe", parent.document).contents().find('#version-management-data').text();
+    if (data){
+        data = JSON.parse(data);
+        $('#app-name').val(data.type);
+        $('.version-number').val(data.currentVersion);
+        $('.download-links').val(data.downLoadUrl);
+        $('.update-description').val(data.description);
+        if (data.isForceUpdate==0){
+            $('input[name="isForceUpdate"]').eq(0).attr("checked","checked")
+        }else {
+            $('input[name="isForceUpdate"]').eq(1).attr("checked","checked")
+        }
+
+    }
+</script>
+</body>
+</html>

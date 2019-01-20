@@ -123,17 +123,19 @@ table.on('tool(channel-management-table)', function(obj){
                     receivablesPeople:payee
                 };
                 let url = globalAjaxUrl + '/admin/channel/updateChannel';
-
+                let index1 = pageCommon.layerLoad(true);
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                    if (res.errcode==3){
-                        pageCommon.layerMsg(res.info ,1);
-                        layer.close(index);
+                    if (res.errcode===0){
+                        parent.layer.close(index);
+                        pageCommon.layerMsg(res.info, 1);
+                        table.reload('channel-management-table', {
+                            url: globalAjaxUrl + '/admin/channel/getChannel'
+                        });
                     } else {
-                        pageCommon.layerMsg(res.info ,1);
-                        layer.close(index);
+                        parent.layer.close(index1);
+                        pageCommon.layerMsg(res.info, 2);
+                        return false;
                     }
-                    table.reload('channel-management-table');
-                    parent.layer.close(index);
                 });
             },
             cancel: function (index, layero) {
@@ -225,16 +227,18 @@ $('.add-channel-management').click(function () {
             };
             let url = globalAjaxUrl + '/admin/channel/addChannel';
 
+            let index1 = pageCommon.layerLoad(true);
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (!res.errcode){
-                   pageCommon.layerMsg(res.info, 2);
-                   return false;
+                if (res.errcode===3){
+                    parent.layer.close(index);
+                    pageCommon.layerMsg(res.info, 1);
+                    table.reload('channel-management-table', {
+                        url: globalAjaxUrl + '/admin/channel/getChannel'
+                    });
                } else {
-                   table.reload('channel-management-table', {
-                       url: globalAjaxUrl + '/admin/channel/getChannel'
-                   });
-                   parent.layer.close(index);
-                   pageCommon.layerMsg(res.info, 1);
+                    parent.layer.close(index1);
+                    pageCommon.layerMsg(res.info, 2);
+                    return false;
                }
             });
         },

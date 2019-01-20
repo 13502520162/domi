@@ -47,6 +47,7 @@ table.on('tool(list-background-map-table)', function (obj) {
                     background: photo
                 };
 
+                pageCommon.layerLoad(true);
                 let url = globalAjaxUrl + '/admin/icon/addBackground';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     if (res.errcode===0) {

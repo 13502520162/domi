@@ -1,0 +1,160 @@
+
+html,body,.channel-data{
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    min-width: auto!important;
+}
+.channel-data-top{
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgb(244,244,244);
+}
+.channel-data-platform-name,.channel-data-time{
+    display: inline-block;
+}
+.channel-data-platform-name{
+    margin-right: 30px;
+    position: relative;
+}
+.channel-data-name{
+    width: 230px;
+    height: 30px;
+    padding-left: 10px;
+    border-radius: 4px;
+    border: 1px solid #E6E6E6;
+}
+
+.channel-data-time i{
+    position: relative;
+    top: 0;
+    left: -25px;
+    color: #ccc;
+}
+.channel-data-ipt{
+    width: 200px;
+    height: 30px;
+    padding-left: 10px;
+    margin-left: 8px;
+    border-radius: 4px;
+    border: 1px solid #E6E6E6;
+}
+.channel-data-end{
+    margin-left: 15px;
+}
+.channel-data-search{
+    margin-top: 20px;
+    padding-left: 250px;
+}
+.channel-data-search>span{
+    margin: 0 35px;
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    background: rgb(60,183,249);
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.channel-data-search .channel-data-empty{
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.channel-data-bottom{
+    height: calc(100% - 88px);
+}
+.channel-data-content-option>span{
+    margin: 0 15px;
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    background: rgb(60,183,249);
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.channel-data-content-option{
+    margin: 15px 0;
+}
+.channel-data-content-option .channel-data-export-all{
+    margin-left: 0;
+}
+.channel-data-content-option .channel-data-batch-export{
+    background: red;
+    color: #fff;
+}
+.channel-data-content-option>div{
+    margin: 10px;
+}
+.channel-data-content-option>div>span{
+    margin: 0 20px;
+    color: #999;
+}
+.channel-data-content-table{
+    height: calc(100% - 44px);
+    overflow: auto;
+}
+.channel-data-content-table .layui-form{
+    height: calc(100%);
+}
+.channel-data-content-table .layui-form .layui-table-box{
+    height: calc(100% - 41px);
+    overflow: hidden;
+}
+.channel-data-content-table .layui-table-body{
+    height: calc(100% - 39px);
+}
+
+.layui-table, .layui-table-view{
+    margin: 0;
+}
+#layui-table-page1{
+    text-align: center;
+}
+
+.layui-input {
+    height: 30px;
+}
+
+
+.management-option-date{
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.management-option-date .active {
+    border: 1px solid red;
+    color: red;
+}
+
+.management-option-date p {
+    padding: 2px 10px;
+    display: inline-block;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.data-management-empty{
+    margin: 0 35px;
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    background: rgb(60,183,249);
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.data-management-empty{
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}

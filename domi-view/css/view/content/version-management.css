@@ -1,0 +1,72 @@
+html,body,.channel-management{
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    min-width: auto!important;
+}
+.channel-management-top{
+    padding: 2px 15px;
+    height: 50px;
+}
+.channel-management-top .app-version-management{
+    float: left;
+    display:inline-block ;
+    font-weight: 600;
+}
+.add-channel-management{
+    height: 30px;
+    line-height: 30px;
+    width: 100px;
+    display: inline-block;
+    border-radius: 4px;
+    text-align: center;
+    background: #3CB7F9;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 8px;
+    float: right;
+}
+.app-toggle{
+    border-bottom: 1px solid #e8e8e8;
+    height: 32px;
+    margin-bottom: 20px;
+}
+.app-toggle ul{
+    height: 30px;
+    line-height: 30px;
+}
+.app-toggle ul li{
+    float: left;
+    width: 60px;
+    text-align: center;
+    cursor: pointer;
+}
+.app-toggle ul li.active{
+    border-bottom: 2px solid #188ae2;
+}
+.layui-table-page>div{
+    text-align: center;
+}
+
+#channel-management-table{
+
+}
+
+.label-success {
+    background-color: #5cb85c;
+}
+.label-default{
+    background-color: #ccc;
+}
+.label {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
