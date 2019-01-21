@@ -1,6 +1,6 @@
 let globalHttp = 'http://';
-let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";
-/*let globalAjaxUrl = globalHttp + "app.duomimarkt.com";*/
+/*let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";*/
+let globalAjaxUrl = globalHttp + "app.duomimarkt.com";
 /*let globalAjaxUrl = globalHttp + "192.168.0.105";*/
 let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
 let pageCommon = {

@@ -357,11 +357,14 @@ $('.management-option-date>p').click(function () {
     }
 });
 
-
+currTime()
 function currTime() {
     let date = new Date();
     let HH = date.getHours();
     let MM = date.getMinutes();
+    HH = HH < 0 ? HH : '0'+ HH;
+    MM = MM > 0 ? MM : '0'+ MM;
+    console.log(HH + ':' + MM);
     $('.time').text(HH + ':' + MM);
 }
 

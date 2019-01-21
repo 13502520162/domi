@@ -3,69 +3,52 @@
 <head>
     <title>注册</title>
     <meta charset="utf-8">
+    <meta name="viewport" content=" user-scalable=no ">
     <meta name="format-detection" content="telephone=no">
     <meta name="format-detection" content="email=no">
     <meta name="flexible" content="initial-dpr=2"/>
-    <link rel="stylesheet" href="css/register.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_978228_boqzdnuqm5e.css">
-
-
+    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/globle.css">
 
 </head>
 <body>
 <p class="prompt4m"></p>
-<div class="register">
-    <div class="register-top">
-        <img src="images/logo-2x.png" alt="">
-        <div class="maximum-borrowable">
-            <p class="may-borrow">最高可借</p>
-            <p class="may-borrow-num">
-                <span class="may-borrow--symbol">￥</span>
-                <span id="may-borrow-money">000,000</span>
-            </p>
-        </div>
-        <div class="register-info">
-            <span><i class="iconfont icon-dui"></i>无抵押</span>
-            <span><i class="iconfont icon-gengduo"></i></span>
-            <span><i class="iconfont icon-dui"></i>无担保</span>
-            <span><i class="iconfont icon-gengduo"></i></span>
-            <span><i class="iconfont icon-dui"></i>循环借</span>
-        </div>
 
-    </div>
-    <div class="register-bottom">
-        <div class="register-bottom-ipt">
-            <span> <i class="iconfont icon-shouji"></i> </span>
-            <input type="text" class="cellphone" placeholder="请输入手机号码">
+<div class="register">
+    <span class="money">￥</span>
+    <div id="dataNums"></div>
+    <div class="register-content">
+        <div class="ipt">
+            <img src="images/ic_login_number.png" alt="">
+            <input type="text" class="register-content-ipt cellphone" value="" placeholder="请输入手机号">
         </div>
-        <div class="register-bottom-ipt">
-            <span> <i class="iconfont icon-anquan"></i> </span>
-            <input  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" type="text" class="checkCode" placeholder="请输入验证码">
-            <span class="verification-code">获取验证码</span>
+        <div class="ipt code">
+            <img src="images/ic_login_validation.png" alt="">
+            <input type="number" class="register-content-ipt checkCode"  placeholder="请输入验证码">
+            <button class="verification-code ">获取验证码</button>
         </div>
-        <div class="register-bottom-ipt">
-            <span> <i class="iconfont icon-mima"></i> </span>
-            <input type="password" class="password" placeholder="请输入密码">
-            <p class="login-immediately">
-                <span>已有账户?</span>
-                <span>立即下载</span>
-            </p>
+        <div class="ipt">
+            <img src="images/ic_login_password.png" alt="">
+            <input type="password" class="register-content-ipt password" value="" placeholder="设置登录密码">
         </div>
-        <div class="register-now">
-            <p class="register-now-btn">立即注册</p>
-        </div>
-        <p class="registration-agreement">
-            注册即代表同意
-            <a href="#">《用户注册协议》</a>
+        <p class="sign-in" style="text-align: right;">
+            <span>已有账号？</span><a class="sign-in-btn" href="javascript:void (0)">立即登陆</a>
+        </p>
+        <button class="btn-register">注册</button>
+
+        <p class="sign-in registration-agreement">
+            <span>注册即同意</span><a class="xieyi" href="javascript:void (0)">《注册协议》</a>
         </p>
     </div>
 </div>
 
+
 <script src="js/flexible.js"></script>
-<script src="js/countUp.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/md5.js"></script>
 <script src="js/common.js"></script>
+<script src="js/num.js"></script>
 <script src="js/register.js"></script>
 </body>
 </html>

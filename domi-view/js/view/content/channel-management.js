@@ -172,6 +172,7 @@ $('.add-channel-management').click(function () {
     let index = pageCommon.layerParentOpenIframe({
         url: globalUrl + '/view/popup/add-channel-management.html',
         title: '创建渠道',
+        area:['800px','680px'],
         confirm: function () {
             let body = parent.layer.getChildFrame('body', index);
             let name = body.find('.channel-name').val(); // 渠道名

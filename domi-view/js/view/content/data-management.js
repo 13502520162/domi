@@ -77,7 +77,7 @@ table.render({
     ,loading:true
     ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
         return {
-            "code": res.data.code, //解析接口状态
+            "code": res.errcode, //解析接口状态
             "msg": res.info, //解析提示文本
             "count": res.data.count, //解析数据长度
             "data": res.data.data //解析数据列表
@@ -175,7 +175,7 @@ $('.management-option-date>p').click(function () {
             },
             parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                 return {
-                    "code": res.data.code, //解析接口状态
+                    "code": res.errcode, //解析接口状态
                     "msg": res.info, //解析提示文本
                     "count": res.data.count, //解析数据长度
                     "data": res.data.data //解析数据列表
@@ -192,7 +192,7 @@ $('.management-option-date>p').click(function () {
             }
             ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
                 return {
-                    "code": res.data.code, //解析接口状态
+                    "code": res.errcode, //解析接口状态
                     "msg": res.info, //解析提示文本
                     "count": res.data.count, //解析数据长度
                     "data": res.data.data //解析数据列表

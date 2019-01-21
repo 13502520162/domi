@@ -123,7 +123,7 @@ table.on('edit(rotation-chart-table)', function (obj) {
 
     let url = globalAjaxUrl + '/admin/banner/bannerSort?id=' + id + '&sort=' + parseInt(value);
     pageCommon.getAjax(url, {}, function (res) {
-        if (res.state) {
+        if (res.errcode ===0 ) {
             pageCommon.layerMsg(res.info, 1);
             table.reload('rotation-chart-table');
         } else {
