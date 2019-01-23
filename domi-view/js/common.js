@@ -1,6 +1,6 @@
 let globalHttp = 'http://';
-let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";
-/*let globalAjaxUrl = globalHttp + "app.duomimarkt.com";*/
+/*let globalAjaxUrl = globalHttp + "yanis.vicp.io:11790";*/
+let globalAjaxUrl = globalHttp + "app.duomimarkt.com";
 /*let globalAjaxUrl = globalHttp + "192.168.0.105";*/
 let globalUrl = globalHttp + window.location.host + '/domi/domi-view';
 let loginToken = sessionStorage.getItem('loginToken');
@@ -215,6 +215,7 @@ let pageCommon = {
      * @returns {*}
      */
     getTokenUrl: function (base) {
+        let self = this;
         let src;
         let token = localStorage.getItem('token');
         let pic = base.split("base64,")[1];
@@ -231,6 +232,11 @@ let pageCommon = {
             success: function (data) {
                 let domain = localStorage.getItem('domain');
                 src = ' http://' + domain + '/' + data.key;
+            },
+            error:function (data) {
+                if (data.status!=200){
+                    self.returnLogin();
+                }
             }
         });
         return src;

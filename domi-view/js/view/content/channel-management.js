@@ -230,7 +230,7 @@ $('.add-channel-management').click(function () {
 
             let index1 = pageCommon.layerLoad(true);
             pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
-                if (res.errcode===3){
+                if (res.errcode===0){
                     parent.layer.close(index);
                     pageCommon.layerMsg(res.info, 1);
                     table.reload('channel-management-table', {

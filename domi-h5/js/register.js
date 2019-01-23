@@ -50,7 +50,7 @@ $('.verification-code').click(function () {
 });
 
 let query = pageCommon.getUrlParams();
-let inviteCode = query.inviteCode || 24;
+let inviteCode = query.inviteCode;
 
 // 注册
 $('.btn-register').click(function () {

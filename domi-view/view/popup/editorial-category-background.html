@@ -28,24 +28,29 @@
 <script src="../../js/public/jquery/jquery-3.3.1.min.js"></script>
 <script src="../../js/common.js"></script>
 <script src="../../js/public/divScroll/divScroll.js"></script>
-<script src="../../js/view/popup/add-article.js"></script>
 <script>
 
     let query = pageCommon.getUrlParams();
     let photoUrl = query.photoUrl;
     let backgroundUrl = query.background;
-    if (photoUrl) {
+    if (photoUrl != 'null') {
         $('.article-img img').attr('src', photoUrl);
         $('.article-photo').attr('data-src', photoUrl);
         $('.fileImg').hide();
         $('.article-img').show();
+    }else {
+        $('.fileImg').show();
+        $('.article-img').hide();
     }
 
-    if (backgroundUrl) {
+    if (backgroundUrl != 'null') {
         $('.article-img img').attr('src', backgroundUrl);
         $('.article-photo').attr('data-src', backgroundUrl);
         $('.fileImg').hide();
         $('.article-img').show();
+    }else {
+        $('.fileImg').show();
+        $('.article-img').hide();
     }
 
 

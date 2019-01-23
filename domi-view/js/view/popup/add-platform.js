@@ -31,7 +31,6 @@ $(function () {
     });
 
 
-
     // 数据填充
     let query = pageCommon.getUrlParams();
     let data = $('.platform-management-iframe', parent.document).contents().find('.content-data').text();
@@ -77,7 +76,9 @@ $(function () {
             };
             let period = $('.borrowing-cycle>span');
             let newPeriod = data.period.substring(1, data.period.length - 1);
+            newPeriod =newPeriod.replace(/\s*/g,"");
             newPeriod = newPeriod.split(',');
+            console.log(newPeriod);
             for (let i = 0; i < period.length; i++) {
                 if (newPeriod.contains($(period[i]).attr('data-num'))) {
                     $(period[i]).addClass('spanActive')

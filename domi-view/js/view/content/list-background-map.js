@@ -5,7 +5,7 @@ table.render({
     , method: 'GET'
     , limits: [10, 20, 30, 50, 100, 200]
     , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
-    , url: globalAjaxUrl + '/admin/icon/getIcon'
+    , url: globalAjaxUrl + '/admin/loanPlatform/getLabelAndType'
     , cols: [[
         {field: 'id', title: 'ID', align: 'center'}
         , {field: 'name', title: '名称', align: 'center'}
@@ -17,10 +17,10 @@ table.render({
     }
     ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
         return {
-            "code": res.data.code, //解析接口状态
+            "code": res.errcode, //解析接口状态
             "msg": res.info, //解析提示文本
             "count": res.data.count, //解析数据长度
-            "data": res.data.data //解析数据列表
+            "data": res.data.typeList //解析数据列表
         };
     }
 });
@@ -44,11 +44,13 @@ table.on('tool(list-background-map-table)', function (obj) {
 
                 let obj = {
                     id: data.id,
-                    background: photo
+                    name:data.name,
+                    background: photo,
+                    imgUrl:data.imgUrl
                 };
 
                 pageCommon.layerLoad(true);
-                let url = globalAjaxUrl + '/admin/icon/addBackground';
+                let url = globalAjaxUrl + '/admin/loanPlatform/updateLoanPlatformType';
                 pageCommon.postAjax(url, JSON.stringify(obj), function (res) {
                     if (res.errcode===0) {
                         parent.layer.close(index);
