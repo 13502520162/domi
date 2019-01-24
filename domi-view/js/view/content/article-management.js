@@ -20,11 +20,11 @@ ArticleManagement.prototype = {
             , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
             , url: globalAjaxUrl + '/admin/article/getArticle'
             , cols: [[
-                {field: 'title',  width: '50%', title: '标题', align: 'center'}
+                {field: 'title', width: '40%', title: '标题', align: 'center'}
                 , {field: 'id', title: 'ID', align: 'center', hide: true}
-                , {field: 'author',  title: '作者', align: 'center'}
-     /*           , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
-                , {field: 'content', title: '内容', align: 'center'}*/
+                , {field: 'author', title: '作者', align: 'center'}
+                , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
+                /*         , {field: 'content', title: '内容', align: 'center'}*/
                 , {field: 'typeName', width: '10%', title: '推荐分类', align: 'center'}
                 , {field: 'dateTime', width: '12%', title: '更新时间', align: 'center'}
                 , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
@@ -98,7 +98,7 @@ table.on('tool(article-management-content-table)', function (obj) {
         let index = pageCommon.layerParentOpenIframe({
             url: globalUrl + '/view/popup/add-article.html?field=edit',
             title: '编辑文章',
-            area:['800px','670px'],
+            area: ['800px', '880px'],
             confirm: function () {
                 var body = parent.layer.getChildFrame('body', index);
                 var tit = body.find('.article-title').val();
@@ -115,10 +115,10 @@ table.on('tool(article-management-content-table)', function (obj) {
                     pageCommon.layerMsg('作者不能为空', 2);
                     return false;
                 }
-           /*     if (photo == undefined) {
+                if (photo == undefined) {
                     pageCommon.layerMsg('图片不能为空', 2);
                     return false;
-                }*/
+                }
                 if (content == '') {
                     pageCommon.layerMsg('内容不能为空', 2);
                     return false;
@@ -128,9 +128,9 @@ table.on('tool(article-management-content-table)', function (obj) {
                     title: tit,
                     author: author,
                     typeId: classification,
+                    imgUrl: photo,
                     updateTime: "",
-                    content: content,
-                    imgUrl: ''
+                    content: content
                 };
                 let index1 = pageCommon.layerLoad(true);
                 let url = globalAjaxUrl + '/admin/article/updateArticle';
@@ -160,7 +160,7 @@ table.on('tool(article-management-content-table)', function (obj) {
             url: globalUrl + '/view/popup/add-article.html?field=view',
             title: '预览文章',
             btn: ['关闭'],
-            area:['800px','670px'],
+            area: ['800px', '880px'],
             confirm: function (index, layero) {
                 parent.layer.close(index);
             },
@@ -203,11 +203,11 @@ function labelSelection(e) {
             , limit: 10 //注意：请务必确保 limit 参数（默认：10）是与你服务端限定的数据条数一致 //支持所有基础参数
             , url: globalAjaxUrl + '/admin/article/getArticle'
             , cols: [[
-                {field: 'title',  width: '50%',  title: '标题', align: 'center'}
+                {field: 'title', width: '40%', title: '标题', align: 'center'}
                 , {field: 'id', title: 'ID', align: 'center', hide: true}
-                , {field: 'author',  title: '作者', align: 'center'}
-                /*           , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
-                           , {field: 'content', title: '内容', align: 'center'}*/
+                , {field: 'author', title: '作者', align: 'center'}
+                , {field: 'imgUrl', width: '10%', title: '图片', templet: '#imgUrl', align: 'center'}
+                /*                           , {field: 'content', title: '内容', align: 'center'}*/
                 , {field: 'typeName', width: '10%', title: '推荐分类', align: 'center'}
                 , {field: 'dateTime', width: '12%', title: '更新时间', align: 'center'}
                 , {fixed: 'right', width: '15%', title: '操作', toolbar: '#barDemo', align: 'center'}
@@ -246,7 +246,7 @@ function formatDateTime(inputTime) {
     var second = date.getSeconds();
     minute = minute < 10 ? ('0' + minute) : minute;
     second = second < 10 ? ('0' + second) : second;
-    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
+    return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
 }
 
 //标题栏的切换
@@ -372,7 +372,7 @@ $('.article-management-top').on('click', '.article-management', function () {
     var index = pageCommon.layerParentOpenIframe({
         url: globalUrl + '/view/popup/add-article.html',
         title: '创建文章',
-        area:['800px','670px'],
+        area: ['800px', '880px'],
         confirm: function () {
             var body = parent.layer.getChildFrame('body', index);
             var tit = body.find('.article-title').val();
@@ -388,6 +388,10 @@ $('.article-management-top').on('click', '.article-management', function () {
                 pageCommon.layerMsg('作者不能为空', 2);
                 return false;
             }
+            if (photo == undefined) {
+                pageCommon.layerMsg('图片不能为空', 2);
+                return false;
+            }
 
             if ($.trim(content) == '') {
                 pageCommon.layerMsg('内容不能为空', 2);
@@ -400,7 +404,7 @@ $('.article-management-top').on('click', '.article-management', function () {
                 typeId: classification,
                 updateTime: "",
                 content: content,
-                imgUrl: ''
+                imgUrl: photo
             };
             let index1 = pageCommon.layerLoad(true);
             let url = globalAjaxUrl + '/admin/article/addArticle';
